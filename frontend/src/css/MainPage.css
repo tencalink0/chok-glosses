@@ -1,0 +1,51 @@
+.tile-collection {
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    justify-content: left;
+}
+
+.mainpage {
+    width: 100%;
+    margin-top: 2.5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tile {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    background: white;
+    margin: 2.5%;
+    border-radius: 10px;
+    font-size: var(--body-font);
+    padding: 2.5%;
+    color: black;
+}
+
+.tile.big {
+    width: 60%;
+}
+
+table.leaderboards {
+    border-collapse: collapse;
+}
+
+table.leaderboards td, th {
+    text-align: left;
+    padding: 8px;
+    border-radius: 8px;
+    color: var(--white);
+    font-size:  var(--body-font);
+}
+
+table.leaderboards th {
+    color: var(--blue);
+    font-size:  var(--body-font-big);
+}
+
+table.leaderboards tr {
+    border-radius: 8px;
+}

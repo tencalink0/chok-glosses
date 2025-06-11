@@ -9,13 +9,15 @@ import './App.css';
 function App() {
   return (
     <>
-      <Header></Header>
       <Router>
-        <Routes>
-          <Route path="/" element={<MainPage />}></Route>
-        </Routes>
+        <Header />
+          <main>
+            <Routes>
+              <Route path="/" element={<MainPage />} />
+            </Routes>
+          </main>
+        <Footer />
       </Router>
-      <Footer></Footer>
     </>
   );
 }
