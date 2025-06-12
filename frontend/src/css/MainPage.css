@@ -28,7 +28,7 @@
     background: white;
     margin: 2.5%;
     border-radius: var(--border-radius);
-    font-size: var(--heading-font);
+    font-size: var(--body-font);
     padding: 2.5%;
     color: var(--grey-dark);
     text-align: left;
@@ -41,6 +41,7 @@
 .tile.full {
     padding: 0;
     background: none;
+    font-size: var(--heading-font);
 }
 
 table.leaderboards {
@@ -90,6 +91,19 @@ table.leaderboards tr {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.after-text {
+    opacity: 0;
+    content: 'hi';
+    font-size: var(--body-font);
+    background-color: var(--grey);
+    transform: translateX(100px);
+    padding: 10px;
+    border-radius: var(--border-radius);
+    transition: opacity 0.3s ease;
+    font-weight: lighter;
+    color: var(--grey-dark);
+}
+
 .level.left { --translate-x: translateX(-80px); }
 .level.left.far { --translate-x: translateX(-120px); }
 .level.right { --translate-x: translateX(80px); }
@@ -102,4 +116,8 @@ table.leaderboards tr {
 .level:hover {
   transform: var(--translate-x, translateX(0)) scale(1.1) translateY(-10px);
   box-shadow: none;
+}
+
+.level:hover .after-text {
+    opacity: 1;
 }

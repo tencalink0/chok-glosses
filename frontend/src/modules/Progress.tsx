@@ -3,6 +3,7 @@ import type { LevelGroupColourChoice, LevelGroupColour } from '../pages/MainPage
 export interface Level {
     completed: boolean;
     stars: number;
+    description?: string;
 }
 
 export interface LevelGroup {
@@ -69,7 +70,7 @@ const Progress: React.FC<ProgressProps> = ({ progress, colors }) => {
                                 className={className}
                                 style={{ background: tile.completed ? '' : 'var(--green)' }}
                             >
-                                
+                                {tile.description ? <span className="after-text">{tile.description}</span> : ''}
                             </div>
                         );
                         globalTileIndex++;

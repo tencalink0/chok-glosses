@@ -32,7 +32,7 @@ const sampleData: LevelGroup[] = [
         title: 'Basics 2',
         color: LevelGroupColourChoice.Red,
         tiles: [
-            { completed: true, stars: 3 },
+            { completed: true, stars: 3, description: 'hey' },
             { completed: false, stars: 0 },
             { completed: true, stars: 0 },
             { completed: false, stars: 0 }
