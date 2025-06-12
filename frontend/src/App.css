@@ -1,16 +1,18 @@
 :root {
     --blue: #006eb8;
-    --blue-light: #007ccf;
+    --blue-light: #59a9de;
 
-    --green: #00b86e;
+    --green: #0ac890;
     --green-light: #00cf7c;
 
-    --grey: #aaa; 
+    --grey: #eee; 
     --grey-dark: #888; 
     background-color: var(--grey);
 
     --body-font: 20px;
     --body-font-big: 26px;
+
+    --border-radius: 10px;
 }
 
 * {
