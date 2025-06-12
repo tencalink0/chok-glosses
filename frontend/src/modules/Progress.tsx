@@ -16,6 +16,8 @@ export interface ProgressProps {
 }
 
 const Progress: React.FC<ProgressProps> = ({ progress, colors }) => {
+    const totalLevels = progress.reduce((sum, group) => sum + group.tiles.length, 0);
+
     const assignColor = (color: LevelGroupColourChoice | undefined) => {
         switch (color) {
             case 'red':
@@ -31,6 +33,8 @@ const Progress: React.FC<ProgressProps> = ({ progress, colors }) => {
         }
     };
 
+    let globalTileIndex = 0;
+
     return (
         <>
             {progress.map((group, groupIndex) => (
@@ -41,15 +45,35 @@ const Progress: React.FC<ProgressProps> = ({ progress, colors }) => {
                         background: assignColor(group.color),
                     }}
                 >
-                    {group.tiles.map((tile, tileIndex) => (
-                        <div
-                            key={tileIndex}
-                            className="level"
-                            style={{ background: tile.completed ? '' : ''}}
-                        >
-                            {tileIndex+1}
-                        </div>
-                    ))}
+                    {group.tiles.map((tile, tileIndex) => {
+                        let className = 'level';
+                        if (globalTileIndex % 8 === 1) {
+                            className += ' right';
+                        } else if (globalTileIndex % 8 === 2) {
+                            className += ' right far';
+                        } else if (globalTileIndex % 8 === 3) {
+                            className += ' right';
+                        } else if (globalTileIndex % 8 === 5) {
+                            className += ' left';
+                        } else if (globalTileIndex % 8 === 6) {
+                            className += ' left far';
+                        } else if (globalTileIndex % 8 === 7) {
+                            className += ' left';
+                        }
+
+                        const tileElement = (
+                            <div
+                                key={tileIndex}
+                                className={className}
+                                style={{ background: tile.completed ? '' : '' }}
+                            >
+                                
+                            </div>
+                        );
+                        globalTileIndex++;
+
+                        return tileElement;
+                    })}
                 </div>
             ))}
         </>

@@ -21,9 +21,18 @@ export type LevelGroupColourChoice = typeof LevelGroupColourChoice[keyof typeof 
 
 const sampleData: LevelGroup[] = [
   {
+    color: LevelGroupColourChoice.Green,
+    tiles: [
+      { completed: true, stars: 3 },
+      { completed: false, stars: 0 }
+    ]
+  },
+  {
     color: LevelGroupColourChoice.Red,
     tiles: [
       { completed: true, stars: 3 },
+      { completed: false, stars: 0 },
+      { completed: true, stars: 0 },
       { completed: false, stars: 0 }
     ]
   },
