@@ -20,29 +20,32 @@ export const LevelGroupColourChoice = {
 export type LevelGroupColourChoice = typeof LevelGroupColourChoice[keyof typeof LevelGroupColourChoice];
 
 const sampleData: LevelGroup[] = [
-  {
-    color: LevelGroupColourChoice.Green,
-    tiles: [
-      { completed: true, stars: 3 },
-      { completed: false, stars: 0 }
-    ]
-  },
-  {
-    color: LevelGroupColourChoice.Red,
-    tiles: [
-      { completed: true, stars: 3 },
-      { completed: false, stars: 0 },
-      { completed: true, stars: 0 },
-      { completed: false, stars: 0 }
-    ]
-  },
-  {
-    color: LevelGroupColourChoice.Purple,
-    tiles: [
-      { completed: true, stars: 2 },
-      { completed: true, stars: 1 }
-    ]
-  }
+    {
+        title: 'The basics',
+        color: LevelGroupColourChoice.Green,
+        tiles: [
+            { completed: true, stars: 3 },
+            { completed: false, stars: 0 }
+        ]
+    },
+    {
+        title: 'Basics 2',
+        color: LevelGroupColourChoice.Red,
+        tiles: [
+            { completed: true, stars: 3 },
+            { completed: false, stars: 0 },
+            { completed: true, stars: 0 },
+            { completed: false, stars: 0 }
+        ]
+    },
+    {
+        title: 'Food',
+        color: LevelGroupColourChoice.Purple,
+        tiles: [
+            { completed: true, stars: 2 },
+            { completed: true, stars: 1 }
+        ]
+    }
 ];
 
 function MainPage() {

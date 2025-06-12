@@ -21,7 +21,7 @@ header ul {
 }
 
 header ul li {
-    width: 33%;
+    width: 100%;
     text-align: center;
     padding: 10px;
     font-size: var(--header-fontsize);

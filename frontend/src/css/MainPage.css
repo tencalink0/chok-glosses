@@ -21,15 +21,17 @@
 }
 
 .tile {
+    font-family: "Trebuchet MS", "Segoe UI", Verdana, sans-serif;
     display: flex;
     flex-direction: column;
     width: 20%;
     background: white;
     margin: 2.5%;
     border-radius: var(--border-radius);
-    font-size: var(--body-font);
+    font-size: var(--heading-font);
     padding: 2.5%;
-    color: black;
+    color: var(--grey-dark);
+    text-align: left;
 }
 
 .tile.big {

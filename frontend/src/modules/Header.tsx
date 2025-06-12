@@ -9,6 +9,7 @@ function Header() {
                     <li><a href="/">Home</a></li>
                     <li><a href="#">Progress</a></li>
                     <li><a href="#">Courses</a></li>
+                    <li><a href="#">Courses</a></li>
                 </ul>
                 <div className="login-container">
                     <button className="login">login</button>

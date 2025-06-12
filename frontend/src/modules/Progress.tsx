@@ -6,6 +6,7 @@ export interface Level {
 }
 
 export interface LevelGroup {
+    title: string;
     tiles: Level[];
     color: LevelGroupColourChoice | undefined;
 }
@@ -45,6 +46,7 @@ const Progress: React.FC<ProgressProps> = ({ progress, colors }) => {
                         background: assignColor(group.color),
                     }}
                 >
+                    <p className='title'>{`Tier ${groupIndex + 1} - ${group.title}`}</p>
                     {group.tiles.map((tile, tileIndex) => {
                         let className = 'level';
                         if (globalTileIndex % 8 === 1) {
@@ -65,7 +67,7 @@ const Progress: React.FC<ProgressProps> = ({ progress, colors }) => {
                             <div
                                 key={tileIndex}
                                 className={className}
-                                style={{ background: tile.completed ? '' : '' }}
+                                style={{ background: tile.completed ? '' : 'var(--green)' }}
                             >
                                 
                             </div>
