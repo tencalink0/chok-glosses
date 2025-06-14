@@ -3,6 +3,17 @@
     --level-green: #d0f0c0;
     --level-purple: #c1c1f4;
     --level-orange: #f8d7b5;
+
+    --font-family-main: "Trebuchet MS", "Segoe UI", Verdana, sans-serif;
+}
+
+.mainpage {
+    width: 100%;
+    margin-top: 2.5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .tile-collection {
@@ -12,19 +23,11 @@
     justify-content: left;
 }
 
-.mainpage {
-    width: 100%;
-    margin-top: 2.5%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .tile {
-    font-family: "Trebuchet MS", "Segoe UI", Verdana, sans-serif;
+    font-family: var(--font-family-main);
     display: flex;
     flex-direction: column;
-    width: 20%;
+    width: 25%;
     background: white;
     margin: 2.5%;
     border-radius: var(--border-radius);
@@ -34,14 +37,44 @@
     text-align: left;
 }
 
-.tile.big {
-    width: 60%;
-}
-
+.tile.medium { width: 40%; }
+.tile.big { width: 60%; }
+.tile.wide { width: 75%; }
 .tile.full {
     padding: 0;
     background: none;
     font-size: var(--heading-font);
+}
+.tile.center-content {
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.tile h2 {
+    font-size: 30px;
+    text-align: center;
+}
+
+.tile li{
+    padding: 5px;
+    transition: transform 0.3s ease;
+}
+
+.tile li.hover-shift .before-text {
+    opacity: 0;
+    padding: 5px;
+    transition: opacity 0.3s ease;
+}
+
+.tile li.hover-shift:hover .before-text {
+    opacity: 1;
+}
+
+
+.tile li.hover-shift:hover {
+    padding: 5px;
+    transform: translateX(20px);
 }
 
 table.leaderboards {
@@ -83,7 +116,7 @@ table.leaderboards tr {
     border-radius: 50%;
     background-color: var(--blue-light);
     width: 100px;
-    aspect-ratio: 1.3 / 1;
+    aspect-ratio: 1.5 / 1;
     margin: 2.5%;
     font-weight: bold;
     z-index: 10;
@@ -115,8 +148,8 @@ table.leaderboards tr {
 }
 
 .level:hover {
-  transform: var(--translate-x, translateX(0)) scale(1.1) translateY(-10px);
-  box-shadow: none;
+    transform: var(--translate-x, translateX(0)) scale(1.1) translateY(-10px);
+    box-shadow: none;
 }
 
 .level:hover .after-text {
@@ -124,5 +157,5 @@ table.leaderboards tr {
 }
 
 .level .level-icon {
-    width: 70%;
+    width: 60%;
 }

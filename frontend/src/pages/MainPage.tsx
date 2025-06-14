@@ -27,7 +27,7 @@ export const LevelIconChoice = {
 export type LevelGroupColourChoice = typeof LevelGroupColourChoice[keyof typeof LevelGroupColourChoice];
 export type LevelIconChoice = typeof LevelIconChoice[keyof typeof LevelIconChoice];
 
-const sampleCourse: Course = {
+export const sampleCourse: Course = {
     title: "Test Introduction",
     level_groups: [
         {

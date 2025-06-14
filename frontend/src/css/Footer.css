@@ -1,0 +1,33 @@
+.footer-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer {
+    width: 60%;
+    padding: 2.5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--blue);
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+}
+
+footer .icon-credits {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+footer .icon-credits h2 {
+    font-family: var(--font-family-main);
+}
+
+footer .icon-credits li {
+    font-family: var(--font-family-main);
+    list-style: none;
+    text-align: center;
+}

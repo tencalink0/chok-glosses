@@ -19,6 +19,7 @@ export interface LevelGroup {
 
 export interface Course {
     title: string;
+    emoji?: string;
     level_groups: LevelGroup[];
 }
 

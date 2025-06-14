@@ -11,6 +11,17 @@ header {
 
 header .logo {
     width: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+header .logo a {
+    width: 25%;
+}
+
+header .logo img {
+    width: 100%;
 }
 
 header ul {
@@ -47,13 +58,4 @@ header .login-container {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-header .login-container button.login {
-    font-size: var(--header-login-fontsize);
-    color: white;
-    background-color: var(--green);
-    padding: 10px 18px;
-    border: none;
-    border-radius: 10px;
 }
