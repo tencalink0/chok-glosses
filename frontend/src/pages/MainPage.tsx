@@ -1,6 +1,6 @@
 import '../css/MainPage.css'
 import Progress from '../modules/Progress';
-import type { LevelGroup } from '../modules/Progress';
+import type { LevelGroup, Course } from '../modules/Progress';
 import { useState, useEffect} from 'react';
 
 export interface LevelGroupColour {
@@ -17,36 +17,47 @@ export const LevelGroupColourChoice = {
     Orange: 'oranges'
 };
 
-export type LevelGroupColourChoice = typeof LevelGroupColourChoice[keyof typeof LevelGroupColourChoice];
+export const LevelIconChoice = {
+    Flashcard: 'flashcard',
+    Reading: 'reading',
+    Writing: 'writing',
+    Listening: 'listening'
+} 
 
-const sampleData: LevelGroup[] = [
-    {
-        title: 'The basics',
-        color: LevelGroupColourChoice.Green,
-        tiles: [
-            { completed: true, stars: 3 },
-            { completed: false, stars: 0 }
-        ]
-    },
-    {
-        title: 'Basics 2',
-        color: LevelGroupColourChoice.Red,
-        tiles: [
-            { completed: true, stars: 3, description: 'hey' },
-            { completed: false, stars: 0 },
-            { completed: true, stars: 0 },
-            { completed: false, stars: 0 }
-        ]
-    },
-    {
-        title: 'Food',
-        color: LevelGroupColourChoice.Purple,
-        tiles: [
-            { completed: true, stars: 2 },
-            { completed: true, stars: 1 }
-        ]
-    }
-];
+export type LevelGroupColourChoice = typeof LevelGroupColourChoice[keyof typeof LevelGroupColourChoice];
+export type LevelIconChoice = typeof LevelIconChoice[keyof typeof LevelIconChoice];
+
+const sampleCourse: Course = {
+    title: "Test Introduction",
+    level_groups: [
+        {
+            title: 'The basics',
+            color: LevelGroupColourChoice.Green,
+            tiles: [
+                { completed: true, stars: 3, icon: LevelIconChoice.Flashcard },
+                { completed: false, stars: 0, icon: LevelIconChoice.Listening }
+            ]
+        },
+        {
+            title: 'Basics 2',
+            color: LevelGroupColourChoice.Red,
+            tiles: [
+                { completed: true, stars: 3, description: 'hey' },
+                { completed: false, stars: 0 },
+                { completed: true, stars: 0 },
+                { completed: false, stars: 0 }
+            ]
+        },
+        {
+            title: 'Food',
+            color: LevelGroupColourChoice.Purple,
+            tiles: [
+                { completed: true, stars: 2 },
+                { completed: true, stars: 1 }
+            ]
+        }
+    ] as LevelGroup[]
+};
 
 function MainPage() {
     const [colors, setColors] = useState<LevelGroupColour>({
@@ -71,7 +82,7 @@ function MainPage() {
             <div className='mainpage'>
                 <div className='tile-collection'>
                     <div className="tile big full">
-                        <Progress progress={sampleData} colors={colors}/>
+                        <Progress course={sampleCourse} colors={colors}/>
                     </div>
                     <div className="tile">
                         <table className='leaderboards'>

@@ -92,6 +92,7 @@ table.leaderboards tr {
 }
 
 .after-text {
+    position: absolute;
     opacity: 0;
     content: 'hi';
     font-size: var(--body-font);
@@ -120,4 +121,8 @@ table.leaderboards tr {
 
 .level:hover .after-text {
     opacity: 1;
+}
+
+.level .level-icon {
+    width: 70%;
 }

@@ -8,7 +8,7 @@ function Header() {
                 <ul>
                     <li><a href="/">Home</a></li>
                     <li><a href="#">Progress</a></li>
-                    <li><a href="#">Courses</a></li>
+                    <li><a href="#">Practice</a></li>
                     <li><a href="#">Courses</a></li>
                 </ul>
                 <div className="login-container">

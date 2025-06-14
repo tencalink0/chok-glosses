@@ -26,6 +26,11 @@ body {
     color: var(--grey); 
 }
 
+h1.course-title {
+    margin: 2.5% 0;
+    text-align: center;
+}
+
 main {
     margin: 0 10%;
 }
