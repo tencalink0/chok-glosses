@@ -9,10 +9,9 @@ function Header() {
                     <a href='/'><img src={logo}></img></a>
                 </div>
                 <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="#">Progress</a></li>
-                    <li><a href="#">Practice</a></li>
-                    <li><a href="/courses">Courses</a></li>
+                    <a href="#"><li>Practice</li></a>
+                    <a href="/courses"><li>Courses</li></a>
+                    <a href="#"><li>Shop</li></a>
                 </ul>
                 <div className="login-container">
                     <button className="button-green">login</button>

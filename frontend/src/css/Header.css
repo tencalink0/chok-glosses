@@ -31,7 +31,7 @@ header ul {
     align-items: center;
 }
 
-header ul li {
+header ul a {
     width: 100%;
     text-align: center;
     padding: 10px;
@@ -40,16 +40,16 @@ header ul li {
     transition: transform 0.2s ease;
 }
 
-header ul li:hover {
+header ul a:hover {
     transform: scale(1.2);
 }
 
-header ul li a {
+header ul a {
     color: inherit;
     text-decoration: none;
 }
 
-header ul li:hover {
+header ul a:hover {
     transform: scale(1.2);
 }
 

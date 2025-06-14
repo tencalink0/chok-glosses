@@ -1,4 +1,4 @@
-import { sampleCourse } from "./MainPage";'';
+import { sampleCourse } from "./MainPage";
 import type { Course } from "../modules/Progress";
 
 const CourseList: Course[] = [ sampleCourse ];
@@ -15,12 +15,17 @@ function Courses() {
                     <div className="tile medium">
                         <h2>Courses</h2>
                         <ul>
-                            {CourseList.map((course, _) => (
-                                <li className="hover-shift">
-                                    <span className="before-text">{course.emoji ? course.emoji : '▶'}</span>
-                                    {course.title}
-                                </li>
-                            ))}
+                            {CourseList.length > 0 ? (
+                                CourseList.map((course, index) => (
+                                    <li className="hover-shift">
+                                        <span className="before-text">{course.emoji ? course.emoji : '▶'}</span>
+                                        <span id={`course${index}`}>{course.title}</span>
+                                    </li>
+                                ))
+                            ) : (
+                                <li>Hmmm, seems like you have no courses. Consider <a className="green-highlight">uploading</a> one</li>
+                            )
+                            }
                         </ul>
                     </div>
                     <div className="tile full center-content">
