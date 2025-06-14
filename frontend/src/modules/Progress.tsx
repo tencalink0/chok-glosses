@@ -1,4 +1,6 @@
 import type { LevelGroupColourChoice, LevelIconChoice, LevelGroupColour } from '../pages/MainPage'
+import { useNavigate } from 'react-router-dom';
+
 import bookIcon from '../img/icons/icons8-book-100.png';
 import flashcardsIcon from '../img/icons/icons8-flashcards-100.png';
 import speakerIcon from '../img/icons/icons8-speaker-100.png'
@@ -30,6 +32,7 @@ export interface ProgressProps {
 
 const Progress: React.FC<ProgressProps> = ({ course, colors }) => {
     const progress = course.level_groups;
+    const navigate = useNavigate();
 
     const assignColor = (color: LevelGroupColourChoice | undefined) => {
         switch (color) {
@@ -96,6 +99,7 @@ const Progress: React.FC<ProgressProps> = ({ course, colors }) => {
                                 key={tileIndex}
                                 className={className}
                                 style={{ background: tile.completed ? 'var(--green)' : '' }}
+                                onClick={() => navigate(`/${tile.icon ? tile.icon : 'mix'}`)}
                             >
                                 {assignIcon(tile.icon) && (
                                     <img className="level-icon" src={assignIcon(tile.icon)} alt="" />

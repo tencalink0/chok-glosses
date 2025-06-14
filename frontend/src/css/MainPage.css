@@ -39,7 +39,7 @@
 
 .tile.medium { width: 40%; }
 .tile.big { width: 60%; }
-.tile.wide { width: 75%; }
+.tile.full-width { width: 90%; }
 .tile.full {
     padding: 0;
     background: none;

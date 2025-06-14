@@ -1,0 +1,18 @@
+.flashcard-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flashcard {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--blue-light);
+    border-radius: var(--border-radius);
+    aspect-ratio: 1 / 1.25;
+    margin: 2.5%;
+    font-size: var(--heading-font);
+    color: white
+}
