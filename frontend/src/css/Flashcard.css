@@ -14,5 +14,6 @@
     aspect-ratio: 1 / 1.25;
     margin: 2.5%;
     font-size: var(--heading-font);
-    color: white
+    color: white;
+    user-select: none;
 }

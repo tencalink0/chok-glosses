@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../css/Flashcard.css';
 
 export interface Deck {
@@ -33,20 +33,49 @@ export const TestDeck: Deck = {
 
 const Card: React.FC<Flashcard> = ({front, back, help}) => {
     const [shownCard, setShownCard] = useState(front);
-    const { deckId, cardId } = useParams();
+
+    const handleClick = () => {
+        if (shownCard == front) {
+            setShownCard(back);
+        } else {
+            setShownCard(front);
+        }
+    };
 
     return (
         <div className="flashcard-container">
-            <div className="flashcard">
-                {shownCard}{deckId ?? 'none'}{cardId ?? 'none'}
+            <div className="flashcard" onClick={handleClick}>
+                {shownCard}
             </div>
         </div>
     );
 };
 
 const Flashcard = () => {
-    const title = TestDeck.title;
-    const flashcards = TestDeck.flashcards;
+    const [error, setError] = useState<string | null>(null);
+    const [currentDeck, setCurrentDeck] = useState<Deck | undefined>(undefined);
+
+    const [title, setTitle] = useState<string | undefined>(undefined);
+    const [flashcard, setFlashcards] = useState<Flashcard[] | undefined>(undefined);
+    const { deckId, cardId } = useParams();
+
+    useEffect(() => {
+        const currentCourse = localStorage.getItem('currentCourse');
+        if (currentCourse) {
+            let rawCurrentDeck = localStorage.getItem(`|${currentCourse}`);
+            if (rawCurrentDeck) {
+                try {
+                    setCurrentDeck(JSON.parse(rawCurrentDeck));
+                } catch {
+                    setError('Failed to parse deck');
+                }
+            } else {
+                setError("Course doesn't exist");
+            }
+        }
+        setTitle(TestDeck.title);
+        setFlashcards(TestDeck.flashcards);
+    }, []);
 
     return (
         <>
@@ -54,6 +83,10 @@ const Flashcard = () => {
                 <div className='tile-collection'>
                     <div className="tile full-width">
                         <h2>{title}</h2>
+                        {
+                            
+                            <>{deckId ?? 'none'}{cardId ?? 'none'}</>
+                        }
                         <Card front={'hi'} back={'bye'}></Card>
                     </div>
                 </div>
