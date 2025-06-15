@@ -34,7 +34,7 @@ export const sampleCourse: Course = {
             title: 'The basics',
             color: LevelGroupColourChoice.Green,
             tiles: [
-                { completed: true, stars: 3, icon: LevelIconChoice.Flashcard },
+                { completed: true, stars: 3, icon: LevelIconChoice.Flashcard, description: 'Try me' },
                 { completed: false, stars: 0, icon: LevelIconChoice.Listening }
             ]
         },

@@ -99,7 +99,7 @@ const Progress: React.FC<ProgressProps> = ({ course, colors }) => {
                                 key={tileIndex}
                                 className={className}
                                 style={{ background: tile.completed ? 'var(--green)' : '' }}
-                                onClick={() => navigate(`/${tile.icon ? tile.icon : 'mix'}`)}
+                                onClick={() => navigate(`/${tile.icon ? tile.icon : 'mix'}/${tileIndex}/1`)}
                             >
                                 {assignIcon(tile.icon) && (
                                     <img className="level-icon" src={assignIcon(tile.icon)} alt="" />

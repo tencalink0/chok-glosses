@@ -1,3 +1,4 @@
+import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import '../css/Flashcard.css';
 
@@ -32,11 +33,12 @@ export const TestDeck: Deck = {
 
 const Card: React.FC<Flashcard> = ({front, back, help}) => {
     const [shownCard, setShownCard] = useState(front);
+    const { deckId, cardId } = useParams();
 
     return (
         <div className="flashcard-container">
             <div className="flashcard">
-                {shownCard}
+                {shownCard}{deckId ?? 'none'}{cardId ?? 'none'}
             </div>
         </div>
     );
