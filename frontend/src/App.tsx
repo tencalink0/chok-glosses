@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import MainPage from './pages/MainPage';
 import Courses from './pages/Courses';
-import Flashcard from './pages/Flashcard';
+import Flashcards from './pages/Flashcards';
 
 import './App.css';
 
@@ -17,9 +17,12 @@ function App() {
                                 <Routes>
                                     <Route path="/" element={<MainPage />} />
                                     <Route path="/courses" element={<Courses />} />
-                                    <Route path="/flashcard/:deckId/:cardId" element={<Flashcard />} />
-                                    <Route path="/flashcard/:deckId" element={<Flashcard />} />
-                                    <Route path="/flashcard" element={<Flashcard />} />
+
+                                    <Route path="/flashcard/:levelGroupId/:levelId/:cardId" element={<Flashcards />} />
+                                    <Route path="/flashcard/:levelGroupId/:levelId" element={<Flashcards />} />
+                                    <Route path="/flashcard/:levelGroupId" element={<Flashcards />} />
+                                    <Route path="/flashcard" element={<Flashcards />} />
+                                    
                                 </Routes>
                         </main>
                     <Footer />

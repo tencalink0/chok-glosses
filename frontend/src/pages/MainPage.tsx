@@ -1,31 +1,11 @@
 import '../css/MainPage.css'
 import Progress from '../modules/Progress';
-import type { LevelGroup, Course } from '../modules/Progress';
+
+import { ContentChoice, LevelGroupColourChoice } from '../modules/Enums';
+import type { LevelGroupColour, LevelGroup, Course, Level} from '../modules/Types';
+
 import { useState, useEffect} from 'react';
-
-export interface LevelGroupColour {
-    Red: string;
-    Green: string;
-    Purple: string;
-    Orange: string;
-};
-
-export const LevelGroupColourChoice = {
-    Red: 'red', 
-    Green: 'green',
-    Purple: 'purple', 
-    Orange: 'oranges'
-};
-
-export const LevelIconChoice = {
-    Flashcard: 'flashcard',
-    Reading: 'reading',
-    Writing: 'writing',
-    Listening: 'listening'
-} 
-
-export type LevelGroupColourChoice = typeof LevelGroupColourChoice[keyof typeof LevelGroupColourChoice];
-export type LevelIconChoice = typeof LevelIconChoice[keyof typeof LevelIconChoice];
+import { TestDeckContentType } from './Flashcards';
 
 export const sampleCourse: Course = {
     title: "Test Introduction",
@@ -34,26 +14,26 @@ export const sampleCourse: Course = {
             title: 'The basics',
             color: LevelGroupColourChoice.Green,
             tiles: [
-                { completed: true, stars: 3, icon: LevelIconChoice.Flashcard, description: 'Try me' },
-                { completed: false, stars: 0, icon: LevelIconChoice.Listening }
+                { completed: true, stars: 3, description: 'Try me', content: TestDeckContentType } satisfies Level,
+                { completed: false, stars: 0, content: TestDeckContentType} satisfies Level
             ]
         },
         {
             title: 'Basics 2',
             color: LevelGroupColourChoice.Red,
             tiles: [
-                { completed: true, stars: 3, description: 'hey' },
-                { completed: false, stars: 0 },
-                { completed: true, stars: 0 },
-                { completed: false, stars: 0 }
+                { completed: true, stars: 3, description: 'hey', content: { description: ContentChoice.ComingSoon, content: null }} satisfies Level,
+                { completed: false, stars: 0, content: { description: ContentChoice.ComingSoon, content: null }} satisfies Level,
+                { completed: true, stars: 0, content: { description: ContentChoice.ComingSoon, content: null }} satisfies Level,
+                { completed: false, stars: 0, content: { description: ContentChoice.ComingSoon, content: null }} satisfies Level
             ]
         },
         {
             title: 'Food',
             color: LevelGroupColourChoice.Purple,
             tiles: [
-                { completed: true, stars: 2 },
-                { completed: true, stars: 1 }
+                { completed: true, stars: 2, content: { description: ContentChoice.ComingSoon, content: null }} satisfies Level,
+                { completed: true, stars: 1, content: { description: ContentChoice.ComingSoon, content: null }} satisfies Level
             ]
         }
     ] as LevelGroup[]

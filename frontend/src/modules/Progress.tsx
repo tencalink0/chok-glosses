@@ -1,4 +1,5 @@
-import type { LevelGroupColourChoice, LevelIconChoice, LevelGroupColour } from '../pages/MainPage'
+import { LevelGroupColourChoice, ContentChoice} from './Enums';
+import type { LevelGroupColour, Course, LevelGroup, Level } from './Types';
 import { useNavigate } from 'react-router-dom';
 
 import bookIcon from '../img/icons/icons8-book-100.png';
@@ -6,28 +7,56 @@ import flashcardsIcon from '../img/icons/icons8-flashcards-100.png';
 import speakerIcon from '../img/icons/icons8-speaker-100.png'
 import writingIcon from '../img/icons/icons8-writing-100.png';
 
-export interface Level {
-    completed?: boolean;
-    stars?: number;
-    description?: string;
-    icon?: LevelIconChoice;
-}
-
-export interface LevelGroup {
-    title: string;
-    tiles: Level[];
-    color?: LevelGroupColourChoice;
-}
-
-export interface Course {
-    title: string;
-    emoji?: string;
-    level_groups: LevelGroup[];
-}
-
 export interface ProgressProps {
     course: Course;
     colors: LevelGroupColour;
+}
+
+export function getCurrentCourse(): Course | string {
+    const currentCourseTitle = localStorage.getItem('currentCourse');
+    if (currentCourseTitle) {
+        let rawCurrentCourse = localStorage.getItem(`|${currentCourseTitle}`);
+        if (rawCurrentCourse) {
+            try {
+                const json = JSON.parse(rawCurrentCourse) as Course;
+                return json;
+            } catch {
+                return 'Failed to parse deck';
+            }
+        } else {
+            return "Deck doesn't exist";
+        }
+    } else {
+        return "Course doesn't exist";
+    }
+}
+
+export function getLevelGroup(levelGroupId: number): LevelGroup | string {
+    const errCurrentCourse = getCurrentCourse();
+    if (typeof errCurrentCourse === 'string') {
+        return errCurrentCourse;
+    } else {
+        const currentLevelGroups = errCurrentCourse.level_groups;
+        if (currentLevelGroups.length >= levelGroupId) {
+            return currentLevelGroups[levelGroupId + 1];
+        } else {
+            return "LevelGroup doesn't exist";
+        }
+    }
+}
+
+export function getLevel(levelGroupId: number, levelId: number): Level | string {
+    const errCurrentCourse = getLevelGroup(levelGroupId);
+    if (typeof errCurrentCourse === 'string') {
+        return errCurrentCourse;
+    } else {
+        const currentLevels = errCurrentCourse.tiles;
+        if (currentLevels.length >= levelId) {
+            return currentLevels[levelId + 1];
+        } else {
+            return "Deck doesn't exist";
+        }
+    }
 }
 
 const Progress: React.FC<ProgressProps> = ({ course, colors }) => {
@@ -49,15 +78,15 @@ const Progress: React.FC<ProgressProps> = ({ course, colors }) => {
         }
     };
 
-    const assignIcon = (icon?: LevelIconChoice): string | undefined => {
-        switch (icon) {
-            case 'flashcard': 
+    const assignIcon = (levelTypeDescription: ContentChoice): string | undefined => {
+        switch (levelTypeDescription) {
+            case ContentChoice.Flashcard: 
                 return flashcardsIcon;
-            case 'reading': 
+            case ContentChoice.Reading: 
                 return bookIcon;
-            case 'writing': 
+            case ContentChoice.Writing: 
                 return writingIcon;
-            case 'listening': 
+            case ContentChoice.Listening: 
                 return speakerIcon;
             default:
                 return undefined;
@@ -93,16 +122,16 @@ const Progress: React.FC<ProgressProps> = ({ course, colors }) => {
                         } else if (globalTileIndex % 8 === 7) {
                             className += ' left';
                         }
-
+                        
                         const tileElement = (
                             <div
                                 key={tileIndex}
                                 className={className}
                                 style={{ background: tile.completed ? 'var(--green)' : '' }}
-                                onClick={() => navigate(`/${tile.icon ? tile.icon : 'mix'}/${tileIndex}/1`)}
+                                onClick={() => navigate(`/${tile.content.description ? tile.content.description : 'mix'}/${groupIndex}/${tileIndex}/1`)}
                             >
-                                {assignIcon(tile.icon) && (
-                                    <img className="level-icon" src={assignIcon(tile.icon)} alt="" />
+                                {assignIcon(tile.content.description) && (
+                                    <img className="level-icon" src={assignIcon(tile.content.description)} alt="" />
                                 )}
                                 {tile.description ? <span className="after-text">{tile.description}</span> : ''}
                             </div>

@@ -1,8 +1,7 @@
 import { sampleCourse } from "./MainPage";
-import type { Course } from "../modules/Progress";
+import type { Course } from "../modules/Types";
 
 const CourseList: Course[] = [ sampleCourse ];
-
 
 function Courses() {
     return (
