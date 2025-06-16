@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import '../css/Flashcard.css';
-import { getLevel } from '../modules/Progress';
+import { getLevel } from '../modules/LocalStorage';
 
 import { ContentChoice } from '../modules/Enums';
 import type { ContentType, Deck, Flashcard } from '../modules/Types';

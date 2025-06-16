@@ -1,5 +1,6 @@
 import '../css/MainPage.css'
-import Progress, { getCurrentCourse } from '../modules/Progress';
+import Progress from '../modules/Progress';
+import { getCurrentCourse } from '../modules/LocalStorage';
 
 import { ContentChoice, LevelGroupColourChoice } from '../modules/Enums';
 import type { LevelGroupColour, LevelGroup, Course, Level} from '../modules/Types';

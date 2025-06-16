@@ -12,63 +12,6 @@ export interface ProgressProps {
     colors: LevelGroupColour;
 }
 
-export function getAllCourses(): Course[] | string {
-    const courses = localStorage.getItem('courses');
-    if (courses) {
-        try {
-            const json: Course[] = JSON.parse(courses);
-            return json;
-        } catch {
-            return 'Failed to parse JSON data'
-        }
-    } else {
-        return 'No courses available';
-    }
-}
-
-export function getCurrentCourse(): Course | string {
-    const currentCourseTitle = localStorage.getItem('currentCourse');
-    if (currentCourseTitle) {
-        const allCourses = getAllCourses();
-        if (typeof allCourses === 'string') {
-            return allCourses;
-        } else {
-            const foundCourse = allCourses.find(item => item.title === currentCourseTitle);
-            return foundCourse ?? "Course doesn't exist";
-        }
-    } else {
-        return "No course selected";
-    }
-}
-
-export function getLevelGroup(levelGroupId: number): LevelGroup | string {
-    const errCurrentCourse = getCurrentCourse();
-    if (typeof errCurrentCourse === 'string') {
-        return errCurrentCourse;
-    } else {
-        const currentLevelGroups = errCurrentCourse.level_groups;
-        if (currentLevelGroups.length >= levelGroupId) {
-            return currentLevelGroups[levelGroupId + 1];
-        } else {
-            return "LevelGroup doesn't exist";
-        }
-    }
-}
-
-export function getLevel(levelGroupId: number, levelId: number): Level | string {
-    const errCurrentCourse = getLevelGroup(levelGroupId);
-    if (typeof errCurrentCourse === 'string') {
-        return errCurrentCourse;
-    } else {
-        const currentLevels = errCurrentCourse.tiles;
-        if (currentLevels.length >= levelId) {
-            return currentLevels[levelId + 1];
-        } else {
-            return "Deck doesn't exist";
-        }
-    }
-}
-
 const Progress: React.FC<ProgressProps> = ({ course, colors }) => {
     const progress = course.level_groups;
     const navigate = useNavigate();

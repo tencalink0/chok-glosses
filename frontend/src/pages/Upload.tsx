@@ -1,5 +1,7 @@
-import CourseCreator from "../modules/CourseCreator";
+import CourseCreator, { parseCourse } from "../modules/CourseCreator";
 import { useState, useRef } from "react";
+import { setCourse } from '../modules/LocalStorage'
+import type { Course } from '../modules/Types'
 
 type ConfirmProps = {
     successFunc: () => void;
@@ -25,10 +27,9 @@ const Confirm = ({ successFunc, hideWarn }: ConfirmProps) => {
 };
 
 function Upload() {
-    const [ msgContainer, setMsgContainer ] = useState<HTMLElement | null>(null);
     const [ courseTitle, setCourseTitle ] = useState<string | null>(null);
 
-    const [ courseUpload, setCourseUpload ] = useState<string | undefined>(undefined);
+    const [ courseUpload, setCourseUpload ] = useState<Course | undefined>(undefined);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [ dragging, setDragging ] = useState(false);
 
@@ -59,9 +60,19 @@ function Upload() {
         reader.onload = () => {
             if (reader.result) {
                 if (typeof reader.result === 'string') {
-                    setCourseUpload(reader.result)
+                    const errCourseParse = parseCourse(reader.result);
+                    if (typeof errCourseParse === 'string') {
+                        return; //TODO: impl proper error handling
+                    } else {
+                        setCourseUpload(errCourseParse);
+                    }
                 } else {
-                    setCourseUpload(arrBuffToString(reader.result));
+                    const errCourseParse = parseCourse(arrBuffToString(reader.result));
+                    if (typeof errCourseParse === 'string') {
+                        return; //TODO: impl proper error handling
+                    } else {
+                        setCourseUpload(errCourseParse);
+                    }
                 }
                 confirmUpload();
             }
@@ -75,7 +86,8 @@ function Upload() {
     }
 
     const pushToLocalStorage = () => {
-        //TODO: impl
+        if (!courseUpload) return;
+        setCourse(courseUpload);
     };
 
     const clearFileInput = () => {
@@ -106,7 +118,6 @@ function Upload() {
                 <div className="tile">
                     <h2>Warning</h2>
                     <p>Are you sure you want to upload <span style={{color: 'var(--blue)'}}>{courseTitle}</span>?</p>
-                    {courseUpload}
                     <Confirm hideWarn={hideWarn} successFunc={pushToLocalStorage}/>
                 </div>
             </div>

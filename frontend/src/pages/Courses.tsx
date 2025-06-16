@@ -1,10 +1,8 @@
 import type { Course } from "../modules/Types";
 import { useEffect, useState } from "react";
-import { getAllCourses } from "../modules/Progress";
-import { useNavigate } from 'react-router-dom';
+import { getAllCourses } from "../modules/LocalStorage";
 
 function Courses() {
-    const navigate = useNavigate();
     const [ error, setError ] = useState<string | null>(null);
     const [ courses, setCourses ] = useState<Course[] | undefined>(undefined);
 
@@ -41,7 +39,7 @@ function Courses() {
                         </ul>
                     </div>
                     <div className="tile full center-content">
-                        <button className="button-green" onClick={() => navigate('/upload')}>Upload</button>
+                        <button className="button-green" onClick={() => window.location.href = '/upload'}>Upload</button>
                     </div>
                 </div>
             </div>

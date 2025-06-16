@@ -1,3 +1,83 @@
 {
-    "hi": "bye"
+  "title": "Test Introduction",
+  "level_groups": [
+    {
+      "title": "The basics",
+      "color": "green",
+      "tiles": [
+        {
+          "completed": true,
+          "stars": 3,
+          "description": "Try me",
+          "content": "TestDeckContentType"
+        },
+        {
+          "completed": false,
+          "stars": 0,
+          "content": "TestDeckContentType"
+        }
+      ]
+    },
+    {
+      "title": "Basics 2",
+      "color": "red",
+      "tiles": [
+        {
+          "completed": true,
+          "stars": 3,
+          "description": "hey",
+          "content": {
+            "description": "coming_soon",
+            "content": null
+          }
+        },
+        {
+          "completed": false,
+          "stars": 0,
+          "content": {
+            "description": "coming_soon",
+            "content": null
+          }
+        },
+        {
+          "completed": true,
+          "stars": 0,
+          "content": {
+            "description": "coming_soon",
+            "content": null
+          }
+        },
+        {
+          "completed": false,
+          "stars": 0,
+          "content": {
+            "description": "coming_soon",
+            "content": null
+          }
+        }
+      ]
+    },
+    {
+      "title": "Food",
+      "color": "purple",
+      "tiles": [
+        {
+          "completed": true,
+          "stars": 2,
+          "content": {
+            "description": "coming_soon",
+            "content": null
+          }
+        },
+        {
+          "completed": true,
+          "stars": 1,
+          "content": {
+            "description": "coming_soon",
+            "content": null
+          }
+        }
+      ]
+    }
+  ]
 }
