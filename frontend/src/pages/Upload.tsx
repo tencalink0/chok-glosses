@@ -79,7 +79,10 @@ function Upload() {
     };
 
     const clearFileInput = () => {
-        
+        const input = document.getElementById('fileUpload') as HTMLInputElement;
+        if (!input) return;
+
+        input.value = '';
     };
 
     const warnUser = () => {
@@ -90,6 +93,7 @@ function Upload() {
     };
 
     const hideWarn = () => {
+        clearFileInput();
         const messageContainer = document.getElementById('message-container');
         if (!messageContainer) return;
 
@@ -115,7 +119,7 @@ function Upload() {
                     <div className="tile half-width">
                         <h2>Upload:</h2>
                         {/* lbsv: language bar separated values */}
-                        <input className="file-input" type="file" onChange={fileUpload} accept=".json,.lbsv"></input>
+                        <input className="file-input" type="file" onChange={fileUpload} accept=".json,.lbsv" id="fileUpload"></input>
                         <div
                             className={`drop-zone ${dragging ? 'dragging' : ''}`}
                             onDragOver={(e) => {
