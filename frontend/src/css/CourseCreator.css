@@ -1,0 +1,35 @@
+.course-creator {
+    margin: 2.5%;
+    padding: 2.5%;
+    background-color: var(--grey);
+    border-radius: var(--border-radius);
+}
+
+.file-input {
+    margin: 2.5%;
+}
+
+.file-input::file-selector-button {
+    font-size: var(--header-login-fontsize);
+    color: white;
+    background-color: var(--green);
+    padding: 10px 18px;
+    border: none;
+    border-radius: 10px;
+}
+
+.drop-zone {
+    margin-top: 2.5%;
+    padding: 30px;
+    border: 2px dashed var(--green);
+    border-radius: var(--border-radius);
+    background-color: #f9f9f9;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.drop-zone.dragging {
+    background-color: var(--green-light);
+    border-color: var(--blue);
+}

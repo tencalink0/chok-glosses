@@ -5,6 +5,8 @@
     --green: #0ac890;
     --green-light: #6aebb7;
 
+    --red: #df4153;
+
     --grey: #eee; 
     --grey-dark: #888; 
     background-color: var(--grey);
@@ -20,6 +22,10 @@
 * {
     margin: 0;
     padding: 0;
+}
+
+html, body, #root {
+    height: 100%;
 }
 
 body {
@@ -66,3 +72,34 @@ a.green-highlight {
 a.green-highlight:visited { color: var(--green); }
 
 a.green-highlight:hover { color: var(--green-light); text-decoration: underline; }
+
+#message-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+}
+
+.message-confirm {
+    background-color: var(--green);
+}
+
+.message-cancel {
+    background-color: var(--red);
+}
+
+.message-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    margin: 2.5%;
+    gap: 2.5%;
+}

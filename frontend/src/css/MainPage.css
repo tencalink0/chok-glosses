@@ -39,12 +39,15 @@
 
 .tile.medium { width: 40%; }
 .tile.big { width: 60%; }
+.tile.half-width { width: 40%; }
 .tile.full-width { width: 90%; }
+
 .tile.full {
     padding: 0;
     background: none;
     font-size: var(--heading-font);
 }
+
 .tile.center-content {
     align-items: center;
     justify-content: center;
@@ -56,7 +59,13 @@
     text-align: center;
 }
 
-.tile li{
+.tile p {
+    padding: 2.5%;
+    font-size: 20px;
+    text-align: center;
+}
+
+.tile li {
     padding: 5px;
     transition: transform 0.3s ease;
 }

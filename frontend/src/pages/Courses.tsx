@@ -1,8 +1,10 @@
 import type { Course } from "../modules/Types";
 import { useEffect, useState } from "react";
 import { getAllCourses } from "../modules/Progress";
+import { useNavigate } from 'react-router-dom';
 
 function Courses() {
+    const navigate = useNavigate();
     const [ error, setError ] = useState<string | null>(null);
     const [ courses, setCourses ] = useState<Course[] | undefined>(undefined);
 
@@ -20,7 +22,7 @@ function Courses() {
             <div className="mainpage">
                 <div className='tile-collection'>
                     <div className="tile full">
-
+                        
                     </div>
                     <div className="tile medium">
                         <h2>Courses</h2>
@@ -33,13 +35,13 @@ function Courses() {
                                     </li>
                                 ))
                             ) : (
-                                <li>Hmmm, seems like you have no courses. Consider <a className="green-highlight">uploading</a> one</li>
+                                <li>Hmmm, seems like you have no courses. Consider <a className="green-highlight" href="/upload">uploading</a> one</li>
                             )
                             }
                         </ul>
                     </div>
                     <div className="tile full center-content">
-                        <button className="button-green">Upload</button>
+                        <button className="button-green" onClick={() => navigate('/upload')}>Upload</button>
                     </div>
                 </div>
             </div>

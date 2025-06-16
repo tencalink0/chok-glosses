@@ -73,7 +73,7 @@ const Flashcards = () => {
     const { levelGroupId, levelId, cardId } = useParams();
 
     useEffect(() => {
-        if (levelGroupId && levelId) {
+        if (levelGroupId && levelId && flashcardId) {
             try {
                 const [levelGroupIdNum, levelIdNum] = [parseInt(levelGroupId), parseInt(levelId)];
                 let errCurrentDeck = getDeck(levelGroupIdNum, levelIdNum);
@@ -86,6 +86,8 @@ const Flashcards = () => {
             } catch {
                 console.log('Failed to parse url path');
             }
+        } else {
+            setError('Broken url sub-path');
         }
 
         setFlashcardId(1);
