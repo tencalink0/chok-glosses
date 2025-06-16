@@ -12,22 +12,32 @@ export interface ProgressProps {
     colors: LevelGroupColour;
 }
 
+export function getAllCourses(): Course[] | string {
+    const courses = localStorage.getItem('courses');
+    if (courses) {
+        try {
+            const json: Course[] = JSON.parse(courses);
+            return json;
+        } catch {
+            return 'Failed to parse JSON data'
+        }
+    } else {
+        return 'No courses available';
+    }
+}
+
 export function getCurrentCourse(): Course | string {
     const currentCourseTitle = localStorage.getItem('currentCourse');
     if (currentCourseTitle) {
-        let rawCurrentCourse = localStorage.getItem(`|${currentCourseTitle}`);
-        if (rawCurrentCourse) {
-            try {
-                const json = JSON.parse(rawCurrentCourse) as Course;
-                return json;
-            } catch {
-                return 'Failed to parse deck';
-            }
+        const allCourses = getAllCourses();
+        if (typeof allCourses === 'string') {
+            return allCourses;
         } else {
-            return "Deck doesn't exist";
+            const foundCourse = allCourses.find(item => item.title === currentCourseTitle);
+            return foundCourse ?? "Course doesn't exist";
         }
     } else {
-        return "Course doesn't exist";
+        return "No course selected";
     }
 }
 
@@ -128,7 +138,7 @@ const Progress: React.FC<ProgressProps> = ({ course, colors }) => {
                                 key={tileIndex}
                                 className={className}
                                 style={{ background: tile.completed ? 'var(--green)' : '' }}
-                                onClick={() => navigate(`/${tile.content.description ? tile.content.description : 'mix'}/${groupIndex}/${tileIndex}/1`)}
+                                onClick={() => navigate(`/${tile.content.description ? tile.content.description : 'mix'}/${groupIndex + 1}/${tileIndex + 1}/1`)}
                             >
                                 {assignIcon(tile.content.description) && (
                                     <img className="level-icon" src={assignIcon(tile.content.description)} alt="" />

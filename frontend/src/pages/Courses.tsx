@@ -1,9 +1,20 @@
-import { sampleCourse } from "./MainPage";
 import type { Course } from "../modules/Types";
-
-const CourseList: Course[] = [ sampleCourse ];
+import { useEffect, useState } from "react";
+import { getAllCourses } from "../modules/Progress";
 
 function Courses() {
+    const [ error, setError ] = useState<string | null>(null);
+    const [ courses, setCourses ] = useState<Course[] | undefined>(undefined);
+
+    useEffect(() => {
+        const allCourses = getAllCourses();
+        if (typeof allCourses === 'string') {
+            setError(allCourses);
+        } else {
+            setCourses(allCourses);
+        }
+    }, []);
+
     return (
         <>
             <div className="mainpage">
@@ -14,8 +25,8 @@ function Courses() {
                     <div className="tile medium">
                         <h2>Courses</h2>
                         <ul>
-                            {CourseList.length > 0 ? (
-                                CourseList.map((course, index) => (
+                            {courses && courses.length > 0 ? (
+                                courses.map((course, index) => (
                                     <li className="hover-shift">
                                         <span className="before-text">{course.emoji ? course.emoji : '▶'}</span>
                                         <span id={`course${index}`}>{course.title}</span>

@@ -65,11 +65,11 @@ const Card: React.FC<Flashcard> = ({front, back, help}) => {
 };
 
 const Flashcards = () => {
-    const [error, setError] = useState<string | null>(null);
-    const [currentDeck, setCurrentDeck] = useState<Deck | undefined>(undefined);
+    const [ error, setError ] = useState<string | null>(null);
 
-    const [title, setTitle] = useState<string | undefined>(undefined);
-    const [flashcard, setFlashcards] = useState<Flashcard[] | undefined>(undefined);
+    const [ title, setTitle ] = useState<string | undefined>(undefined);
+    const [ deckFlashcards, setDeckFlashcards ] = useState<Flashcard[] | undefined>(undefined);
+    const [ flashcardId, setFlashcardId ] = useState<number>(1);
     const { levelGroupId, levelId, cardId } = useParams();
 
     useEffect(() => {
@@ -80,15 +80,15 @@ const Flashcards = () => {
                 if (typeof errCurrentDeck === 'string') {
                     setError(errCurrentDeck);
                 } else {
-                    setCurrentDeck(errCurrentDeck);
+                    setTitle(errCurrentDeck.title);
+                    setDeckFlashcards(errCurrentDeck.flashcards);
                 }
             } catch {
                 console.log('Failed to parse url path');
             }
         }
 
-        setTitle(TestDeck.title);
-        setFlashcards(TestDeck.flashcards);
+        setFlashcardId(1);
     }, []);
 
     return (
@@ -96,12 +96,17 @@ const Flashcards = () => {
             <div className='mainpage'>
                 <div className='tile-collection'>
                     <div className="tile full-width">
-                        <h2>{title}</h2>
                         {
-                            
-                            <>{levelGroupId ?? 'none'}{levelId ?? 'none'}{cardId ?? 'none'}</>
+                            error === null && deckFlashcards && flashcardId ? (
+                                <>
+                                    <h2>{title}</h2>
+                                    {levelGroupId ?? 'none'}{levelId ?? 'none'}{cardId ?? 'none'}
+                                    <Card front={deckFlashcards[flashcardId].front} back={deckFlashcards[flashcardId].back}></Card>
+                                </>
+                            ) : (
+                                <h2>Error: {error}</h2>
+                            )
                         }
-                        <Card front={'hi'} back={'bye'}></Card>
                     </div>
                 </div>
             </div>
