@@ -45,6 +45,22 @@ export function getDeck(levelGroupId: number, deckId: number): Deck | string {
     }
 }
 
+const PrevCardBtn: React.FC<{prevCard: () => void}> = ({prevCard}) => {
+    return (
+        <>
+            <button onClick={prevCard} className='button-green'>◀</button>
+        </>
+    );
+};
+
+const NextCardBtn: React.FC<{nextCard: () => void}> = ({nextCard}) => {
+    return (
+        <>
+            <button onClick={nextCard} className='button-green'>▶</button>
+        </>
+    );
+};
+
 const Card: React.FC<Flashcard> = ({front, back, help}) => {
     const [shownCard, setShownCard] = useState(front);
 
@@ -59,7 +75,7 @@ const Card: React.FC<Flashcard> = ({front, back, help}) => {
     return (
         <div className="flashcard-container">
             <div className="flashcard" onClick={handleClick}>
-                {shownCard}
+                <div className="flashcard-content">{shownCard}</div>
             </div>
         </div>
     );
@@ -71,6 +87,7 @@ const Flashcards = () => {
     const [ title, setTitle ] = useState<string | undefined>(undefined);
     const [ deckFlashcards, setDeckFlashcards ] = useState<Flashcard[] | undefined>(undefined);
     const [ flashcardId, setFlashcardId ] = useState<number>(1);
+    const [ cardsTotal, setCardsTotal ] = useState<number>(1);
     const { levelGroupId, levelId, cardId } = useParams();
 
     useEffect(() => {
@@ -93,6 +110,7 @@ const Flashcards = () => {
             } else {
                 setTitle(errCurrentDeck.title);
                 setDeckFlashcards(errCurrentDeck.flashcards);
+                setCardsTotal(errCurrentDeck.flashcards.length);
             }
         } else {
             setError('Broken url sub-path');
@@ -100,6 +118,23 @@ const Flashcards = () => {
 
         setFlashcardId(1);
     }, []);
+
+    const nextCard = () => {
+        if (flashcardId >= cardsTotal) {
+            setFlashcardId(1);
+        } else {
+            setFlashcardId(flashcardId + 1);
+        }
+        console.log("here!");
+    }
+
+    const prevCard = () => {
+        if (flashcardId <= 1) {
+            setFlashcardId(cardsTotal);
+        } else {
+            setFlashcardId(flashcardId - 1);
+        }
+    }
 
     return (
         <>
@@ -110,7 +145,15 @@ const Flashcards = () => {
                             error === null && deckFlashcards && flashcardId ? (
                                 <>
                                     <h2>{title}</h2>
-                                    <Card front={deckFlashcards[flashcardId-1].front} back={deckFlashcards[flashcardId-1].back}></Card>
+                                    <div className='flashcard-full'>
+                                        <PrevCardBtn prevCard={prevCard} />
+                                        <Card 
+                                            key={flashcardId}
+                                            front={deckFlashcards[flashcardId-1].front} 
+                                            back={deckFlashcards[flashcardId-1].back}
+                                        ></Card>
+                                        <NextCardBtn nextCard={nextCard} />
+                                    </div>
                                 </>
                             ) : (
                                 <h2>Error: {error}</h2>

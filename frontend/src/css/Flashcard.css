@@ -4,16 +4,40 @@
     justify-content: center;
 }
 
-.flashcard {
-    width: 30%;
+.flashcard-full {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 15%;
+    padding: 2rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.flashcard {
+    flex: 1;
+    max-width: 500px;
+    aspect-ratio: 1 / 1.25;
     background-color: var(--blue-light);
     border-radius: var(--border-radius);
-    aspect-ratio: 1 / 1.25;
-    margin: 2.5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: var(--heading-font);
     color: white;
     user-select: none;
+
+    overflow: hidden;
+    padding: 1rem;
+}
+
+.flashcard-content {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
 }
