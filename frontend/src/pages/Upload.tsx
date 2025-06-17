@@ -1,4 +1,4 @@
-import CourseCreator, { parseCourse } from "../modules/CourseCreator";
+import CourseCreatorSelect, { parseCourse } from "../modules/CourseCreator";
 import { useState, useRef } from "react";
 import { setCourse } from '../modules/LocalStorage'
 import type { Course } from '../modules/Types'
@@ -62,6 +62,7 @@ function Upload() {
                 if (typeof reader.result === 'string') {
                     const errCourseParse = parseCourse(reader.result);
                     if (typeof errCourseParse === 'string') {
+                        window.alert(errCourseParse);
                         return; //TODO: impl proper error handling
                     } else {
                         setCourseUpload(errCourseParse);
@@ -69,6 +70,7 @@ function Upload() {
                 } else {
                     const errCourseParse = parseCourse(arrBuffToString(reader.result));
                     if (typeof errCourseParse === 'string') {
+                        window.alert(errCourseParse);
                         return; //TODO: impl proper error handling
                     } else {
                         setCourseUpload(errCourseParse);
@@ -81,13 +83,19 @@ function Upload() {
     };
 
     const confirmUpload = () => {
-        setCourseTitle('test'); //TODO: get course and write actual title
+        setCourseTitle(courseUpload?.title || 'Untitled');
         warnUser();
     }
 
     const pushToLocalStorage = () => {
         if (!courseUpload) return;
-        setCourse(courseUpload);
+        const courseState = setCourse(courseUpload);
+        if (typeof courseState === 'string') {
+            window.alert(`Error: ${courseState}`);
+            return; //TODO: impl proper error handling
+        } else  {
+            window.alert('Success');
+        }
     };
 
     const clearFileInput = () => {
@@ -117,7 +125,7 @@ function Upload() {
             <div id="message-container">
                 <div className="tile">
                     <h2>Warning</h2>
-                    <p>Are you sure you want to upload <span style={{color: 'var(--blue)'}}>{courseTitle}</span>?</p>
+                    <p className="text-small">Are you sure you want to upload <span style={{color: 'var(--blue)'}}>{courseTitle}</span>?</p>
                     <Confirm hideWarn={hideWarn} successFunc={pushToLocalStorage}/>
                 </div>
             </div>
@@ -125,7 +133,7 @@ function Upload() {
                 <div className="tile-collection">
                     <div className="tile half-width">
                         <h2>Create your own course:</h2>
-                        <CourseCreator />
+                        <CourseCreatorSelect />
                     </div>
                     <div className="tile half-width">
                         <h2>Upload:</h2>

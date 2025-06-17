@@ -10,7 +10,7 @@ export function parseCourse(strCourse: string): Course | string {
     }
 }
 
-function CourseCreator() {
+function CourseCreatorSelect() {
     return (
         <>  
             <div className="course-creator" id='courseCreator'>
@@ -20,4 +20,4 @@ function CourseCreator() {
     );
 }
 
-export default CourseCreator;
+export default CourseCreatorSelect;

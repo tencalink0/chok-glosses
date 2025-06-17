@@ -14,6 +14,14 @@ export function getAllCourses(): Course[] | string {
     }
 }
 
+export function getCurrentCourseTitle() {
+    return localStorage.getItem('currentCourse');
+}
+
+export function setCurrentCourseTitle(title: string) {
+    localStorage.setItem('currentCourse', title);
+}
+
 export function getCurrentCourse(): Course | string {
     const currentCourseTitle = localStorage.getItem('currentCourse');
     if (currentCourseTitle) {
@@ -59,10 +67,14 @@ export function getLevel(levelGroupId: number, levelId: number): Level | string 
 
 export function setCourse(course: Course): string | null {
     let errAllCourses = getAllCourses();
-    if (typeof errAllCourses === 'string') return errAllCourses;
-
-    errAllCourses.push(course);
-    localStorage.setItem('currentCourse', course.title);
-    localStorage.setItem('courses', JSON.stringify(errAllCourses));
-    return null;
+    if (typeof errAllCourses === 'string') {
+        localStorage.setItem('currentCourse', course.title);
+        localStorage.setItem('courses', JSON.stringify([course]));
+        return null;
+    } else {
+        errAllCourses.push(course);
+        localStorage.setItem('currentCourse', course.title);
+        localStorage.setItem('courses', JSON.stringify(errAllCourses));
+        return null;
+    }
 }
