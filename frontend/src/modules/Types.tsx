@@ -39,5 +39,6 @@ export type Deck = {
 export type Flashcard = {
     front: string,
     back: string,
-    help?: string
+    help?: string,
+    strength: number
 }

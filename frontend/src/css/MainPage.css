@@ -76,10 +76,14 @@
     transition: opacity 0.3s ease;
 }
 
-.tile li.hover-shift:hover .before-text {
-    opacity: 1;
+.tile li.hover-shift:hover .course-title {
+    text-decoration: underline;
 }
 
+.tile li.hover-shift:hover .before-text {
+    opacity: 1;
+    text-decoration: none;
+}
 
 .tile li.hover-shift:hover {
     padding: 5px;

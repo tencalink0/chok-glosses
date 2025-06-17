@@ -66,6 +66,7 @@ function Upload() {
                         return; //TODO: impl proper error handling
                     } else {
                         setCourseUpload(errCourseParse);
+                        confirmUpload(errCourseParse.title);
                     }
                 } else {
                     const errCourseParse = parseCourse(arrBuffToString(reader.result));
@@ -74,16 +75,16 @@ function Upload() {
                         return; //TODO: impl proper error handling
                     } else {
                         setCourseUpload(errCourseParse);
+                        confirmUpload(errCourseParse.title);
                     }
                 }
-                confirmUpload();
             }
         };
         reader.readAsText(file);
     };
 
-    const confirmUpload = () => {
-        setCourseTitle(courseUpload?.title || 'Untitled');
+    const confirmUpload = (title: string) => {
+        setCourseTitle(title || 'Untitled');
         warnUser();
     }
 

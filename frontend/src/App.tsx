@@ -8,12 +8,16 @@ import Flashcards from './pages/Flashcards';
 import Upload from './pages/Upload';
 
 import './App.css';
+import { FeedbackBar } from './modules/Feedback';
+
+export const Version = 0.1;
 
 function App() {
     return (
         <>
             <Router>
                 <Header />
+                <FeedbackBar />
                 <main>
                     <Routes>
                         <Route path="/" element={<MainPage />} />

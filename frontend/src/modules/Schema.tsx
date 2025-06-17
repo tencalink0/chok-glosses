@@ -13,6 +13,7 @@ const FlashcardSchema = z.object({
     front: z.string(),
     back: z.string(),
     help: z.string().optional(),
+    strength: z.number().default(0)
 });
 
 const DeckSchema = z.object({
@@ -22,11 +23,11 @@ const DeckSchema = z.object({
 
 const ContentTypeSchema = z.object({
     description: ContentChoiceSchema,
-    content: DeckSchema.nullable(),
+    content: DeckSchema.nullable().default(null),
 });
 
 const LevelSchema = z.object({
-    completed: z.boolean().optional(),
+    completed: z.boolean().default(false),
     stars: z.number().optional(),
     description: z.string().optional(),
     content: ContentTypeSchema,

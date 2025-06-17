@@ -42,7 +42,7 @@ function Courses() {
                                         }}
                                     >
                                         <span className="before-text">{course.emoji ? course.emoji : '▶'}</span>
-                                        <span id={`course${index}`}>{course.title}</span>
+                                        <span className="course-title" id={`course${index}`}>{course.title}</span>
                                     </li>
                                 ))
                             ) : (
