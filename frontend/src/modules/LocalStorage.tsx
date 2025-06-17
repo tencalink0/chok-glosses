@@ -44,7 +44,7 @@ export function getLevelGroup(levelGroupId: number): LevelGroup | string {
     } else {
         const currentLevelGroups = errCurrentCourse.level_groups;
         if (currentLevelGroups.length >= levelGroupId) {
-            return currentLevelGroups[levelGroupId + 1];
+            return currentLevelGroups[levelGroupId - 1];
         } else {
             return "LevelGroup doesn't exist";
         }
@@ -58,7 +58,7 @@ export function getLevel(levelGroupId: number, levelId: number): Level | string 
     } else {
         const currentLevels = errCurrentCourse.tiles;
         if (currentLevels.length >= levelId) {
-            return currentLevels[levelId + 1];
+            return currentLevels[levelId - 1];
         } else {
             return "Deck doesn't exist";
         }

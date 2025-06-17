@@ -34,7 +34,8 @@ export function getDeck(levelGroupId: number, deckId: number): Deck | string {
     if (typeof errCurrentLevel === 'string') {
         return errCurrentLevel;
     } else {
-        const levelContentType =  errCurrentLevel.content;
+        console.log(JSON.stringify(errCurrentLevel));
+        const levelContentType = errCurrentLevel.content;
         switch (levelContentType.description) {
             case ContentChoice.Flashcard: 
                 return levelContentType.content as Deck;
@@ -73,18 +74,25 @@ const Flashcards = () => {
     const { levelGroupId, levelId, cardId } = useParams();
 
     useEffect(() => {
-        if (levelGroupId && levelId && flashcardId) {
+        if (levelGroupId && levelId && cardId) {
+            let [levelGroupIdNum, levelIdNum, cardIdNum] = [0, 0, 0];
             try {
-                const [levelGroupIdNum, levelIdNum] = [parseInt(levelGroupId), parseInt(levelId)];
-                let errCurrentDeck = getDeck(levelGroupIdNum, levelIdNum);
-                if (typeof errCurrentDeck === 'string') {
-                    setError(errCurrentDeck);
+                [levelGroupIdNum, levelIdNum, cardIdNum] = [parseInt(levelGroupId), parseInt(levelId), parseInt(cardId)];
+            } catch (error) {
+                if (error instanceof Error) {
+                    setError(error.message);
                 } else {
-                    setTitle(errCurrentDeck.title);
-                    setDeckFlashcards(errCurrentDeck.flashcards);
+                    setError(String(error));
                 }
-            } catch {
-                console.log('Failed to parse url path');
+                return;
+            }
+
+            let errCurrentDeck = getDeck(levelGroupIdNum, levelIdNum);
+            if (typeof errCurrentDeck === 'string') {
+                setError(errCurrentDeck);
+            } else {
+                setTitle(errCurrentDeck.title);
+                setDeckFlashcards(errCurrentDeck.flashcards);
             }
         } else {
             setError('Broken url sub-path');
@@ -102,8 +110,7 @@ const Flashcards = () => {
                             error === null && deckFlashcards && flashcardId ? (
                                 <>
                                     <h2>{title}</h2>
-                                    {levelGroupId ?? 'none'}{levelId ?? 'none'}{cardId ?? 'none'}
-                                    <Card front={deckFlashcards[flashcardId].front} back={deckFlashcards[flashcardId].back}></Card>
+                                    <Card front={deckFlashcards[flashcardId-1].front} back={deckFlashcards[flashcardId-1].back}></Card>
                                 </>
                             ) : (
                                 <h2>Error: {error}</h2>
