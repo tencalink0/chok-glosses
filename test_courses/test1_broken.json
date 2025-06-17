@@ -1,5 +1,5 @@
 {
-  "title": "Test Introduction",
+  "titl": "Broken Test",
   "level_groups": [
     {
       "title": "The basics",
@@ -9,34 +9,12 @@
           "completed": true,
           "stars": 3,
           "description": "Try me",
-          "content": {
-            "description": "flashcard",
-            "content": {
-              "title": "Term 1 Content",
-              "flashcards": [
-                {
-                  "front": "Question1",
-                  "back": "Answer1"
-                },
-                {
-                  "front": "Question2",
-                  "back": "Answer2"
-                },
-                {
-                  "front": "Question3",
-                  "back": "Answer3"
-                }
-              ]
-            }
-          }
+          "content": "TestDeckContentType"
         },
         {
           "completed": false,
           "stars": 0,
-          "content": {
-            "description": "listening",
-            "content": null
-          }
+          "content": "TestDeckContentType"
         }
       ]
     },
@@ -49,7 +27,7 @@
           "stars": 3,
           "description": "hey",
           "content": {
-            "description": "coming-soon",
+            "description": "coming_soon",
             "content": null
           }
         },
@@ -57,7 +35,7 @@
           "completed": false,
           "stars": 0,
           "content": {
-            "description": "coming-soon",
+            "description": "coming_soon",
             "content": null
           }
         },
@@ -65,7 +43,7 @@
           "completed": true,
           "stars": 0,
           "content": {
-            "description": "coming-soon",
+            "description": "coming_soon",
             "content": null
           }
         },
@@ -73,7 +51,7 @@
           "completed": false,
           "stars": 0,
           "content": {
-            "description": "coming-soon",
+            "description": "coming_soon",
             "content": null
           }
         }
@@ -87,7 +65,7 @@
           "completed": true,
           "stars": 2,
           "content": {
-            "description": "coming-soon",
+            "description": "coming_soon",
             "content": null
           }
         },
@@ -95,7 +73,7 @@
           "completed": true,
           "stars": 1,
           "content": {
-            "description": "coming-soon",
+            "description": "coming_soon",
             "content": null
           }
         }
