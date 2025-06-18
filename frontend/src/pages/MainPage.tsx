@@ -2,43 +2,9 @@ import '../css/MainPage.css'
 import Progress from '../modules/Progress';
 import { getCurrentCourse } from '../modules/LocalStorage';
 
-import { ContentChoice, LevelGroupColourChoice } from '../modules/Enums';
-import type { LevelGroupColour, LevelGroup, Course, Level} from '../modules/Types';
+import type { LevelGroupColour, Course} from '../modules/Types';
 
 import { useState, useEffect } from 'react';
-import { TestDeckContentType } from './Flashcards';
-
-export const sampleCourse: Course = {
-    title: "Test Introduction",
-    level_groups: [
-        {
-            title: 'The basics',
-            color: LevelGroupColourChoice.Green,
-            tiles: [
-                { completed: true, stars: 3, description: 'Try me', content: TestDeckContentType } satisfies Level,
-                { completed: false, stars: 0, content: TestDeckContentType} satisfies Level
-            ]
-        },
-        {
-            title: 'Basics 2',
-            color: LevelGroupColourChoice.Red,
-            tiles: [
-                { completed: true, stars: 3, description: 'hey', content: { description: ContentChoice.ComingSoon, content: null }} satisfies Level,
-                { completed: false, stars: 0, content: { description: ContentChoice.ComingSoon, content: null }} satisfies Level,
-                { completed: true, stars: 0, content: { description: ContentChoice.ComingSoon, content: null }} satisfies Level,
-                { completed: false, stars: 0, content: { description: ContentChoice.ComingSoon, content: null }} satisfies Level
-            ]
-        },
-        {
-            title: 'Food',
-            color: LevelGroupColourChoice.Purple,
-            tiles: [
-                { completed: true, stars: 2, content: { description: ContentChoice.ComingSoon, content: null }} satisfies Level,
-                { completed: true, stars: 1, content: { description: ContentChoice.ComingSoon, content: null }} satisfies Level
-            ]
-        }
-    ] as LevelGroup[]
-};
 
 function MainPage() {
     const [ error, setError ] = useState<string | null>(null);
@@ -79,7 +45,7 @@ function MainPage() {
                             error === null && course ? (
                                 <>
                                     <div className="tile big full">
-                                        <Progress course={sampleCourse} colors={colors}/>
+                                        <Progress course={course} colors={colors}/>
                                     </div>
                                     <div className="tile">
                                         <table className='leaderboards'>
