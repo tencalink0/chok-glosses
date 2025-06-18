@@ -18,13 +18,13 @@ const Progress: React.FC<ProgressProps> = ({ course, colors }) => {
 
     const assignColor = (color: LevelGroupColourChoice | undefined) => {
         switch (color) {
-            case 'red':
+            case LevelGroupColourChoice.Red:
                 return colors.Red;
-            case 'green':
+            case LevelGroupColourChoice.Green:
                 return colors.Green;
-            case 'purple':
+            case LevelGroupColourChoice.Purple:
                 return colors.Purple;
-            case 'orange':
+            case LevelGroupColourChoice.Orange:
                 return colors.Orange;
             default:
                 return '#ccc';

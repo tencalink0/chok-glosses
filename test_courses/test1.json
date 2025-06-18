@@ -3,7 +3,7 @@
   "level_groups": [
     {
       "title": "The basics",
-      "color": "green",
+      "color": "--green",
       "tiles": [
         {
           "completed": true,
@@ -42,7 +42,7 @@
     },
     {
       "title": "Basics 2",
-      "color": "red",
+      "color": "--red",
       "tiles": [
         {
           "completed": true,
@@ -81,7 +81,7 @@
     },
     {
       "title": "Food",
-      "color": "purple",
+      "color": "--purple",
       "tiles": [
         {
           "completed": true,

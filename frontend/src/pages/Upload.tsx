@@ -63,6 +63,7 @@ function Upload() {
                     const errCourseParse = parseCourse(reader.result);
                     if (typeof errCourseParse === 'string') {
                         window.alert(errCourseParse);
+                        window.location.reload();
                         return; //TODO: impl proper error handling
                     } else {
                         setCourseUpload(errCourseParse);
@@ -72,6 +73,7 @@ function Upload() {
                     const errCourseParse = parseCourse(arrBuffToString(reader.result));
                     if (typeof errCourseParse === 'string') {
                         window.alert(errCourseParse);
+                        window.location.reload();
                         return; //TODO: impl proper error handling
                     } else {
                         setCourseUpload(errCourseParse);

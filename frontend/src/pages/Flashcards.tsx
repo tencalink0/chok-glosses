@@ -4,30 +4,7 @@ import '../css/Flashcard.css';
 import { getLevel } from '../modules/LocalStorage';
 
 import { ContentChoice } from '../modules/Enums';
-import type { ContentType, Deck, Flashcard } from '../modules/Types';
-
-export const TestDeck: Deck = {
-    title: 'Term 1 Content',
-    flashcards: [
-        {
-            front: 'Question1',
-            back: 'Answer1'
-        },
-        {
-            front: 'Question2',
-            back: 'Answer2'
-        },
-        {
-            front: 'Question3',
-            back: 'Answer3'
-        }
-    ]
-}
-
-export const TestDeckContentType: ContentType = {
-    description: ContentChoice.Flashcard,
-    content: TestDeck
-}
+import type { Deck, Flashcard } from '../modules/Types';
 
 export function getDeck(levelGroupId: number, deckId: number): Deck | string {
     const errCurrentLevel = getLevel(levelGroupId, deckId);
@@ -61,7 +38,7 @@ const NextCardBtn: React.FC<{nextCard: () => void}> = ({nextCard}) => {
     );
 };
 
-const Card: React.FC<Flashcard> = ({front, back, help}) => {
+const Card: React.FC<Flashcard> = ({front, back, help, strength}) => {
     const [shownCard, setShownCard] = useState(front);
 
     const handleClick = () => {
@@ -151,6 +128,7 @@ const Flashcards = () => {
                                             key={flashcardId}
                                             front={deckFlashcards[flashcardId-1].front} 
                                             back={deckFlashcards[flashcardId-1].back}
+                                            strength={deckFlashcards[flashcardId-1].strength}
                                         ></Card>
                                         <NextCardBtn nextCard={nextCard} />
                                     </div>
