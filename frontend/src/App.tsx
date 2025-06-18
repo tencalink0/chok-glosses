@@ -6,9 +6,9 @@ import MainPage from './pages/MainPage';
 import Courses from './pages/Courses';
 import Flashcards from './pages/Flashcards';
 import Upload from './pages/Upload';
+import Feedback, { FeedbackBar } from './modules/Feedback';
 
 import './App.css';
-import { FeedbackBar } from './modules/Feedback';
 
 export const Version = 0.1;
 
@@ -29,7 +29,7 @@ function App() {
                         <Route path="/flashcard" element={<Flashcards />} />
 
                         <Route path="/upload" element={<Upload />} />
-                        
+                        <Route path="/feedback" element={<Feedback />} />
                     </Routes>
                 </main>
                 <Footer />

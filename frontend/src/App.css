@@ -39,6 +39,11 @@ h1 {
     color: var(--grey-dark);
 }
 
+h3 {
+    font-size: 24px;
+    text-align: center;
+}
+
 h1.course-title {
     color: var(--grey-dark);
     margin: 2.5% 0;
