@@ -137,3 +137,7 @@ a.green-highlight:hover { color: var(--green-light); text-decoration: underline;
     background-color: var(--green-light);
     border-color: var(--blue);
 }
+
+textarea {
+    font-family: Arial, Helvetica, sans-serif;
+}
