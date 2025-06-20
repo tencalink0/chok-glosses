@@ -1,4 +1,4 @@
-import { ContentChoice, LevelGroupColourChoice } from "./Enums";
+import { ContentChoice, LevelGroupColourChoice, Versions } from "./Enums";
 
 export type Level = {
     completed?: boolean;
@@ -16,6 +16,7 @@ export type LevelGroup = {
 export type Course = {
     title: string;
     emoji?: string;
+    version: Versions;
     level_groups: LevelGroup[];
 }
 

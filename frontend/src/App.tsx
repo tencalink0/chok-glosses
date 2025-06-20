@@ -7,10 +7,11 @@ import Courses from './pages/Courses';
 import Flashcards from './pages/Flashcards';
 import Upload from './pages/Upload';
 import Feedback, { FeedbackBar } from './modules/Feedback';
+import { Versions } from './modules/Enums'
 
 import './App.css';
 
-export const Version = 0.1;
+export const Version = Versions.pre0_1;
 
 function App() {
     return (

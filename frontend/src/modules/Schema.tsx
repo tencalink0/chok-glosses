@@ -1,5 +1,6 @@
 import { z } from 'zod';
-import { LevelGroupColourChoice, ContentChoice } from './Enums'
+import { LevelGroupColourChoice, ContentChoice, Versions } from './Enums'
+import { version } from 'react';
 
 const LevelGroupColourChoiceSchema = z.enum(
   [...Object.values(LevelGroupColourChoice)] as [string, ...string[]]
@@ -8,6 +9,11 @@ const LevelGroupColourChoiceSchema = z.enum(
 const ContentChoiceSchema = z.enum(
   [...Object.values(ContentChoice)] as [string, ...string[]]
 );
+
+const VersionsSchema = z.enum(
+  [...Object.values(Versions)] as [string, ...string[]]
+);
+
 
 const FlashcardSchema = z.object({
     front: z.string(),
@@ -42,6 +48,7 @@ const LevelGroupSchema = z.object({
 export const CourseSchema = z.object({
     title: z.string(),
     emoji: z.string().optional(),
+    version: VersionsSchema,
     level_groups: z.array(LevelGroupSchema),
 });
 
