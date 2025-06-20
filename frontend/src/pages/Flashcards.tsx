@@ -11,7 +11,6 @@ export function getDeck(levelGroupId: number, deckId: number): Deck | string {
     if (typeof errCurrentLevel === 'string') {
         return errCurrentLevel;
     } else {
-        console.log(JSON.stringify(errCurrentLevel));
         const levelContentType = errCurrentLevel.content;
         switch (levelContentType.description) {
             case ContentChoice.Flashcard: 

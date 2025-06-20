@@ -8,6 +8,7 @@ import Flashcards from './pages/Flashcards';
 import Upload from './pages/Upload';
 import Feedback, { FeedbackBar } from './modules/Feedback';
 import { Versions } from './modules/Enums'
+import Err404 from './pages/Err404'
 
 import './App.css';
 
@@ -31,6 +32,8 @@ function App() {
 
                         <Route path="/upload" element={<Upload />} />
                         <Route path="/feedback" element={<Feedback />} />
+
+                        <Route path="*" element={<Err404 />} />
                     </Routes>
                 </main>
                 <Footer />
