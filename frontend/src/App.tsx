@@ -38,7 +38,7 @@ function App() {
                         <Route path="/" element={<MainPage />} />
                         <Route path="/courses" element={<Courses />} />
 
-                        <Route path="/flashcard/:levelGroupId/:levelId/:cardId" element={<Flashcards />} />
+                        <Route path="/:levelGroupId/:levelId?cardId=3" element={<Flashcards />} />
                         <Route path="/flashcard/:levelGroupId/:levelId" element={<Flashcards />} />
                         <Route path="/flashcard/:levelGroupId" element={<Flashcards />} />
                         <Route path="/flashcard" element={<Flashcards />} />

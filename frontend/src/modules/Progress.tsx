@@ -82,7 +82,7 @@ const Progress: React.FC<ProgressProps> = ({ course, colors }) => {
                                 key={tileIndex}
                                 className={className}
                                 style={{ background: tile.completed ? 'var(--green)' : '' }}
-                                onClick={() => navigate(`/${mapContentType(tile.content)}/${groupIndex + 1}/${tileIndex + 1}/1`)}
+                                onClick={() => navigate(`/${mapContentType(tile.content)}/${groupIndex + 1}/${tileIndex + 1}?cardId=1`)}
                             >
                                 {assignIcon(mapContentType(tile.content)) && (
                                     <img className="level-icon" src={assignIcon(mapContentType(tile.content))} alt="" />

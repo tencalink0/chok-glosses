@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import '../css/Flashcard.css';
 import { getDeck, setFlashcardStrength } from '../modules/LocalStorage';
@@ -94,7 +94,13 @@ const Flashcards = () => {
 
     const [ levelGroupIdNum, setLevelGroupIdNum ] = useState<number>(1);
     const [ levelIdNum, setLevelId ] = useState<number>(1);
-    const { levelGroupId, levelId, cardId } = useParams();
+
+    const { levelGroupId, levelId } = useParams();
+    const [searchParams] = useSearchParams();
+    const cardId = searchParams.get("cardId");
+
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         if (levelGroupId && levelId && cardId) {
@@ -161,10 +167,10 @@ const Flashcards = () => {
             newId = flashcardId + 1;
         }
         setFlashcardId(newId);
-        // TODO: change url of page without reloading page
-        /* 
-        window.location.href = '';
-        */
+
+        const params = new URLSearchParams(location.search);
+        params.set("cardId", String(newId));
+        navigate(`${location.pathname}?${params.toString()}`, { replace: true });
 
         if (!deckFlashcards) return;
         setFlashcardStrength(
