@@ -27,32 +27,46 @@ function calculateStrength(
     time: number, // small significance
     correct: boolean // big significance
 ) {
-    const helpStrength = 0.1;
-    const correctStrength = 0.1;
-    const timeStrength = 0.1;
+    const target = correct ? 1 : 0;
+    let rate = 0.3;
 
-    const modifier = 0;
-    
+    if (help) {
+        rate *= 0.5;
+    }
 
-    return prevStrength * modifier;
+    const timeDecay = 1 / Math.pow(Math.E, time * 0.01);
+    rate *= timeDecay;
+
+    const newStrength = prevStrength + rate * (target - prevStrength);
+
+    return newStrength;
 }
 
 const BtnList: React.FC<{
     btnState: boolean, 
     helpState: boolean,
-    helpFn: () => void
-}> = ({btnState, helpState, helpFn}) => {
+    helpFn: () => void,
+    responseFn: (state: boolean) => void
+}> = ({btnState, helpState, helpFn, responseFn}) => {
 
 
     return (
         <div className='button-collection-row'>
-            <button className='button-green flashcard-btn' disabled={!btnState}>✔️</button>
+            <button 
+                className='button-green flashcard-btn' 
+                disabled={!btnState}
+                onClick={() => {responseFn(true)}}
+            >✔️</button>
             <button 
                 className='button-green flashcard-btn' 
                 disabled={!helpState}
                 onClick={helpFn}
             >🤔</button>
-            <button className='button-green flashcard-btn' disabled={!btnState}>❌</button>
+            <button 
+                className='button-green flashcard-btn' 
+                disabled={!btnState}
+                onClick={() => {responseFn(false)}}
+            >❌</button>
         </div>
     );
 }
@@ -88,7 +102,8 @@ const Flashcards = () => {
     const [ error, setError ] = useState<string | null>(null);
     const [ buttonStates, setButtonStates] = useState<boolean>(false);
     const [ helpState, setHelpState ] = useState<boolean>(false);
-    
+    const [ helpUse, setHelpUse ] = useState<boolean>(false);
+
     const [ title, setTitle ] = useState<string | undefined>(undefined);
     const [ deckFlashcards, setDeckFlashcards ] = useState<Flashcard[] | undefined>(undefined);
     const [ flashcardId, setFlashcardId ] = useState<number>(1);
@@ -128,7 +143,7 @@ const Flashcards = () => {
         }
     }, []);
 
-    const checkHelp = (flashcard?: Flashcard) => {
+    const checkHelp = (flashcard?: Flashcard, newId?: number) => {
         if (flashcard) {
             const currentHelp = flashcard.help;
             if (currentHelp) {
@@ -136,33 +151,48 @@ const Flashcards = () => {
             }
         } else {
             if (!deckFlashcards) return;
-            console.log(deckFlashcards[flashcardId-1]);
-            const currentHelp = deckFlashcards[flashcardId-1].help;
-            if (currentHelp) {
-                setHelpState(true);
+            if (newId) {
+                const currentHelp = deckFlashcards[newId-1].help;
+                if (currentHelp) {
+                    setHelpState(true);
+                }
+            } else {
+                const currentHelp = deckFlashcards[flashcardId-1].help;
+                if (currentHelp) {
+                    setHelpState(true);
+                }
             }
         }
     }
 
     const nextCard = () => {
+        let newId = 0;
         if (flashcardId >= cardsTotal) {
-            setFlashcardId(1);
+            newId = 1;
         } else {
-            setFlashcardId(flashcardId + 1);
+            newId = flashcardId + 1;
         }
-        checkHelp();
+        setFlashcardId(newId);
+
+        setButtonStates(false);
+        setHelpUse(false);
+        checkHelp(undefined, newId);
     }
 
-    const prevCard = () => {
-        if (flashcardId <= 1) {
-            setFlashcardId(cardsTotal);
-        } else {
-            setFlashcardId(flashcardId - 1);
+    const cardResponse = (correct: boolean) => {
+        if (deckFlashcards) {
+            const strength = calculateStrength(
+                deckFlashcards[flashcardId-1].strength, 
+                helpUse, 
+                1,
+                correct
+            );
         }
-        checkHelp();
+        nextCard();
     }
 
     const showHelp = () => {
+        setHelpUse(true);
         if (!deckFlashcards) return;
         const currentHelp = deckFlashcards[flashcardId-1].help;
         if (currentHelp) {
@@ -192,6 +222,7 @@ const Flashcards = () => {
                                         btnState={buttonStates}
                                         helpState={helpState}
                                         helpFn={showHelp}
+                                        responseFn={cardResponse}
                                     ></BtnList>
                                 </>
                             ) : (
