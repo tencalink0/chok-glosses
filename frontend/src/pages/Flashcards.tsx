@@ -159,7 +159,7 @@ const Flashcards = () => {
         }
     }
 
-    const nextCard = () => {
+    const nextCard = (strength?: number) => {
         let newId = 0;
         if (flashcardId >= cardsTotal) {
             newId = 1;
@@ -173,12 +173,14 @@ const Flashcards = () => {
         navigate(`${location.pathname}?${params.toString()}`, { replace: true });
 
         if (!deckFlashcards) return;
-        setFlashcardStrength(
-            levelGroupIdNum,
-            levelIdNum,
-            newId,
-            deckFlashcards[flashcardId-1].strength
-        ); 
+        if (strength) {
+            setFlashcardStrength(
+                levelGroupIdNum,
+                levelIdNum,
+                newId,
+                strength
+            ); 
+        }
         
         setButtonStates(false);
         setHelpUse(false);
@@ -194,8 +196,10 @@ const Flashcards = () => {
                 correct
             );
             console.log(strength);
+            nextCard(strength);
+        } else {
+            nextCard(0);
         }
-        nextCard();
     }
 
     const showHelp = () => {

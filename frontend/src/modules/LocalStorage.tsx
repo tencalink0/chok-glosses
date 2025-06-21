@@ -78,6 +78,23 @@ export function getLevel(levelGroupId: number, levelId: number): Level | string 
     }
 }
 
+export function writeCourse(course: Course): string | null {
+    let errAllCourses = getAllCourses();
+    if (typeof errAllCourses === 'string') {
+        return setCourse(course);
+    } else {
+        if (errAllCourses.find(aCourse => aCourse.title === course.title)) {
+            const newCourseArray = errAllCourses.map((aCourse) => 
+                aCourse.title === course.title ? course : aCourse
+            );
+            localStorage.setItem('courses', JSON.stringify(newCourseArray));
+            return null;
+        } else {
+            return "Course doesn't exist";
+        }
+    }
+}
+
 export function setCourse(course: Course): string | null {
     let errAllCourses = getAllCourses();
     if (typeof errAllCourses === 'string') {
@@ -99,7 +116,7 @@ export function setFlashcardStrength(
     levelGroupId: number, 
     levelId: number, 
     cardId: number, 
-    _strength: number
+    strength: number
 ) : string | null {
     let errCurrentCourse = getCurrentCourse();
     if (typeof errCurrentCourse === 'string') return errCurrentCourse;
@@ -107,38 +124,10 @@ export function setFlashcardStrength(
     if (typeof errDeck === 'string') return errDeck;
     if (errDeck.flashcards.length < cardId) return 'CardId out of range';
 
-    // TODO: properly set strength of the card
-    // This can be done by moifying the copy of course and 
-
-    /*
-    const newCourse = { 
-        ...errCurrentCourse,
-        level_groups: 
-            errCurrentCourse.level_groups.map((val, index) => {
-                if (index !== levelGroupId) return val;
-                val.tiles.map((val, index) => {
-                    if (index !== levelId) return val;
-                    let newContent = val.content as Deck;
-                    const newFlashcards = newContent.flashcards.map((val, index) => {
-                        if (index !== cardId) return val;
-                        return {
-                            ...val,
-                            strength: strength
-                        };
-                    });
-                    newContent = {
-                        ...newContent,
-                        flashcards: newFlashcards
-                    }
-
-                    return {
-                        ...val,
-                        content: val.content
-                    }
-                });
-            })
-    }
-    */
+    const levelGroup = errCurrentCourse.level_groups[levelGroupId-1];
+    const level = levelGroup.tiles[levelId-1];
+    (level.content as Deck).flashcards[cardId - 1].strength = strength;
+    writeCourse(errCurrentCourse);
 
     return null;
 }
