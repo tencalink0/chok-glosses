@@ -21,6 +21,22 @@ export function getDeck(levelGroupId: number, deckId: number): Deck | string {
     }
 }
 
+function calculateStrength(
+    prevStrength: number, // big significance
+    help: boolean, // medium significance
+    time: number, // small significance
+    correct: boolean // big significance
+) {
+    const helpStrength = 0.1;
+    const correctStrength = 0.1;
+    const timeStrength = 0.1;
+
+    const modifier = 0;
+    
+
+    return prevStrength * modifier;
+}
+
 const BtnList: React.FC<{
     btnState: boolean, 
     helpState: boolean,
