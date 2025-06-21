@@ -8,7 +8,7 @@ type ConfirmProps = {
     hideWarn: () => void;
 };
 
-const Confirm = ({ successFunc, hideWarn }: ConfirmProps) => {
+export const Confirm = ({ successFunc, hideWarn }: ConfirmProps) => {
     const confirmUpload = () => {
         successFunc();
         hideWarn();

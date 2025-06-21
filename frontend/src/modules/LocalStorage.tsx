@@ -35,6 +35,13 @@ export function getCurrentCourseTitle() {
     return localStorage.getItem('currentCourse');
 }
 
+export function deleteCourse(courseTitle: string) {
+    const errAllCourses = getAllCourses();
+    if (typeof errAllCourses === 'string') return errAllCourses;
+    const cleanCourseList = errAllCourses.filter(item => item.title !== courseTitle);
+    localStorage.setItem('courses', JSON.stringify(cleanCourseList));
+}
+
 export function getCurrentCourse(): Course | string {
     const currentCourseTitle = localStorage.getItem('currentCourse');
     if (currentCourseTitle) {

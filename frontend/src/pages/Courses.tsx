@@ -1,19 +1,23 @@
 import type { Course } from "../modules/Types";
 import { useEffect, useState } from "react";
-import { getAllCourses, getCurrentCourseTitle } from "../modules/LocalStorage";
+import { getAllCourses, getCurrentCourseTitle, deleteCourse } from "../modules/LocalStorage";
+import { useNavigate } from "react-router-dom";
+import { Confirm } from "./Upload";
 
 function Courses() {
+    const navigate = useNavigate();
     const [ courses, setCourses ] = useState<Course[] | undefined>(undefined);
-    const [ currentCourseTitle, setCurrentCourseTitle ] = useState<string | null>(null);
+    const [ localCourseTitle, setLocalCourseTitle ] = useState<string | null>(null);
+    const [ preDeleteTitle, setPreDeleteTitle ] = useState<string | null>(null);
 
     const updateCurrentCourse = (title: string) => {
-        setCurrentCourseTitle(title);
-        window.location.href = '/';
+        localStorage.setItem('currentCourse', title);
+        navigate('/');
     }
 
     useEffect(() => {
         const allCourses = getAllCourses();
-        setCurrentCourseTitle(getCurrentCourseTitle);
+        setLocalCourseTitle(getCurrentCourseTitle);
         if (typeof allCourses === 'string') {
             console.log(`Error: ${allCourses}`);
         } else {
@@ -22,8 +26,37 @@ function Courses() {
         }
     }, []);
 
+    const showWarn = (title: string) => {
+        setPreDeleteTitle(title);
+        const messageContainer = document.getElementById('message-container');
+        if (!messageContainer) return;
+
+        messageContainer.style.display = 'flex';
+    }
+
+
+    const hideWarn = () => {
+        const messageContainer = document.getElementById('message-container');
+        if (!messageContainer) return;
+
+        messageContainer.style.display = 'none';
+    }
+
+    const clearCourse = (courseTitle: string) => {
+        deleteCourse(courseTitle);
+        window.location.reload();
+    }
+
     return (
         <>
+            <div id="message-container">
+                <div className="tile">
+                    <h2>Warning</h2>
+                    <p className="text-small">Are you sure you want to delete <span style={{color: 'var(--blue)'}}>{preDeleteTitle}</span>?</p>
+                    <p className="text-small" style={{color: 'var(--red)'}}>This is Irreversible</p>
+                    <Confirm hideWarn={hideWarn} successFunc={() => {if (preDeleteTitle) clearCourse(preDeleteTitle)}}/>
+                </div>
+            </div>
             <div className="mainpage">
                 <div className='tile-collection'>
                     <div className="tile full">
@@ -33,16 +66,22 @@ function Courses() {
                         <h2>Courses</h2>
                         <ul>
                             {courses && courses.length > 0 ? (
-                                courses.map((course, index) => (
+                                courses.map((course, _) => (
                                     <li className="hover-shift" style={{
-                                        color: currentCourseTitle === course.title ? 'var(--green)' : 'var(--grey)'
-                                    }}
-                                        onClick={() => {
+                                        color: localCourseTitle === course.title ? 'var(--green)' : 'var(--grey)'
+                                    }}>
+                                        <div onClick={() => {
                                             updateCurrentCourse(course.title)
-                                        }}
-                                    >
-                                        <span className="before-text">{course.emoji ? course.emoji : '▶'}</span>
-                                        <span className="course-title" id={`course${index}`}>{course.title}</span>
+                                        }}>
+                                            <span className="before-text">{course.emoji ? course.emoji : '▶'}</span>
+                                            <span className="course-title">{course.title}</span>
+                                        </div>
+                                        <div>
+                                            <span className="before-text">❌</span>
+                                            <span className="below-text" onClick={
+                                                () => showWarn(course.title)
+                                            }>Delete</span>
+                                        </div>
                                     </li>
                                 ))
                             ) : (
@@ -52,7 +91,7 @@ function Courses() {
                         </ul>
                     </div>
                     <div className="tile full center-content">
-                        <button className="button-green" onClick={() => window.location.href = '/upload'}>Upload</button>
+                        <button className="button-green" onClick={() => navigate('/upload')}>Upload</button>
                     </div>
                 </div>
             </div>

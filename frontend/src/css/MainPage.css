@@ -68,6 +68,7 @@
 .tile li {
     padding: 5px;
     transition: transform 0.3s ease;
+    user-select: none;
 }
 
 .tile li.hover-shift .before-text {
@@ -76,9 +77,18 @@
     transition: opacity 0.3s ease;
 }
 
-.tile li.hover-shift:hover .course-title {
-    text-decoration: underline;
+.tile li.hover-shift .below-text {
+    opacity: 0;
+    padding: 5px;
+    transition: opacity 0.3s ease;
+    color: var(--red);
 }
+
+.tile li.hover-shift:hover .below-text { opacity: 1; }
+
+.tile li.hover-shift .below-text:hover { text-decoration: underline; }
+
+.tile li.hover-shift .course-title:hover { text-decoration: underline; }
 
 .tile li.hover-shift:hover .before-text {
     opacity: 1;
