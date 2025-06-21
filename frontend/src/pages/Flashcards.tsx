@@ -1,25 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import '../css/Flashcard.css';
-import { getLevel } from '../modules/LocalStorage';
-
-import { ContentChoice } from '../modules/Enums';
-import type { Deck, Flashcard } from '../modules/Types';
-
-export function getDeck(levelGroupId: number, deckId: number): Deck | string {
-    const errCurrentLevel = getLevel(levelGroupId, deckId);
-    if (typeof errCurrentLevel === 'string') {
-        return errCurrentLevel;
-    } else {
-        const levelContentType = errCurrentLevel.content;
-        switch (levelContentType.description) {
-            case ContentChoice.Flashcard: 
-                return levelContentType.content as Deck;
-            default:
-                return "The current level isn't a deck";
-        }
-    }
-}
+import { getDeck, setFlashcardStrength } from '../modules/LocalStorage';
+import type { Flashcard } from '../modules/Types';
 
 function calculateStrength(
     prevStrength: number, // big significance
@@ -108,13 +91,18 @@ const Flashcards = () => {
     const [ deckFlashcards, setDeckFlashcards ] = useState<Flashcard[] | undefined>(undefined);
     const [ flashcardId, setFlashcardId ] = useState<number>(1);
     const [ cardsTotal, setCardsTotal ] = useState<number>(1);
+
+    const [ levelGroupIdNum, setLevelGroupIdNum ] = useState<number>(1);
+    const [ levelIdNum, setLevelId ] = useState<number>(1);
     const { levelGroupId, levelId, cardId } = useParams();
 
     useEffect(() => {
         if (levelGroupId && levelId && cardId) {
-            let [levelGroupIdNum, levelIdNum, cardIdNum] = [0, 0, 0];
+            let [levelGroupIdTemp, levelIdTemp, cardIdTemp] = [0, 0, 0];
             try {
-                [levelGroupIdNum, levelIdNum, cardIdNum] = [parseInt(levelGroupId), parseInt(levelId), parseInt(cardId)];
+                [levelGroupIdTemp, levelIdTemp, cardIdTemp] = [parseInt(levelGroupId), parseInt(levelId), parseInt(cardId)];
+                setLevelGroupIdNum(levelGroupIdTemp);
+                setLevelId(levelIdTemp);
             } catch (error) {
                 if (error instanceof Error) {
                     setError(error.message);
@@ -124,18 +112,18 @@ const Flashcards = () => {
                 return;
             }
 
-            let errCurrentDeck = getDeck(levelGroupIdNum, levelIdNum);
+            let errCurrentDeck = getDeck(levelGroupIdTemp, levelIdTemp);
             if (typeof errCurrentDeck === 'string') {
                 setError(errCurrentDeck);
             } else {
-                if (errCurrentDeck.flashcards.length < cardIdNum) {
+                if (errCurrentDeck.flashcards.length < cardIdTemp) {
                     setError('Card Id Out of Range');
                 } else {
                     setTitle(errCurrentDeck.title);
                     setDeckFlashcards(errCurrentDeck.flashcards);
                     setCardsTotal(errCurrentDeck.flashcards.length);
-                    setFlashcardId(cardIdNum);
-                    checkHelp(errCurrentDeck.flashcards[cardIdNum-1]);
+                    setFlashcardId(cardIdTemp);
+                    checkHelp(errCurrentDeck.flashcards[cardIdTemp-1]);
                 }
             }
         } else {
@@ -173,7 +161,19 @@ const Flashcards = () => {
             newId = flashcardId + 1;
         }
         setFlashcardId(newId);
+        // TODO: change url of page without reloading page
+        /* 
+        window.location.href = '';
+        */
 
+        if (!deckFlashcards) return;
+        setFlashcardStrength(
+            levelGroupIdNum,
+            levelIdNum,
+            newId,
+            deckFlashcards[flashcardId-1].strength
+        ); 
+        
         setButtonStates(false);
         setHelpUse(false);
         checkHelp(undefined, newId);
@@ -187,6 +187,7 @@ const Flashcards = () => {
                 1,
                 correct
             );
+            console.log(strength);
         }
         nextCard();
     }

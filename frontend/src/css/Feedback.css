@@ -1,6 +1,6 @@
 .feedback-bar {
     background: var(--level-green);
-    padding: 1%;
+    padding: 15px 0;
     color: var(--grey-dark);
     display: flex;
     align-items: center;

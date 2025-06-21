@@ -1,4 +1,21 @@
-import type { Course, LevelGroup, Level } from './Types';
+import type { Course, LevelGroup, Level, Deck } from './Types';
+import { ContentChoice } from './Enums'
+import { UNSAFE_getPatchRoutesOnNavigationFunction } from 'react-router-dom';
+
+export function getDeck(levelGroupId: number, deckId: number): Deck | string {
+    const errCurrentLevel = getLevel(levelGroupId, deckId);
+    if (typeof errCurrentLevel === 'string') {
+        return errCurrentLevel;
+    } else {
+        const levelContentType = errCurrentLevel.content;
+        switch (levelContentType.description) {
+            case ContentChoice.Flashcard: 
+                return levelContentType.content as Deck;
+            default:
+                return "The current level cannot be formatted as flashcards";
+        }
+    }
+}
 
 export function getAllCourses(): Course[] | string {
     const courses = localStorage.getItem('courses');
@@ -76,4 +93,49 @@ export function setCourse(course: Course): string | null {
         localStorage.setItem('courses', JSON.stringify(errAllCourses));
         return null;
     }
+}
+
+export function setFlashcardStrength(
+    levelGroupId: number, 
+    levelId: number, 
+    cardId: number, 
+    strength: number
+) : string | null {
+    let errCurrentCourse = getCurrentCourse();
+    if (typeof errCurrentCourse === 'string') return errCurrentCourse;
+    const errDeck = getDeck(levelGroupId, levelId);
+    if (typeof errDeck === 'string') return errDeck;
+    if (errDeck.flashcards.length < cardId) return 'CardId out of range';
+
+    // TODO: properly set strength of the card
+    // This can be done by moifying the copy of course and 
+    const newCourse = { 
+        ...errCurrentCourse,
+        level_groups: 
+            errCurrentCourse.level_groups.map((val, index) => {
+                if (index !== levelGroupId) return val;
+                val.tiles.map((val, index) => {
+                    if (index !== levelId) return val;
+                    let newContent = val.content.content as Deck;
+                    const newFlashcards = newContent.flashcards.map((val, index) => {
+                        if (index !== cardId) return val;
+                        return {
+                            ...val,
+                            strength: strength
+                        };
+                    });
+                    newContent = {
+                        ...newContent,
+                        flashcards: newFlashcards
+                    }
+
+                    return {
+                        ...val,
+                        content: val.content
+                    }
+                });
+            })
+    }
+
+    return null;
 }
