@@ -18,10 +18,6 @@ export function getCurrentCourseTitle() {
     return localStorage.getItem('currentCourse');
 }
 
-export function setCurrentCourseTitle(title: string) {
-    localStorage.setItem('currentCourse', title);
-}
-
 export function getCurrentCourse(): Course | string {
     const currentCourseTitle = localStorage.getItem('currentCourse');
     if (currentCourseTitle) {
@@ -72,6 +68,9 @@ export function setCourse(course: Course): string | null {
         localStorage.setItem('courses', JSON.stringify([course]));
         return null;
     } else {
+        if (errAllCourses.find(aCourse => aCourse.title === course.title)) {
+            return 'Course with the same name exists';
+        }
         errAllCourses.push(course);
         localStorage.setItem('currentCourse', course.title);
         localStorage.setItem('courses', JSON.stringify(errAllCourses));
