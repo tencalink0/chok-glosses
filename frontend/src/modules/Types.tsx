@@ -1,26 +1,11 @@
-import { LevelGroupColourChoice, Versions } from "./Enums";
-import { ClauseSchema } from "./Schema";
+import * as Schema from "./Schema";
 import { z } from 'zod';
 
-export type Level = {
-    completed?: boolean;
-    stars?: number;
-    description?: string;
-    content: Deck | Clause | null;
-}
+export type Level = z.infer<typeof Schema.LevelSchema>;
 
-export type LevelGroup = {
-    title: string;
-    tiles: Level[];
-    color?: LevelGroupColourChoice;
-}
+export type LevelGroup = z.infer<typeof Schema.LevelGroupSchema>;
 
-export type Course = {
-    title: string;
-    emoji?: string;
-    version: Versions;
-    level_groups: LevelGroup[];
-}
+export type Course = z.infer<typeof Schema.CourseSchema>;
 
 export type LevelGroupColour = {
     Red: string;
@@ -29,16 +14,7 @@ export type LevelGroupColour = {
     Orange: string;
 };
 
-export type Deck = {
-    title: string;
-    flashcards: Flashcard[];
-}
+export type Deck = z.infer<typeof Schema.DeckSchema>;
 
-export type Clause = z.infer<typeof ClauseSchema>;
-
-export type Flashcard = {
-    front: string,
-    back: string,
-    help?: string,
-    strength: number
-}
+export type Clause = z.infer<typeof Schema.ClauseSchema>;
+export type Flashcard = z.infer<typeof Schema.FlashcardSchema>;

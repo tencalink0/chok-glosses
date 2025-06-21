@@ -8,12 +8,7 @@ import speakerIcon from '../img/icons/icons8-speaker-100.png'
 import writingIcon from '../img/icons/icons8-writing-100.png';
 import { mapContentType } from '../App';
 
-export interface ProgressProps {
-    course: Course;
-    colors: LevelGroupColour;
-}
-
-const Progress: React.FC<ProgressProps> = ({ course, colors }) => {
+const Progress: React.FC<{course: Course, colors: LevelGroupColour}> = ({ course, colors }) => {
     const progress = course.level_groups;
     const navigate = useNavigate();
 
