@@ -28,16 +28,25 @@
     user-select: none;
 
     overflow: hidden;
-    padding: 1rem;
 }
 
 .flashcard-content {
-    width: 100%;
-    height: 100%;
+    width: 250px;
     overflow-y: auto;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem;
+}
+
+.button-green.flashcard-btn {
+    font-size: var(--heading-font);
+}
+
+.button-collection-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: row;
+    gap: 30px
 }

@@ -17,7 +17,8 @@
               "flashcards": [
                 {
                   "front": "Question1",
-                  "back": "Answer1"
+                  "back": "Answer1",
+                  "help": "Some help"
                 },
                 {
                   "front": "Question2",

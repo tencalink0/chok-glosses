@@ -21,26 +21,37 @@ export function getDeck(levelGroupId: number, deckId: number): Deck | string {
     }
 }
 
-const PrevCardBtn: React.FC<{prevCard: () => void}> = ({prevCard}) => {
-    return (
-        <>
-            <button onClick={prevCard} className='button-green'>◀</button>
-        </>
-    );
-};
+const BtnList: React.FC<{
+    btnState: boolean, 
+    helpState: boolean,
+    helpFn: () => void
+}> = ({btnState, helpState, helpFn}) => {
 
-const NextCardBtn: React.FC<{nextCard: () => void}> = ({nextCard}) => {
-    return (
-        <>
-            <button onClick={nextCard} className='button-green'>▶</button>
-        </>
-    );
-};
 
-const Card: React.FC<Flashcard> = ({front, back, help, strength}) => {
+    return (
+        <div className='button-collection-row'>
+            <button className='button-green flashcard-btn' disabled={!btnState}>✔️</button>
+            <button 
+                className='button-green flashcard-btn' 
+                disabled={!helpState}
+                onClick={helpFn}
+            >🤔</button>
+            <button className='button-green flashcard-btn' disabled={!btnState}>❌</button>
+        </div>
+    );
+}
+
+const Card: React.FC<{
+    front: string, 
+    back: string, 
+    setBtn: (state: boolean) => void,
+    setHelp: (state: boolean) => void
+}> = ({front, back, setBtn, setHelp}) => {
     const [shownCard, setShownCard] = useState(front);
 
     const handleClick = () => {
+        setBtn(true);
+        setHelp(false);
         if (shownCard == front) {
             setShownCard(back);
         } else {
@@ -59,7 +70,9 @@ const Card: React.FC<Flashcard> = ({front, back, help, strength}) => {
 
 const Flashcards = () => {
     const [ error, setError ] = useState<string | null>(null);
-
+    const [ buttonStates, setButtonStates] = useState<boolean>(false);
+    const [ helpState, setHelpState ] = useState<boolean>(false);
+    
     const [ title, setTitle ] = useState<string | undefined>(undefined);
     const [ deckFlashcards, setDeckFlashcards ] = useState<Flashcard[] | undefined>(undefined);
     const [ flashcardId, setFlashcardId ] = useState<number>(1);
@@ -84,16 +97,36 @@ const Flashcards = () => {
             if (typeof errCurrentDeck === 'string') {
                 setError(errCurrentDeck);
             } else {
-                setTitle(errCurrentDeck.title);
-                setDeckFlashcards(errCurrentDeck.flashcards);
-                setCardsTotal(errCurrentDeck.flashcards.length);
+                if (errCurrentDeck.flashcards.length < cardIdNum) {
+                    setError('Card Id Out of Range');
+                } else {
+                    setTitle(errCurrentDeck.title);
+                    setDeckFlashcards(errCurrentDeck.flashcards);
+                    setCardsTotal(errCurrentDeck.flashcards.length);
+                    setFlashcardId(cardIdNum);
+                    checkHelp(errCurrentDeck.flashcards[cardIdNum-1]);
+                }
             }
         } else {
             setError('Broken url sub-path');
         }
-
-        setFlashcardId(1);
     }, []);
+
+    const checkHelp = (flashcard?: Flashcard) => {
+        if (flashcard) {
+            const currentHelp = flashcard.help;
+            if (currentHelp) {
+                setHelpState(true);
+            }
+        } else {
+            if (!deckFlashcards) return;
+            console.log(deckFlashcards[flashcardId-1]);
+            const currentHelp = deckFlashcards[flashcardId-1].help;
+            if (currentHelp) {
+                setHelpState(true);
+            }
+        }
+    }
 
     const nextCard = () => {
         if (flashcardId >= cardsTotal) {
@@ -101,7 +134,7 @@ const Flashcards = () => {
         } else {
             setFlashcardId(flashcardId + 1);
         }
-        console.log("here!");
+        checkHelp();
     }
 
     const prevCard = () => {
@@ -109,6 +142,15 @@ const Flashcards = () => {
             setFlashcardId(cardsTotal);
         } else {
             setFlashcardId(flashcardId - 1);
+        }
+        checkHelp();
+    }
+
+    const showHelp = () => {
+        if (!deckFlashcards) return;
+        const currentHelp = deckFlashcards[flashcardId-1].help;
+        if (currentHelp) {
+            window.alert(currentHelp);
         }
     }
 
@@ -122,15 +164,19 @@ const Flashcards = () => {
                                 <>
                                     <h2>{title}</h2>
                                     <div className='flashcard-full'>
-                                        <PrevCardBtn prevCard={prevCard} />
                                         <Card 
                                             key={flashcardId}
                                             front={deckFlashcards[flashcardId-1].front} 
                                             back={deckFlashcards[flashcardId-1].back}
-                                            strength={deckFlashcards[flashcardId-1].strength}
+                                            setBtn={setButtonStates}
+                                            setHelp={setHelpState}
                                         ></Card>
-                                        <NextCardBtn nextCard={nextCard} />
                                     </div>
+                                    <BtnList 
+                                        btnState={buttonStates}
+                                        helpState={helpState}
+                                        helpFn={showHelp}
+                                    ></BtnList>
                                 </>
                             ) : (
                                 <h2>Error: {error}</h2>
