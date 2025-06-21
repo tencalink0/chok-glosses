@@ -1,45 +1,43 @@
 import { z } from 'zod';
-import { LevelGroupColourChoice, ContentChoice, Versions } from './Enums'
-import { version } from 'react';
+import { LevelGroupColourChoice, Versions } from './Enums'
 
 const LevelGroupColourChoiceSchema = z.enum(
-  [...Object.values(LevelGroupColourChoice)] as [string, ...string[]]
-);
-
-const ContentChoiceSchema = z.enum(
-  [...Object.values(ContentChoice)] as [string, ...string[]]
+    [...Object.values(LevelGroupColourChoice)] as [string, ...string[]]
 );
 
 const VersionsSchema = z.enum(
-  [...Object.values(Versions)] as [string, ...string[]]
+    [...Object.values(Versions)] as [string, ...string[]]
 );
 
-
-const FlashcardSchema = z.object({
+export const FlashcardSchema = z.object({
     front: z.string(),
     back: z.string(),
     help: z.string().optional(),
     strength: z.number().default(0)
 });
 
-const DeckSchema = z.object({
+export const DeckSchema = z.object({
     title: z.string(),
     flashcards: z.array(FlashcardSchema),
 });
 
-const ContentTypeSchema = z.object({
-    description: ContentChoiceSchema,
-    content: DeckSchema.nullable().default(null),
+export const ClauseSchema = z.object({
+    original: z.string(),
+    translated: z.string(),
 });
 
-const LevelSchema = z.object({
+export const LevelSchema = z.object({
     completed: z.boolean().default(false),
     stars: z.number().optional(),
     description: z.string().optional(),
-    content: ContentTypeSchema,
+    content: z.union([
+    DeckSchema,
+    ClauseSchema,
+    z.null()
+  ]),
 });
 
-const LevelGroupSchema = z.object({
+export const LevelGroupSchema = z.object({
     title: z.string(),
     tiles: z.array(LevelSchema),
     color: LevelGroupColourChoiceSchema.optional(),

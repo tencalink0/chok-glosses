@@ -1,18 +1,31 @@
-import Footer from './modules/Footer';
-import Header from './modules/Header';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import './App.css';
+
+import Footer from './pages/Footer';
+import Header from './pages/Header';
 import MainPage from './pages/MainPage';
 import Courses from './pages/Courses';
 import Flashcards from './pages/Flashcards';
 import Upload from './pages/Upload';
-import Feedback, { FeedbackBar } from './modules/Feedback';
-import { Versions } from './modules/Enums'
 import Err404 from './pages/Err404'
 
-import './App.css';
+import Feedback, { FeedbackBar } from './modules/Feedback';
+import { Versions, ContentChoice } from './modules/Enums'
+import type { Deck, Clause } from './modules/Types';
+import { DeckSchema, ClauseSchema } from './modules/Schema';
 
 export const Version = Versions.pre0_1;
+
+export function mapContentType(levelContent: Deck | Clause | null): ContentChoice {
+    if (DeckSchema.safeParse(levelContent).success) {
+        return ContentChoice.Flashcard;
+    } else if (ClauseSchema.safeParse(levelContent).success) {
+        return ContentChoice.Reading;
+    } else {
+        return ContentChoice.ComingSoon;
+    }
+}
 
 function App() {
     return (

@@ -1,16 +1,16 @@
 import type { Course, LevelGroup, Level, Deck } from './Types';
 import { ContentChoice } from './Enums'
-import { UNSAFE_getPatchRoutesOnNavigationFunction } from 'react-router-dom';
+import { mapContentType } from '../App'
 
 export function getDeck(levelGroupId: number, deckId: number): Deck | string {
     const errCurrentLevel = getLevel(levelGroupId, deckId);
     if (typeof errCurrentLevel === 'string') {
         return errCurrentLevel;
     } else {
-        const levelContentType = errCurrentLevel.content;
-        switch (levelContentType.description) {
+        const levelContent = errCurrentLevel.content;
+        switch (mapContentType(levelContent)) {
             case ContentChoice.Flashcard: 
-                return levelContentType.content as Deck;
+                return levelContent as Deck;
             default:
                 return "The current level cannot be formatted as flashcards";
         }
@@ -99,7 +99,7 @@ export function setFlashcardStrength(
     levelGroupId: number, 
     levelId: number, 
     cardId: number, 
-    strength: number
+    _strength: number
 ) : string | null {
     let errCurrentCourse = getCurrentCourse();
     if (typeof errCurrentCourse === 'string') return errCurrentCourse;
@@ -109,6 +109,8 @@ export function setFlashcardStrength(
 
     // TODO: properly set strength of the card
     // This can be done by moifying the copy of course and 
+
+    /*
     const newCourse = { 
         ...errCurrentCourse,
         level_groups: 
@@ -116,7 +118,7 @@ export function setFlashcardStrength(
                 if (index !== levelGroupId) return val;
                 val.tiles.map((val, index) => {
                     if (index !== levelId) return val;
-                    let newContent = val.content.content as Deck;
+                    let newContent = val.content as Deck;
                     const newFlashcards = newContent.flashcards.map((val, index) => {
                         if (index !== cardId) return val;
                         return {
@@ -136,6 +138,7 @@ export function setFlashcardStrength(
                 });
             })
     }
+    */
 
     return null;
 }

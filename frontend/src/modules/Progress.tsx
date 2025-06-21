@@ -1,11 +1,12 @@
 import { LevelGroupColourChoice, ContentChoice} from './Enums';
-import type { LevelGroupColour, Course, LevelGroup, Level } from './Types';
+import type { LevelGroupColour, Course } from './Types';
 import { useNavigate } from 'react-router-dom';
 
 import bookIcon from '../img/icons/icons8-book-100.png';
 import flashcardsIcon from '../img/icons/icons8-flashcards-100.png';
 import speakerIcon from '../img/icons/icons8-speaker-100.png'
 import writingIcon from '../img/icons/icons8-writing-100.png';
+import { mapContentType } from '../App';
 
 export interface ProgressProps {
     course: Course;
@@ -81,10 +82,10 @@ const Progress: React.FC<ProgressProps> = ({ course, colors }) => {
                                 key={tileIndex}
                                 className={className}
                                 style={{ background: tile.completed ? 'var(--green)' : '' }}
-                                onClick={() => navigate(`/${tile.content.description ? tile.content.description : 'mix'}/${groupIndex + 1}/${tileIndex + 1}/1`)}
+                                onClick={() => navigate(`/${mapContentType(tile.content)}/${groupIndex + 1}/${tileIndex + 1}/1`)}
                             >
-                                {assignIcon(tile.content.description) && (
-                                    <img className="level-icon" src={assignIcon(tile.content.description)} alt="" />
+                                {assignIcon(mapContentType(tile.content)) && (
+                                    <img className="level-icon" src={assignIcon(mapContentType(tile.content))} alt="" />
                                 )}
                                 {tile.description ? <span className="after-text">{tile.description}</span> : ''}
                             </div>

@@ -1,10 +1,12 @@
-import { ContentChoice, LevelGroupColourChoice, Versions } from "./Enums";
+import { LevelGroupColourChoice, Versions } from "./Enums";
+import { ClauseSchema } from "./Schema";
+import { z } from 'zod';
 
 export type Level = {
     completed?: boolean;
     stars?: number;
     description?: string;
-    content: ContentType;
+    content: Deck | Clause | null;
 }
 
 export type LevelGroup = {
@@ -27,15 +29,12 @@ export type LevelGroupColour = {
     Orange: string;
 };
 
-export type ContentType = {
-    description: ContentChoice;
-    content: Deck | null;
-}
-
 export type Deck = {
     title: string;
     flashcards: Flashcard[];
 }
+
+export type Clause = z.infer<typeof ClauseSchema>;
 
 export type Flashcard = {
     front: string,
