@@ -68,7 +68,7 @@ function Courses() {
                             {courses && courses.length > 0 ? (
                                 courses.map((course, _) => (
                                     <li className="hover-shift" style={{
-                                        color: localCourseTitle === course.title ? 'var(--green)' : 'var(--grey)'
+                                        color: localCourseTitle === course.title ? 'var(--green)' : 'var(--grey-dark)'
                                     }}>
                                         <div onClick={() => {
                                             updateCurrentCourse(course.title)

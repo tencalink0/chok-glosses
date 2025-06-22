@@ -13,7 +13,7 @@ import { DeckSchema, ClauseSchema } from './modules/Schema';
 export const Version = Versions.pre0_1;
 export const Title = 'Chok Glosses';
 
-const MaintenanceState = false;
+const MaintenanceState = true;
 export const ConstructionPercent = 25;
 
 export function mapContentType(levelContent: Deck | Clause | null): ContentChoice {

@@ -9,7 +9,7 @@ function Header() {
                     <a href='/'><img src={logo}></img></a>
                 </div>
                 <ul>
-                    <a href="#"><li>Practice</li></a>
+                    <a href="/flashcards"><li>Flashcards</li></a>
                     <a href="/courses"><li>Courses</li></a>
                     <a href="/shop"><li>Shop</li></a>
                 </ul>

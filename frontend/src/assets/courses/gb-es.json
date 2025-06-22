@@ -1,0 +1,71 @@
+{
+  "title": "English to Spanish",
+  "version": "pre0.1",
+  "emoji": "🇬🇧➡️🇪🇸",
+  "level_groups": [
+    {
+      "title": "Basics",
+      "color": "--red",
+      "tiles": [
+        {
+          "completed": false,
+          "content": {
+            "title": "Greetings",
+            "flashcards": [
+              { "front": "Hello", "back": "Hola", "strength": 0 },
+              { "front": "Goodbye", "back": "Adiós", "strength": 0 },
+              { "front": "Please", "back": "Por favor", "strength": 0 },
+              { "front": "Thank you", "back": "Gracias", "strength": 0 }
+            ]
+          },
+          "description": "Basic greetings and polite phrases."
+        },
+        {
+          "completed": false,
+          "content": {
+            "title": "People",
+            "flashcards": [
+              { "front": "Man", "back": "Hombre", "strength": 0 },
+              { "front": "Woman", "back": "Mujer", "strength": 0 },
+              { "front": "Boy", "back": "Niño", "strength": 0 },
+              { "front": "Girl", "back": "Niña", "strength": 0 }
+            ]
+          },
+          "description": "Common words for people."
+        }
+      ]
+    },
+    {
+      "title": "Food",
+      "color": "--green",
+      "tiles": [
+        {
+          "completed": false,
+          "content": {
+            "title": "Fruits",
+            "flashcards": [
+              { "front": "Apple", "back": "Manzana", "strength": 0 },
+              { "front": "Banana", "back": "Plátano", "strength": 0 },
+              { "front": "Orange", "back": "Naranja", "strength": 0 },
+              { "front": "Grapes", "back": "Uvas", "strength": 0 }
+            ]
+          },
+          "description": "Basic fruits in Spanish."
+        },
+        {
+          "completed": false,
+          "content": {
+            "title": "Meals",
+            "flashcards": [
+              { "front": "Breakfast", "back": "Desayuno", "strength": 0 },
+              { "front": "Lunch", "back": "Almuerzo", "strength": 0 },
+              { "front": "Dinner", "back": "Cena", "strength": 0 },
+              { "front": "Snack", "back": "Merienda", "strength": 0 }
+            ]
+          },
+          "description": "Common meal times."
+        }
+      ]
+    }
+  ]
+}
