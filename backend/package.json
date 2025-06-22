@@ -4,9 +4,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/server-express.ts",
-    "build:deno": "deno compile --output ./dist/server-deno ./src/server-deno.ts",
+    "build:deno": "shx cp ./src/server-deno.ts ./dist/server-deno.ts",
     "build:express": "tsc",
-    "start:deno": "deno run --allow-net --allow-read --config deno.json dist/server-deno.js",
+    "start:deno": "deno run --allow-net --allow-read ./dist/server-deno.ts",
     "start:express": "node dist/server-express.js"
   },
   "type": "module",

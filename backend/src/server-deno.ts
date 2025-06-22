@@ -1,16 +1,22 @@
 import { Hono } from 'https://deno.land/x/hono@v3.11.6/mod.ts';
 import { serveStatic } from 'https://deno.land/x/hono@v3.11.6/middleware.ts';
-import type { Context } from 'https://deno.land/x/hono@v3.11.6/mod.ts';
+import { dirname, fromFileUrl, join } from "https://deno.land/std@0.224.0/path/mod.ts";
 
+const __dirname = dirname(fromFileUrl(import.meta.url));
 const app = new Hono();
 const PORT = 3001;
 
-// API route
-app.get('/api/hello', (c: Context) => c.text('Hello from Deno + Hono'));
-app.use('/static/*', serveStatic({ root: './public', rewriteRequestPath: (path: string) => path.replace(/^\/static/, '') }));
-app.get('/*', serveStatic({ path: './public/index.html' }));
+const publicDir = join(__dirname, '..', 'dist', 'public');
 
-// Start the server on custom port
-Deno.serve({ port: PORT }, app.fetch);
+app.get('/api/hello', (c) => c.text('Test'));
+
+app.use('/*', serveStatic({ root: './dist/public' }));
+
+app.get('/*', async (c) => {
+    const indexPath = join(publicDir, 'index.html');
+    const content = await Deno.readTextFile(indexPath);
+    return c.html(content);
+});
 
 console.log(`Server running on http://localhost:${PORT}`);
+Deno.serve({ port: PORT }, app.fetch);

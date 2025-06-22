@@ -8,7 +8,7 @@
     "build": "npm run build --workspace frontend && npm run copy-dist",
     "build:deno": "npm run build && npm run build:deno --workspace backend",
     "build:express": "npm run build && npm run build:express --workspace backend",
-    "copy-dist": "shx rm -rf backend/dist/public && shx mkdir -p backend/dist/public && shx cp -r frontend/dist/* backend/dist/public/ && shx rm -rf frontend/dist",
+    "copy-dist": "shx rm -rf backend/dist && shx mkdir -p backend/dist/public && shx cp -r frontend/dist/* backend/dist/public/ && shx rm -rf frontend/dist",
     "start:deno": "npm run start:deno --workspace backend",
     "start:express": "npm run start:express --workspace backend",
     "install:workspaces": "npm install --workspace frontend && npm install --workspace backend",
