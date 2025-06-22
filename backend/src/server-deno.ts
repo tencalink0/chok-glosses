@@ -10,6 +10,7 @@ const publicDir = join(__dirname, '..', 'dist', 'public');
 
 app.get('/api/hello', (c) => c.text('Test'));
 
+app.use('/assets//*', serveStatic({ root: './dist/public/assets' }));
 app.use('/*', serveStatic({ root: './dist/public' }));
 
 app.get('/*', async (c) => {
