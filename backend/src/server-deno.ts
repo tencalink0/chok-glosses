@@ -10,13 +10,13 @@ const publicDir = join(__dirname, '..', 'dist', 'public');
 
 app.get('/api/hello', (c) => c.text('Test'));
 
-app.use('/*', serveStatic({ root: './dist/public' }));
+app.use('/assets/*', serveStatic({
+    root: join(publicDir, 'assets')
+}));
 
-app.get('/*', async (c) => {
-    const indexPath = join(publicDir, 'index.html');
-    const content = await Deno.readTextFile(indexPath);
-    return c.html(content);
-});
+app.use('/api/*', (c, next) => next());
+app.use('/assets/*', (c, next) => next());
+app.use('/*', serveStatic({ root: publicDir }));
 
 console.log(`Server running on http://localhost:${PORT}`);
 Deno.serve({ port: PORT }, app.fetch);
