@@ -12,6 +12,8 @@ import { DeckSchema, ClauseSchema } from './modules/Schema';
 
 export const Version = Versions.pre0_1;
 export const Title = 'Chok Glosses';
+
+const MaintenanceState = true
 export const ConstructionPercent = 20;
 
 export function mapContentType(levelContent: Deck | Clause | null): ContentChoice {
@@ -29,7 +31,7 @@ function App() {
         <>
             <Router>
                 <Header />
-                    <Maintenance />
+                    {MaintenanceState ? <Maintenance /> : <PageContent />}
                 <Footer />
             </Router>
         </>
