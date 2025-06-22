@@ -38,7 +38,7 @@ jobs:
         uses: denoland/deployctl@v1
         with:
           project: "chok-glosses"
-          entrypoint: "/backend/dist/server-deno.ts"
+          entrypoint: "/backend/src/server-deno.ts"
           root: ""
           
           
