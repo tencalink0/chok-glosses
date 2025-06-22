@@ -5,9 +5,12 @@
   "main": "index.js",
   "scripts": {
     "dev": "npm run dev --workspace frontend",
-    "build": "npm run build --workspace frontend && npm run copy-dist && npm run build --workspace backend",
+    "build": "npm run build --workspace frontend && npm run copy-dist",
+    "build:deno": "npm run build && npm run build:deno --workspace backend",
+    "build:express": "npm run build && npm run build:express --workspace backend",
     "copy-dist": "shx rm -rf backend/dist/public && shx mkdir -p backend/dist/public && shx cp -r frontend/dist/* backend/dist/public/ && shx rm -rf frontend/dist",
-    "start": "npm run start --workspace backend",
+    "start:deno": "npm run start:deno --workspace backend",
+    "start:express": "npm run start:express --workspace backend",
     "install:workspaces": "npm install --workspace frontend && npm install --workspace backend",
     "clean": "npm run clean:workspaces && shx rm package-lock.json && shx rm -rf node_modules",
     "clean:workspaces": "shx rm -rf frontend/dist && shx rm -rf backend/dist && shx rm -rf frontend/node_modules && shx rm -rf backend/node_modules"

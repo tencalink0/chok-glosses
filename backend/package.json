@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.ts",
-    "build": "tsc",
-    "start": "node dist/index.js"
+    "dev": "nodemon src/server-express.ts",
+    "build:deno": "deno compile --output ./dist/server-deno ./src/server-deno.ts",
+    "build:express": "tsc",
+    "start:deno": "deno run --allow-net --allow-read --config deno.json dist/server-deno.js",
+    "start:express": "node dist/server-express.js"
   },
   "type": "module",
   "dependencies": {

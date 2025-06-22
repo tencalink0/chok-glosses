@@ -49,6 +49,7 @@ export function getCurrentCourse(): Course | string {
         if (typeof errAllCourses === 'string') {
             return errAllCourses;
         } else {
+            if (errAllCourses.length < 1) return 'No courses available';
             const foundCourse = errAllCourses.find(item => item.title === currentCourseTitle);
             return foundCourse ?? "Course doesn't exist";
         }

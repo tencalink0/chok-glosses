@@ -1,0 +1,11 @@
+{
+  "tasks": {},
+  "fmt": {},
+  "lint": {},
+  "compilerOptions": {
+    "strict": true
+  },
+  "unstable": [
+    "sloppy-imports"
+  ]
+}
