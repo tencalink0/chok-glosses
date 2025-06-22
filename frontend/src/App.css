@@ -156,3 +156,18 @@ a.green-highlight:hover { color: var(--green-light); text-decoration: underline;
 textarea {
     font-family: Arial, Helvetica, sans-serif;
 }
+
+.loading-bar-container {
+    width: 90%;
+    margin: 30px 5%;
+    height: 30px;
+    background-color: #eee;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.loading-bar-fill {
+    height: 100%;
+    background-color: var(--blue);
+    transition: width 0.3s ease-in-out;
+}
