@@ -11,7 +11,7 @@ function Header() {
                 <ul>
                     <a href="#"><li>Practice</li></a>
                     <a href="/courses"><li>Courses</li></a>
-                    <a href="#"><li>Shop</li></a>
+                    <a href="/shop"><li>Shop</li></a>
                 </ul>
                 <div className="login-container">
                     <button className="button-green">login</button>

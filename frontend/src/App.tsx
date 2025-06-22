@@ -13,8 +13,8 @@ import { DeckSchema, ClauseSchema } from './modules/Schema';
 export const Version = Versions.pre0_1;
 export const Title = 'Chok Glosses';
 
-const MaintenanceState = true
-export const ConstructionPercent = 20;
+const MaintenanceState = false;
+export const ConstructionPercent = 25;
 
 export function mapContentType(levelContent: Deck | Clause | null): ContentChoice {
     if (DeckSchema.safeParse(levelContent).success) {

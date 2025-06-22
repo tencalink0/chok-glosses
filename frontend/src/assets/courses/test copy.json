@@ -1,0 +1,83 @@
+{
+  "title": "Test Introduction",
+  "version": "pre0.1",
+  "level_groups": [
+    {
+      "title": "The basics",
+      "color": "--green",
+      "tiles": [
+        {
+          "completed": true,
+          "stars": 3,
+          "description": "Try me",
+          "content": {
+            "title": "Term 1 Content",
+            "flashcards": [
+              {
+                "front": "Question1",
+                "back": "Answer1",
+                "help": "Some help"
+              },
+              {
+                "front": "Question2",
+                "back": "Answer2"
+              },
+              {
+                "front": "Question3",
+                "back": "Answer3"
+              }
+            ]
+          }
+        },
+        {
+          "completed": false,
+          "stars": 0,
+          "content": null
+        }
+      ]
+    },
+    {
+      "title": "Basics 2",
+      "color": "--red",
+      "tiles": [
+        {
+          "completed": true,
+          "stars": 3,
+          "description": "hey",
+          "content": null
+        },
+        {
+          "completed": false,
+          "stars": 0,
+          "content": null
+        },
+        {
+          "completed": true,
+          "stars": 0,
+          "content": null
+        },
+        {
+          "completed": false,
+          "stars": 0,
+          "content": null
+        }
+      ]
+    },
+    {
+      "title": "Food",
+      "color": "--purple",
+      "tiles": [
+        {
+          "completed": true,
+          "stars": 2,
+          "content": null
+        },
+        {
+          "completed": true,
+          "stars": 1,
+          "content": null
+        }
+      ]
+    }
+  ]
+}

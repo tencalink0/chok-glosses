@@ -49,5 +49,3 @@ export const CourseSchema = z.object({
     version: VersionsSchema,
     level_groups: z.array(LevelGroupSchema),
 });
-
-export type Course = z.infer<typeof CourseSchema>;

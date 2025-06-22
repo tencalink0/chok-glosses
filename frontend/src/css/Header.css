@@ -13,7 +13,7 @@ header .logo {
     width: 25%;
     display: flex;
     align-items: center;
-    justify-content: right;
+    justify-content: center;
 }
 
 header .logo a {
@@ -21,7 +21,7 @@ header .logo a {
 }
 
 header .logo img {
-    width: 100%;
+    width: 90px;
 }
 
 header ul {

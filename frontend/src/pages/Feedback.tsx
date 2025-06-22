@@ -40,15 +40,18 @@ function Feedback() {
                         <h3>Not listed here? Great, go ahead and submit it below:</h3>
                     </div>
                 </div>
-                <div className='tile-collection'>
-                    <div className="tile full-width">
-                        <h2>Leave some feedback</h2>
-                        <form className="feedback-form">
-                            <input className="feedback-input email" type="email" placeholder="Email" required></input>
-                            <textarea className="feedback-input body" placeholder="Feedback" required></textarea>
-                        </form>
+                <h2><a href="https://forms.gle/toYohfpHZP3ZzXLk6" target="_blank" className="green-highlight">Submit here</a></h2>
+                {/*
+                    <div className='tile-collection'>
+                        <div className="tile full-width">
+                            <h2>Leave some feedback</h2>
+                            <form className="feedback-form">
+                                <input className="feedback-input email" type="email" placeholder="Email" required></input>
+                                <textarea className="feedback-input body" placeholder="Feedback" required></textarea>
+                            </form>
+                        </div>
                     </div>
-                </div>
+                */}
             </div>
         </>
     );

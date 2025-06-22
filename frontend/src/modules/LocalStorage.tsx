@@ -24,7 +24,7 @@ export function getAllCourses(): Course[] | string {
             const json: Course[] = JSON.parse(courses);
             return json;
         } catch {
-            return 'Failed to parse JSON data'
+            return 'Failed to parse JSON data';
         }
     } else {
         return 'No courses available';

@@ -100,6 +100,34 @@
     transform: translateX(20px);
 }
 
+.square-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    gap: 2%;
+    margin: 30px;
+}
+
+.square-container .square {
+    width: 100%;
+    aspect-ratio: 1.8 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+    background-color: var(--green);
+    border-radius: var(--border-radius);
+    color: white;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.square-container .square:hover {
+    background-color: var(--green-light);
+    transform: scale(1.05);
+}
+
 table.leaderboards {
     border-collapse: collapse;
 }
