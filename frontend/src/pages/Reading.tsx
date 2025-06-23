@@ -9,9 +9,9 @@ function Reading() {
     const [ error, setError ] = useState<string | null>(null);
     const [ title, setTitle ] = useState<string | undefined>(undefined);
 
-    const [ levelGroupIdNum, setLevelGroupIdNum ] = useState<number>(1);
-    const [ levelIdNum, setLevelIdNum ] = useState<number>(1);
-    const [ sentenceIdNum, setSentenceIdNum ] = useState<number>(1);
+    const [ _levelGroupIdNum, setLevelGroupIdNum ] = useState<number>(1);
+    const [ _levelIdNum, setLevelIdNum ] = useState<number>(1);
+    const [ _sentenceIdNum, setSentenceIdNum ] = useState<number>(1);
 
     const [ sentences, setSentences ] = useState<Sentence[] | undefined>(undefined);
 
@@ -68,7 +68,7 @@ function Reading() {
                                             }}>
                                                 {
                                                     sentence.clauses.map((clause, clauseIndex) => (
-                                                        <span className="clause-wrapper" key={clauseIndex}>
+                                                        <span className="clause-wrapper" key={clauseIndex} >
                                                             {clause.original}&nbsp;
                                                             {clause.help && (
                                                                 <span className="help-tip">{clause.help}</span>
