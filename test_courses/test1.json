@@ -44,7 +44,37 @@
           "completed": true,
           "stars": 3,
           "description": "hey",
-          "content": null
+          "content": {
+            "title": "Reading 1",
+            "sentences": [
+              {
+                "clauses": [
+                  {
+                    "original": "Parte 1 fue sobre el desarollo de las cosas",
+                    "translated": "Part one was about the development of stuff",
+                    "help": "desarollo: development"
+                  },
+                  {
+                    "original": "y no tuvo tanto exito",
+                    "translated": "and it didn't turn out that great"
+                  }
+                ]
+              },
+              {
+                "clauses": [
+                  {
+                    "original": "Parte 1 fue sobre el desarollo de las cosas",
+                    "translated": "Part one was about the development of stuff",
+                    "help": "desarollo: development"
+                  },
+                  {
+                    "original": "y no tuvo tanto exito",
+                    "translated": "and it didn't turn out that great"
+                  }
+                ]
+              }
+            ]
+          }
         },
         {
           "completed": false,

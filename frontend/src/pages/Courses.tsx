@@ -85,7 +85,7 @@ function Courses() {
                                     </li>
                                 ))
                             ) : (
-                                <li>Hmmm, seems like you have no courses. Consider <a className="green-highlight" href="/upload">uploading</a> one</li>
+                                <li key="none">Hmmm, seems like you have no courses. Consider <a className="green-highlight" href="/upload">uploading</a> one</li>
                             )
                             }
                         </ul>

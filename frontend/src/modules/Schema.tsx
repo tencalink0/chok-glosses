@@ -23,7 +23,18 @@ export const DeckSchema = z.object({
 
 export const ClauseSchema = z.object({
     original: z.string(),
-    translated: z.string(),
+    translated: z.string().optional(),
+    help: z.string().optional()
+});
+
+export const SentenceSchema = z.object({
+    clauses: z.array(ClauseSchema),
+    completed: z.boolean().default(false)
+});
+
+export const ReadingSchema = z.object({
+    title: z.string(),
+    sentences: z.array(SentenceSchema)
 });
 
 export const LevelSchema = z.object({
@@ -31,10 +42,10 @@ export const LevelSchema = z.object({
     stars: z.number().optional(),
     description: z.string().optional(),
     content: z.union([
-    DeckSchema,
-    ClauseSchema,
-    z.null()
-  ]),
+        DeckSchema,
+        ReadingSchema,
+        z.null()
+    ]),
 });
 
 export const LevelGroupSchema = z.object({

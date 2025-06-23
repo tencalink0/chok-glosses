@@ -1,4 +1,4 @@
-import type { Course, LevelGroup, Level, Deck } from './Types';
+import type { Course, LevelGroup, Level, Deck, Reading } from './Types';
 import { ContentChoice } from './Enums'
 import { mapContentType } from '../App'
 
@@ -11,6 +11,21 @@ export function getDeck(levelGroupId: number, deckId: number): Deck | string {
         switch (mapContentType(levelContent)) {
             case ContentChoice.Flashcard: 
                 return levelContent as Deck;
+            default:
+                return "The current level cannot be formatted as flashcards";
+        }
+    }
+}
+
+export function getReading(levelGroupId: number, deckId: number): Reading | string {
+    const errCurrentLevel = getLevel(levelGroupId, deckId);
+    if (typeof errCurrentLevel === 'string') {
+        return errCurrentLevel;
+    } else {
+        const levelContent = errCurrentLevel.content;
+        switch (mapContentType(levelContent)) {
+            case ContentChoice.Reading: 
+                return levelContent as Reading;
             default:
                 return "The current level cannot be formatted as flashcards";
         }

@@ -5,6 +5,7 @@ import { getCurrentCourse } from '../modules/LocalStorage';
 import type { LevelGroupColour, Course} from '../modules/Types';
 
 import { useState, useEffect } from 'react';
+import { Title } from '../App';
 
 function MainPage() {
     const [ error, setError ] = useState<string | null>(null);
@@ -49,19 +50,30 @@ function MainPage() {
                                     </div>
                                     <div className="tile">
                                         <table className='leaderboards'>
+                                            <thead>
+                                                <tr><th>Leaderboards</th></tr>
+                                            </thead>
                                             <tbody>
-                                                <tr>
-                                                    <th>Leaderboards</th>
-                                                </tr>
-                                                <tr>
-                                                    <td>Player 1</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Player 2</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Player 3</td>
-                                                </tr>
+                                                <tr><td>Coming soon...</td></tr>
+                                            </tbody>
+                                        </table>
+
+                                        <table className='leaderboards'>
+                                            <thead>
+                                                <tr><th>Notices</th></tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr><td>Coming soon...</td></tr>
+                                            </tbody>
+                                        </table>
+
+                                        <table className='leaderboards'>
+                                            <thead>
+                                                <tr><th>Sponsor {Title}</th></tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr><td>The sooner we can deploy, the better</td></tr>
+                                                <tr><td>Coming soon...</td></tr>
                                             </tbody>
                                         </table>
                                     </div>

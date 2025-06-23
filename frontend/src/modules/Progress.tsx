@@ -40,7 +40,22 @@ const Progress: React.FC<{course: Course, colors: LevelGroupColour}> = ({ course
             default:
                 return undefined;
         }
-    }
+    };
+
+    const assignQuery = (levelTypeDescription: ContentChoice): string => {
+        switch (levelTypeDescription) {
+            case ContentChoice.Flashcard: 
+                return 'cardId';
+            case ContentChoice.Reading: 
+                return 'sentenceId';
+            case ContentChoice.Writing: 
+                return 'id';
+            case ContentChoice.Listening: 
+                return 'id';
+            default:
+                return 'id';
+        }
+    };
 
     let globalTileIndex = 0;
 
@@ -77,7 +92,9 @@ const Progress: React.FC<{course: Course, colors: LevelGroupColour}> = ({ course
                                 key={tileIndex}
                                 className={className}
                                 style={{ background: tile.completed ? 'var(--green)' : '' }}
-                                onClick={() => navigate(`/${mapContentType(tile.content)}/${groupIndex + 1}/${tileIndex + 1}?cardId=1`)}
+                                onClick={() => navigate(`/${mapContentType(tile.content)}/${groupIndex + 1}/${tileIndex + 1}?${
+                                    assignQuery(mapContentType(tile.content))}=1`
+                                )}
                             >
                                 {assignIcon(mapContentType(tile.content)) && (
                                     <img className="level-icon" src={assignIcon(mapContentType(tile.content))} alt="" />

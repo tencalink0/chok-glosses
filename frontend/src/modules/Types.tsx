@@ -15,6 +15,8 @@ export type LevelGroupColour = {
 };
 
 export type Deck = z.infer<typeof Schema.DeckSchema>;
+export type Reading = z.infer<typeof Schema.ReadingSchema>;
 
 export type Clause = z.infer<typeof Schema.ClauseSchema>;
+export type Sentence = z.infer<typeof Schema.SentenceSchema>;
 export type Flashcard = z.infer<typeof Schema.FlashcardSchema>;
