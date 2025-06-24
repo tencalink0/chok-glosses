@@ -51,6 +51,25 @@ function Reading() {
             setError('Broken url sub-path');
         }
     }, []);
+
+    const completeCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const isChecked = e.target.checked;
+        const sentenceId = parseInt(e.target.value);
+
+        if (!sentences) return;
+
+        if (sentenceId < 1 || sentenceId > sentences.length) return;
+
+        const updatedSentences = [...sentences];
+        updatedSentences[sentenceId-1] = {
+            ...updatedSentences[sentenceId-1],
+            completed: isChecked
+        };
+
+        console.log(isChecked, sentenceId);
+
+        setSentences(updatedSentences);
+    };
     
     return(
         <div className='mainpage'>
@@ -64,7 +83,10 @@ function Reading() {
                                     {
                                         sentences.map((sentence, index) => (
                                             <li key={index} style={{
-                                                padding: '15px'
+                                                padding: '15px',
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center"
                                             }}>
                                                 {
                                                     sentence.clauses.map((clause, clauseIndex) => (
@@ -76,6 +98,13 @@ function Reading() {
                                                         </span>
                                                     ))
                                                 }
+                                                <input 
+                                                    type="checkbox"
+                                                    className="sentence-check"
+                                                    value={index + 1}
+                                                    checked={sentence.completed}
+                                                    onChange={completeCheck}
+                                                ></input>
                                             </li>
                                         ))
                                     }

@@ -22,3 +22,18 @@
 .clause-wrapper:hover .help-tip {
     display: block;
 }
+
+.sentence-check {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 25px;
+    aspect-ratio: 1 / 1;
+    border-radius: 5px;
+    border: 1px solid black;
+    background-color: var(--red);
+}
+
+.sentence-check:checked {
+    background-color: var(--green);
+}
