@@ -9,7 +9,7 @@
     font-family: Arial, Helvetica, sans-serif;
     top: 100%;
     right: 0;
-    background-color: var(--level-green);
+    background-color: var(--level-orange);
     color: var(--grey-dark);
     padding: 8px;
     font-size: 16px;
@@ -36,4 +36,36 @@
 
 .sentence-check:checked {
     background-color: var(--green);
+}
+
+.toggle-switch {
+    width: 80px;
+    height: 40px;
+    border-radius: 40px;
+    background-color: var(--level-orange);
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.toggle-switch.on {
+    background-color: var(--level-green);
+}
+
+.toggle-thumb {
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    border-radius: 15px;
+    position: relative;
+    top: 5px;
+    left: 5px;
+    transition: left 0.2s ease;
+    text-align: center;
+    font-size: 25px;
+}
+
+.toggle-switch.on .toggle-thumb {
+    left: 45px;
 }

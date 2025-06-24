@@ -14,6 +14,7 @@ function Reading() {
     const [ _sentenceIdNum, setSentenceIdNum ] = useState<number>(1);
 
     const [ sentences, setSentences ] = useState<Sentence[] | undefined>(undefined);
+    const [ isAnswer, setIsAnswer ] = useState(false);
 
     const { levelGroupId, levelId } = useParams();
     const [ searchParams ] = useSearchParams();
@@ -52,6 +53,8 @@ function Reading() {
         }
     }, []);
 
+    const toggle = () => setIsAnswer(!isAnswer);
+
     const completeCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
         const isChecked = e.target.checked;
         const sentenceId = parseInt(e.target.value);
@@ -78,6 +81,13 @@ function Reading() {
                     {
                         error === null && sentences && sentenceId ? (
                             <>
+                                <div style={{
+                                    position: 'relative'
+                                }}>
+                                    <div className={`toggle-switch ${isAnswer ? 'on' : 'off'}`} onClick={toggle}>
+                                        <div className="toggle-thumb">{isAnswer ? 'A' : '?'}</div>
+                                    </div>
+                                </div>
                                 <h2>{title}</h2>
                                 <ul>
                                     {
@@ -92,8 +102,12 @@ function Reading() {
                                                     sentence.clauses.map((clause, clauseIndex) => (
                                                         <span className="clause-wrapper" key={clauseIndex} >
                                                             {clause.original}&nbsp;
-                                                            {clause.help && (
+                                                            {!isAnswer ? clause.help && (
                                                                 <span className="help-tip">{clause.help}</span>
+                                                            ) : (
+                                                                <span className="help-tip" style={{
+                                                                    backgroundColor: 'var(--level-green)'
+                                                                }}>{clause.translated}</span>
                                                             )}
                                                         </span>
                                                     ))
