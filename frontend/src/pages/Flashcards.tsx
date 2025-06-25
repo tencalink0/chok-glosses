@@ -57,14 +57,18 @@ const BtnList: React.FC<{
 const Card: React.FC<{
     front: string, 
     back: string, 
+    totalCards?: number,
+    flashcardId?: number,
     setBtn: (state: boolean) => void,
     setHelp: (state: boolean) => void
-}> = ({front, back, setBtn, setHelp}) => {
+}> = ({front, back, totalCards, flashcardId, setBtn, setHelp}) => {
     const [shownCard, setShownCard] = useState(front);
-
+    const [flipped, setFlipped] = useState(false);
+    
     const handleClick = () => {
         setBtn(true);
         setHelp(false);
+        setFlipped(!flipped);
         if (shownCard == front) {
             setShownCard(back);
         } else {
@@ -72,10 +76,20 @@ const Card: React.FC<{
         }
     };
 
+    const isLastCard = () => {
+        if (!totalCards || !flashcardId) return true;
+        return totalCards === flashcardId;
+    }
+
     return (
         <div className="flashcard-container">
-            <div className="flashcard" onClick={handleClick}>
-                <div className="flashcard-content">{shownCard}</div>
+            <div 
+                className={`flashcard ${flipped ? 'flipped' : ''} ${isLastCard() ? '' : 'back-card'}`}
+                onClick={handleClick}
+            >
+                <div className="flashcard-content">
+                    <div className="flashcard-front flashcard-content">{shownCard}</div>
+                </div>
             </div>
         </div>
     );
@@ -225,6 +239,8 @@ const Flashcards = () => {
                                             key={flashcardId}
                                             front={deckFlashcards[flashcardId-1].front} 
                                             back={deckFlashcards[flashcardId-1].back}
+                                            totalCards={cardsTotal}
+                                            flashcardId={flashcardId}
                                             setBtn={setButtonStates}
                                             setHelp={setHelpState}
                                         ></Card>
