@@ -15,6 +15,7 @@ function Reading() {
 
     const [ sentences, setSentences ] = useState<Sentence[] | undefined>(undefined);
     const [ isAnswer, setIsAnswer ] = useState(false);
+    const [ allSentencesDone, setAllSentencesDone ] = useState(false);
 
     const { levelGroupId, levelId } = useParams();
     const [ searchParams ] = useSearchParams();
@@ -46,6 +47,7 @@ function Reading() {
                     setTitle(errCurrentDeck.title);
                     setSentences(errCurrentDeck.sentences);
                     setSentenceIdNum(sentenceIdTemp);
+                    checkSentencesComplete(errCurrentDeck.sentences);
                 }
             }
         } else {
@@ -72,7 +74,22 @@ function Reading() {
         console.log(isChecked, sentenceId);
 
         setSentences(updatedSentences);
+        checkSentencesComplete(updatedSentences);
     };
+
+    const markSectionAsComplete = () => {
+
+    }
+
+    const checkSentencesComplete = (updatedSentences?: Sentence[]) => {
+        let localSentences = updatedSentences ?? sentences;
+        let allCompleted = true;
+        localSentences?.forEach((sentence) => {
+            if (!sentence.completed) allCompleted = false;
+        });
+        setAllSentencesDone(allCompleted)
+        if (allCompleted) markSectionAsComplete();
+    }
     
     return(
         <div className='mainpage'>
@@ -123,6 +140,29 @@ function Reading() {
                                         ))
                                     }
                                 </ul>
+                                <div style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}>
+                                    <div style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        padding: '10px',
+                                        borderRadius: 'var(--border-radius)',
+                                        backgroundColor: 'var(--grey)'
+                                    }}>
+                                        Completed:&nbsp;
+                                        <input 
+                                            type="checkbox"
+                                            className="sentence-check"
+                                            value="completed"
+                                            checked={allSentencesDone}
+                                            readOnly
+                                        ></input>
+                                    </div>
+                                </div>
                             </>
                         ) : (
                             <h2>Error: {error}</h2>
