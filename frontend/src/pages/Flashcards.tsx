@@ -1,5 +1,7 @@
 import { useParams, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import confetti from 'canvas-confetti';
+
 import '../css/Flashcard.css';
 import { getDeck, setFlashcardStrength } from '../modules/LocalStorage';
 import type { Flashcard } from '../modules/Types';
@@ -59,16 +61,31 @@ const Card: React.FC<{
     back: string, 
     totalCards?: number,
     flashcardId?: number,
+    done: boolean,
     setBtn: (state: boolean) => void,
     setHelp: (state: boolean) => void
-}> = ({front, back, totalCards, flashcardId, setBtn, setHelp}) => {
-    const [shownCard, setShownCard] = useState(front);
-    const [flipped, setFlipped] = useState(false);
+}> = ({front, back, totalCards, flashcardId, done, setBtn, setHelp}) => {
+    const [ shownCard, setShownCard ] = useState(front);
+    const [ flipped, setFlipped ] = useState(false);
+    const navigate = useNavigate();
     
+    useEffect(() => {
+        if (done) {
+            confetti({
+                particleCount: 250,
+                spread: 70,
+                startVelocity: 60,
+                gravity: 1.5,
+                ticks: 120,
+                origin: { x: 0.5, y: 1 }
+            });
+        }
+    }, [done]);
+
     const handleClick = () => {
         setBtn(true);
         setHelp(false);
-        setFlipped(!flipped);
+        if (!done) setFlipped(!flipped);
         if (shownCard == front) {
             setShownCard(back);
         } else {
@@ -85,10 +102,26 @@ const Card: React.FC<{
         <div className="flashcard-container">
             <div 
                 className={`flashcard ${flipped ? 'flipped' : ''} ${isLastCard() ? '' : 'back-card'}`}
+                style={done ? { 
+                    backgroundColor: 'white', 
+                    color: 'var(--blue)' 
+                } : {}}
                 onClick={handleClick}
             >
                 <div className="flashcard-content">
-                    <div className="flashcard-front flashcard-content">{shownCard}</div>
+                    <div className={`${!done ? 'flashcard-front' : ''} flashcard-content`}>{
+                        done ? (
+                            <div>
+                                <p>All done!</p>
+                                <a 
+                                    className='green-highlight' style={{
+                                        fontSize: '24px'
+                                    }}
+                                    onClick={() => navigate('/')}
+                                >Return Home</a>
+                            </div>
+                        ) : shownCard}
+                    </div>
                 </div>
             </div>
         </div>
@@ -100,6 +133,7 @@ const Flashcards = () => {
     const [ buttonStates, setButtonStates] = useState<boolean>(false);
     const [ helpState, setHelpState ] = useState<boolean>(false);
     const [ helpUse, setHelpUse ] = useState<boolean>(false);
+    const [ finished, setFinished ] = useState<boolean>(false);
 
     const [ title, setTitle ] = useState<string | undefined>(undefined);
     const [ deckFlashcards, setDeckFlashcards ] = useState<Flashcard[] | undefined>(undefined);
@@ -175,8 +209,18 @@ const Flashcards = () => {
 
     const nextCard = (strength?: number) => {
         let newId = 0;
+        if (strength) {
+            setFlashcardStrength(
+                levelGroupIdNum,
+                levelIdNum,
+                flashcardId,
+                strength
+            ); 
+        }
+
         if (flashcardId >= cardsTotal) {
-            newId = 1;
+            setFinished(true);
+            return;
         } else {
             newId = flashcardId + 1;
         }
@@ -187,14 +231,6 @@ const Flashcards = () => {
         navigate(`${location.pathname}?${params.toString()}`, { replace: true });
 
         if (!deckFlashcards) return;
-        if (strength) {
-            setFlashcardStrength(
-                levelGroupIdNum,
-                levelIdNum,
-                newId,
-                strength
-            ); 
-        }
         
         setButtonStates(false);
         setHelpUse(false);
@@ -241,6 +277,7 @@ const Flashcards = () => {
                                             back={deckFlashcards[flashcardId-1].back}
                                             totalCards={cardsTotal}
                                             flashcardId={flashcardId}
+                                            done={finished}
                                             setBtn={setButtonStates}
                                             setHelp={setHelpState}
                                         ></Card>
