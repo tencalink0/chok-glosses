@@ -147,16 +147,13 @@ const Card: React.FC<{
 
 const Flashcards = () => {
     const [ error, setError ] = useState<string | null>(null);
-    const [ buttonStates, setButtonStates] = useState<boolean>(false);
+    const [ buttonStates, setButtonStates ] = useState<boolean>(false);
     const [ helpState, setHelpState ] = useState<boolean>(false);
     const [ helpUse, setHelpUse ] = useState<boolean>(false);
     const [ finished, setFinished ] = useState<boolean>(false);
 
     const [ title, setTitle ] = useState<string | undefined>(undefined);
-    // const [ deckFlashcards, setDeckFlashcards ] = useState<FlashcardWithId[] | undefined>(undefined);
     const [ flaschardQueue, setFlashcardQueue ] = useState<FlashcardWithId[]>([]);
-    // const [ flashcardId, setFlashcardId ] = useState<number>(1);
-    // const [ cardsTotal, setCardsTotal ] = useState<number>(1);
 
     const [ levelGroupIdNum, setLevelGroupIdNum ] = useState<number>(1);
     const [ levelIdNum, setLevelId ] = useState<number>(1);

@@ -8,6 +8,7 @@ import Upload from './pages/Upload';
 import Err404 from './pages/Err404';
 import Feedback, { FeedbackBar } from './pages/Feedback';
 import Shop from "./pages/Shop";
+import Practice from './pages/Practice';
 
 function PageContent() {
     return (
@@ -16,6 +17,7 @@ function PageContent() {
             <main>
                 <Routes>
                     <Route path="/" element={<MainPage />} />
+                    <Route path="/practice" element={<Practice />} />
                     <Route path="/courses" element={<Courses />} />
                     <Route path="/shop" element={<Shop />} />
 
