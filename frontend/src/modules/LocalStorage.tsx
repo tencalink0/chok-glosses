@@ -166,11 +166,11 @@ export function setLevelCompletion(
     let errCurrentLevel = getLevel(levelGroupId, levelId);
     if (typeof errCurrentLevel === 'string') return errCurrentLevel;
 
-    const levelGroup = errCurrentCourse.level_groups[levelGroupId-1];
+    const newCourse = structuredClone(errCurrentCourse);
+    const levelGroup = newCourse.level_groups[levelGroupId-1];
     const level = levelGroup.tiles[levelId-1];
     level.completed = completeState;
-
-    writeCourse(errCurrentCourse);
+    writeCourse(newCourse);
 
     return null;
 }
@@ -190,6 +190,7 @@ export function setSentenceCompletion(
     const levelGroup = errCurrentCourse.level_groups[levelGroupId-1];
     const level = levelGroup.tiles[levelId-1];
     (level.content as Reading).sentences[sentenceId - 1].completed = completeState;
+    console.log(errCurrentCourse);
     writeCourse(errCurrentCourse);
 
     return null;
