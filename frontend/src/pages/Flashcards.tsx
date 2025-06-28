@@ -29,25 +29,13 @@ function calculateStrength(
     return newStrength;
 }
 
-// TODO: optimise
 function shuffle<T>(cards: T[]): T[] {
-    let cardsLocal = [...cards];
-    type tPos = T & {pos: number};
-    let shuffledCardsPos: tPos[] = cardsLocal.map((value) => {
-        return {
-            ...value,
-            pos: Math.random()
-        }
-    });
-    let shuffledCards = shuffledCardsPos.sort((a, b) => 
-        a.pos - b.pos
-    );
-    return shuffledCards.map((cardPos) => {
-        return {
-            ...cardPos,
-            pos: undefined
-        };
-    });
+    const array = [...cards];
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
 }
 
 const BtnList: React.FC<{
@@ -187,7 +175,7 @@ const Flashcards = () => {
                             id: i + 1
                         }
                     })
-                );
+                ).sort((a, b) => a.strength - b.strength);
 
                 setTitle(errCurrentDeck.title);
                 setFlashcardQueue(currentCards);
@@ -206,23 +194,28 @@ const Flashcards = () => {
 
     const checkHelp = (flashcard?: FlashcardWithId) => {
         if (flashcard) {
-            if (!flaschardQueue[0]) return;
             const currentHelp = flashcard.help;
+            console.log(currentHelp);
             if (currentHelp) {
                 setHelpState(true);
+            } else {
+                setHelpState(false);
             }
         } else {
             if (!flaschardQueue[0]) return;
             const currentHelp = flaschardQueue[0].help;
+            console.log('backup: ', currentHelp);
             if (currentHelp) {
                 setHelpState(true);
+            } else {
+                setHelpState(false);
             }
         }
     }
 
     const nextCard = (strength?: number) => {
+        if (!flaschardQueue[0]) return;
         if (strength) {
-            if (!flaschardQueue[0]) return;
             setFlashcardStrength(
                 levelGroupIdNum,
                 levelIdNum,
@@ -230,6 +223,8 @@ const Flashcards = () => {
                 strength
             ); 
         }
+
+        let newItem;
 
         if (flaschardQueue.length < 2) {
             setFinished(true);
@@ -241,12 +236,13 @@ const Flashcards = () => {
         } else {
             // TODO: improve removing first item
             if (!flaschardQueue[0]) return;
-            setFlashcardQueue(flaschardQueue.filter(card => card.id !== flaschardQueue[0].id));
+            newItem = flaschardQueue[1]
+            setFlashcardQueue(flaschardQueue.slice(1));
         }
         
         setButtonStates(false);
         setHelpUse(false);
-        checkHelp(undefined);
+        checkHelp(newItem);
     }
 
     const cardResponse = (correct: boolean) => {
@@ -266,9 +262,7 @@ const Flashcards = () => {
 
         if (!flaschardQueue[0]) return;
         const currentHelp = flaschardQueue[0].help;
-        if (currentHelp) {
-            window.alert(currentHelp);
-        }
+        if (currentHelp) window.alert(currentHelp);
     }
 
     // true: front, false: back
