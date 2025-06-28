@@ -92,8 +92,7 @@ const Progress: React.FC<{course: Course, colors: LevelGroupColour}> = ({ course
                                 key={tileIndex}
                                 className={className}
                                 style={{ background: tile.completed ? 'var(--green)' : '' }}
-                                onClick={() => navigate(`/${mapContentType(tile.content)}/${groupIndex + 1}/${tileIndex + 1}?${
-                                    assignQuery(mapContentType(tile.content))}=1`
+                                onClick={() => navigate(`/${mapContentType(tile.content)}/${groupIndex + 1}/${tileIndex + 1}`
                                 )}
                             >
                                 {assignIcon(mapContentType(tile.content)) && (

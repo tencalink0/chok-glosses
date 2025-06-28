@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
-import { getReading } from "../modules/LocalStorage";
+import { getReading, setLevelCompletion, setSentenceCompletion } from "../modules/LocalStorage";
 import type { Sentence } from "../modules/Types";
 
 import '../css/Reading.css';
@@ -9,23 +9,20 @@ function Reading() {
     const [ error, setError ] = useState<string | null>(null);
     const [ title, setTitle ] = useState<string | undefined>(undefined);
 
-    const [ _levelGroupIdNum, setLevelGroupIdNum ] = useState<number>(1);
-    const [ _levelIdNum, setLevelIdNum ] = useState<number>(1);
-    const [ _sentenceIdNum, setSentenceIdNum ] = useState<number>(1);
+    const [ levelGroupIdNum, setLevelGroupIdNum ] = useState<number>(1);
+    const [ levelIdNum, setLevelIdNum ] = useState<number>(1);
 
     const [ sentences, setSentences ] = useState<Sentence[] | undefined>(undefined);
     const [ isAnswer, setIsAnswer ] = useState(false);
     const [ allSentencesDone, setAllSentencesDone ] = useState(false);
 
     const { levelGroupId, levelId } = useParams();
-    const [ searchParams ] = useSearchParams();
-    const sentenceId = searchParams.get("sentenceId");
 
     useEffect(() => {
-        if (levelGroupId && levelId && sentenceId) {
-            let [levelGroupIdTemp, levelIdTemp, sentenceIdTemp] = [0, 0, 0];
+        if (levelGroupId && levelId) {
+            let [levelGroupIdTemp, levelIdTemp] = [0, 0];
             try {
-                [levelGroupIdTemp, levelIdTemp, sentenceIdTemp] = [parseInt(levelGroupId), parseInt(levelId), parseInt(sentenceId)];
+                [levelGroupIdTemp, levelIdTemp] = [parseInt(levelGroupId), parseInt(levelId)];
                 setLevelGroupIdNum(levelGroupIdTemp);
                 setLevelIdNum(levelIdTemp);
             } catch (error) {
@@ -41,14 +38,9 @@ function Reading() {
             if (typeof errCurrentDeck === 'string') {
                 setError(errCurrentDeck);
             } else {
-                if (errCurrentDeck.sentences.length < sentenceIdTemp) {
-                    setError('Sentence Id Out of Range');
-                } else {
-                    setTitle(errCurrentDeck.title);
-                    setSentences(errCurrentDeck.sentences);
-                    setSentenceIdNum(sentenceIdTemp);
-                    checkSentencesComplete(errCurrentDeck.sentences);
-                }
+                setTitle(errCurrentDeck.title);
+                setSentences(errCurrentDeck.sentences);
+                checkSentencesComplete(errCurrentDeck.sentences);
             }
         } else {
             setError('Broken url sub-path');
@@ -71,14 +63,23 @@ function Reading() {
             completed: isChecked
         };
 
-        console.log(isChecked, sentenceId);
+        setSentenceCompletion(
+            levelGroupIdNum,
+            levelIdNum,
+            sentenceId,
+            isChecked
+        );
 
         setSentences(updatedSentences);
         checkSentencesComplete(updatedSentences);
     };
 
-    const markSectionAsComplete = () => {
-
+    const updateSectionStatus = (allCompleted: boolean) => {
+        setLevelCompletion(
+            levelGroupIdNum,
+            levelIdNum,
+            allCompleted
+        );
     }
 
     const checkSentencesComplete = (updatedSentences?: Sentence[]) => {
@@ -88,7 +89,7 @@ function Reading() {
             if (!sentence.completed) allCompleted = false;
         });
         setAllSentencesDone(allCompleted)
-        if (allCompleted) markSectionAsComplete();
+        updateSectionStatus(allCompleted);
     }
     
     return(
@@ -96,7 +97,7 @@ function Reading() {
             <div className='tile-collection'>
                 <div className="tile full-width">
                     {
-                        error === null && sentences && sentenceId ? (
+                        error === null && sentences ? (
                             <>
                                 <div style={{
                                     position: 'relative'

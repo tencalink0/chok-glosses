@@ -154,3 +154,43 @@ export function setFlashcardStrength(
 
     return null;
 }
+
+export function setLevelCompletion(
+    levelGroupId: number, 
+    levelId: number,
+    completeState = true
+): string | null {
+    let errCurrentCourse = getCurrentCourse();
+    if (typeof errCurrentCourse === 'string') return errCurrentCourse;
+
+    let errCurrentLevel = getLevel(levelGroupId, levelId);
+    if (typeof errCurrentLevel === 'string') return errCurrentLevel;
+
+    const levelGroup = errCurrentCourse.level_groups[levelGroupId-1];
+    const level = levelGroup.tiles[levelId-1];
+    level.completed = completeState;
+
+    writeCourse(errCurrentCourse);
+
+    return null;
+}
+
+export function setSentenceCompletion(
+    levelGroupId: number, 
+    levelId: number,
+    sentenceId: number,
+    completeState = true
+) {
+    let errCurrentCourse = getCurrentCourse();
+    if (typeof errCurrentCourse === 'string') return errCurrentCourse;
+    const errDeck = getReading(levelGroupId, levelId);
+    if (typeof errDeck === 'string') return errDeck;
+    if (errDeck.sentences.length < sentenceId) return 'SentenceId out of range';
+
+    const levelGroup = errCurrentCourse.level_groups[levelGroupId-1];
+    const level = levelGroup.tiles[levelId-1];
+    (level.content as Reading).sentences[sentenceId - 1].completed = completeState;
+    writeCourse(errCurrentCourse);
+
+    return null;
+}

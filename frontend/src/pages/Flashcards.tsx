@@ -1,10 +1,12 @@
-import { useParams, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import confetti from 'canvas-confetti';
 
 import '../css/Flashcard.css';
-import { getDeck, setFlashcardStrength } from '../modules/LocalStorage';
+import { getDeck, setFlashcardStrength, setLevelCompletion } from '../modules/LocalStorage';
 import type { Flashcard } from '../modules/Types';
+
+type FlashcardWithId = Flashcard & {id: number};
 
 function calculateStrength(
     prevStrength: number, // big significance
@@ -25,6 +27,27 @@ function calculateStrength(
     const newStrength = prevStrength + rate * (target - prevStrength);
 
     return newStrength;
+}
+
+// TODO: optimise
+function shuffle<T>(cards: T[]): T[] {
+    let cardsLocal = [...cards];
+    type tPos = T & {pos: number};
+    let shuffledCardsPos: tPos[] = cardsLocal.map((value) => {
+        return {
+            ...value,
+            pos: Math.random()
+        }
+    });
+    let shuffledCards = shuffledCardsPos.sort((a, b) => 
+        a.pos - b.pos
+    );
+    return shuffledCards.map((cardPos) => {
+        return {
+            ...cardPos,
+            pos: undefined
+        };
+    });
 }
 
 const BtnList: React.FC<{
@@ -59,12 +82,11 @@ const BtnList: React.FC<{
 const Card: React.FC<{
     front: string, 
     back: string, 
-    totalCards?: number,
-    flashcardId?: number,
+    lastCard: boolean,
     done: boolean,
     setBtn: (state: boolean) => void,
     setHelp: (state: boolean) => void
-}> = ({front, back, totalCards, flashcardId, done, setBtn, setHelp}) => {
+}> = ({front, back, lastCard, done, setBtn, setHelp}) => {
     const [ shownCard, setShownCard ] = useState(front);
     const [ flipped, setFlipped ] = useState(false);
     const navigate = useNavigate();
@@ -93,15 +115,10 @@ const Card: React.FC<{
         }
     };
 
-    const isLastCard = () => {
-        if (!totalCards || !flashcardId) return true;
-        return totalCards === flashcardId;
-    }
-
     return (
         <div className="flashcard-container">
             <div 
-                className={`flashcard ${flipped ? 'flipped' : ''} ${isLastCard() ? '' : 'back-card'}`}
+                className={`flashcard ${flipped ? 'flipped' : ''} ${lastCard ? '' : 'back-card'}`}
                 style={done ? { 
                     backgroundColor: 'white', 
                     color: 'var(--blue)' 
@@ -136,25 +153,21 @@ const Flashcards = () => {
     const [ finished, setFinished ] = useState<boolean>(false);
 
     const [ title, setTitle ] = useState<string | undefined>(undefined);
-    const [ deckFlashcards, setDeckFlashcards ] = useState<Flashcard[] | undefined>(undefined);
-    const [ flashcardId, setFlashcardId ] = useState<number>(1);
-    const [ cardsTotal, setCardsTotal ] = useState<number>(1);
+    // const [ deckFlashcards, setDeckFlashcards ] = useState<FlashcardWithId[] | undefined>(undefined);
+    const [ flaschardQueue, setFlashcardQueue ] = useState<FlashcardWithId[]>([]);
+    // const [ flashcardId, setFlashcardId ] = useState<number>(1);
+    // const [ cardsTotal, setCardsTotal ] = useState<number>(1);
 
     const [ levelGroupIdNum, setLevelGroupIdNum ] = useState<number>(1);
     const [ levelIdNum, setLevelId ] = useState<number>(1);
 
     const { levelGroupId, levelId } = useParams();
-    const [searchParams] = useSearchParams();
-    const cardId = searchParams.get("cardId");
-
-    const navigate = useNavigate();
-    const location = useLocation();
 
     useEffect(() => {
-        if (levelGroupId && levelId && cardId) {
-            let [levelGroupIdTemp, levelIdTemp, cardIdTemp] = [0, 0, 0];
+        if (levelGroupId && levelId) {
+            let [levelGroupIdTemp, levelIdTemp] = [0, 0, 0];
             try {
-                [levelGroupIdTemp, levelIdTemp, cardIdTemp] = [parseInt(levelGroupId), parseInt(levelId), parseInt(cardId)];
+                [levelGroupIdTemp, levelIdTemp] = [parseInt(levelGroupId), parseInt(levelId)];
                 setLevelGroupIdNum(levelGroupIdTemp);
                 setLevelId(levelIdTemp);
             } catch (error) {
@@ -170,14 +183,23 @@ const Flashcards = () => {
             if (typeof errCurrentDeck === 'string') {
                 setError(errCurrentDeck);
             } else {
-                if (errCurrentDeck.flashcards.length < cardIdTemp) {
-                    setError('Card Id Out of Range');
+                const currentCards = shuffle(
+                    errCurrentDeck.flashcards.map((value, i) => {
+                        return {
+                            ...value,
+                            id: i + 1
+                        }
+                    })
+                );
+
+                setTitle(errCurrentDeck.title);
+                setFlashcardQueue(currentCards);
+
+                const currentFlashcard = currentCards.find(card => card.id === currentCards[0].id);
+                if (!currentFlashcard) {
+                    setError("Card doesn't exist anymore (rare error)");
                 } else {
-                    setTitle(errCurrentDeck.title);
-                    setDeckFlashcards(errCurrentDeck.flashcards);
-                    setCardsTotal(errCurrentDeck.flashcards.length);
-                    setFlashcardId(cardIdTemp);
-                    checkHelp(errCurrentDeck.flashcards[cardIdTemp-1]);
+                    checkHelp(currentFlashcard);
                 }
             }
         } else {
@@ -185,81 +207,79 @@ const Flashcards = () => {
         }
     }, []);
 
-    const checkHelp = (flashcard?: Flashcard, newId?: number) => {
+    const checkHelp = (flashcard?: FlashcardWithId) => {
         if (flashcard) {
+            if (!flaschardQueue[0]) return;
             const currentHelp = flashcard.help;
             if (currentHelp) {
                 setHelpState(true);
             }
         } else {
-            if (!deckFlashcards) return;
-            if (newId) {
-                const currentHelp = deckFlashcards[newId-1].help;
-                if (currentHelp) {
-                    setHelpState(true);
-                }
-            } else {
-                const currentHelp = deckFlashcards[flashcardId-1].help;
-                if (currentHelp) {
-                    setHelpState(true);
-                }
+            if (!flaschardQueue[0]) return;
+            const currentHelp = flaschardQueue[0].help;
+            if (currentHelp) {
+                setHelpState(true);
             }
         }
     }
 
     const nextCard = (strength?: number) => {
-        let newId = 0;
         if (strength) {
+            if (!flaschardQueue[0]) return;
             setFlashcardStrength(
                 levelGroupIdNum,
                 levelIdNum,
-                flashcardId,
+                flaschardQueue[0].id,
                 strength
             ); 
         }
 
-        if (flashcardId >= cardsTotal) {
+        if (flaschardQueue.length < 2) {
             setFinished(true);
+            setLevelCompletion(
+                levelGroupIdNum,
+                levelIdNum
+            );
             return;
         } else {
-            newId = flashcardId + 1;
+            // TODO: improve removing first item
+            if (!flaschardQueue[0]) return;
+            setFlashcardQueue(flaschardQueue.filter(card => card.id !== flaschardQueue[0].id));
         }
-        setFlashcardId(newId);
-
-        const params = new URLSearchParams(location.search);
-        params.set("cardId", String(newId));
-        navigate(`${location.pathname}?${params.toString()}`, { replace: true });
-
-        if (!deckFlashcards) return;
         
         setButtonStates(false);
         setHelpUse(false);
-        checkHelp(undefined, newId);
+        checkHelp(undefined);
     }
 
     const cardResponse = (correct: boolean) => {
-        if (deckFlashcards) {
-            const strength = calculateStrength(
-                deckFlashcards[flashcardId-1].strength, 
-                helpUse, 
-                1,
-                correct
-            );
-            console.log(strength);
-            nextCard(strength);
-        } else {
-            nextCard(0);
-        }
+        if (!flaschardQueue[0]) return;
+        const strength = calculateStrength(
+            flaschardQueue[0].strength, 
+            helpUse, 
+            1,
+            correct
+        );
+        console.log(strength);
+        nextCard(strength);
     }
 
     const showHelp = () => {
         setHelpUse(true);
-        if (!deckFlashcards) return;
-        const currentHelp = deckFlashcards[flashcardId-1].help;
+
+        if (!flaschardQueue[0]) return;
+        const currentHelp = flaschardQueue[0].help;
         if (currentHelp) {
             window.alert(currentHelp);
         }
     }
+
+    // true: front, false: back
+    function getCardContent(side: boolean): string {
+        const currentFlashcard = flaschardQueue[0];
+        if (!currentFlashcard) return '';
+        return side ? currentFlashcard.front : currentFlashcard.back;
+    };
 
     return (
         <>
@@ -267,16 +287,15 @@ const Flashcards = () => {
                 <div className='tile-collection'>
                     <div className="tile full-width">
                         {
-                            error === null && deckFlashcards && flashcardId ? (
+                            error === null ? (
                                 <>
                                     <h2>{title}</h2>
                                     <div className='flashcard-full'>
                                         <Card 
-                                            key={flashcardId}
-                                            front={deckFlashcards[flashcardId-1].front} 
-                                            back={deckFlashcards[flashcardId-1].back}
-                                            totalCards={cardsTotal}
-                                            flashcardId={flashcardId}
+                                            key={flaschardQueue.length > 1 ? flaschardQueue[0].id :  0}
+                                            front={getCardContent(true)} 
+                                            back={getCardContent(false)}
+                                            lastCard={flaschardQueue.length < 2}
                                             done={finished}
                                             setBtn={setButtonStates}
                                             setHelp={setHelpState}
