@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getReading, setLevelCompletion, setSentenceCompletion } from "../modules/LocalStorage";
 import type { Sentence } from "../modules/Types";
+import confetti from "canvas-confetti";
 
 import '../css/Reading.css';
 
@@ -17,6 +18,7 @@ function Reading() {
     const [ allSentencesDone, setAllSentencesDone ] = useState(false);
 
     const { levelGroupId, levelId } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (levelGroupId && levelId) {
@@ -46,6 +48,19 @@ function Reading() {
             setError('Broken url sub-path');
         }
     }, []);
+
+    useEffect(() => {
+        if (allSentencesDone) {
+            confetti({
+                particleCount: 250,
+                spread: 70,
+                startVelocity: 60,
+                gravity: 1.5,
+                ticks: 120,
+                origin: { x: 0.5, y: 1 }
+            });
+        }
+    }, [allSentencesDone]);
 
     const toggle = () => setIsAnswer(!isAnswer);
 
@@ -145,6 +160,7 @@ function Reading() {
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
+                                    flexDirection: 'column'
                                 }}>
                                     <div style={{
                                         display: 'flex',
@@ -163,6 +179,16 @@ function Reading() {
                                             readOnly
                                         ></input>
                                     </div>
+                                    {allSentencesDone ? (
+                                        <a 
+                                            className='green-highlight' style={{
+                                                fontSize: '20px'
+                                            }}
+                                            onClick={() => navigate('/')}
+                                        >Return Home</a>
+                                    ) : <></>
+
+                                    }
                                 </div>
                             </>
                         ) : (
