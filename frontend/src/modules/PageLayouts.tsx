@@ -1,14 +1,35 @@
-import React, { useEffect, useState } from 'react';
-
-type LayoutProp = {
-    children: React.ReactNode;
-    children2?: React.ReactNode;
-    sideHidden?: boolean;
-}
+import React, { useEffect, useState, type CSSProperties } from 'react';
 
 class PageLayout {
-    static Main({children, sideHidden}: LayoutProp) {
-        console.log(children, sideHidden);
+    static Main({
+        children,
+        style,
+        error
+    }: {
+        children: React.ReactNode,
+        style?: CSSProperties,
+        error?: string | null
+    }) {
+        return (
+            <div className='mainpage'>
+                <div className='tile-collection'>
+                    {
+                        error === null || error === undefined ? (
+                            <div 
+                                className="tile full-width"
+                                style={style}
+                            >
+                                {children}
+                            </div>
+                        ) : (
+                            <div className="tile big">
+                                <h2>Error: { error }</h2>
+                            </div>
+                        )
+                    }
+                </div>
+            </div>
+        );
     }
 
     static MainSide({

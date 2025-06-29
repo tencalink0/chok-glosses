@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Version } from "../App"; 
 import '../css/Feedback.css';
+import PageLayout from "../modules/PageLayouts";
 
 export function FeedbackBar() {
     return (
@@ -25,11 +26,9 @@ function Feedback() {
 
     return (
         <>
-            <div className='mainpage'>
-                <div className='tile-collection'>
-                    <div className="tile full-width" style={{
-                        backgroundColor: 'var(--level-red)'
-                    }}>
+            <PageLayout.Main
+                children={
+                    <>
                         <h2>Before submitting, check if your idea is already an upcoming upgrade:</h2>
                         <ul>
                             <li>- Footer changes</li>
@@ -38,21 +37,23 @@ function Feedback() {
                             <li>- .lbsv file compiling</li>
                         </ul>
                         <h3>Not listed here? Great, go ahead and submit it below:</h3>
+                    </>
+                }
+                style={{
+                    backgroundColor: 'var(--level-red)'
+                }}
+            />
+            {/*
+                <div className='tile-collection'>
+                    <div className="tile full-width">
+                        <h2>Leave some feedback</h2>
+                        <form className="feedback-form">
+                            <input className="feedback-input email" type="email" placeholder="Email" required></input>
+                            <textarea className="feedback-input body" placeholder="Feedback" required></textarea>
+                        </form>
                     </div>
                 </div>
-                <h2><a href="https://forms.gle/toYohfpHZP3ZzXLk6" target="_blank" className="green-highlight">Submit here</a></h2>
-                {/*
-                    <div className='tile-collection'>
-                        <div className="tile full-width">
-                            <h2>Leave some feedback</h2>
-                            <form className="feedback-form">
-                                <input className="feedback-input email" type="email" placeholder="Email" required></input>
-                                <textarea className="feedback-input body" placeholder="Feedback" required></textarea>
-                            </form>
-                        </div>
-                    </div>
-                */}
-            </div>
+            */}
         </>
     );
 }

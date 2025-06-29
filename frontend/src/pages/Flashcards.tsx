@@ -5,6 +5,7 @@ import confetti from 'canvas-confetti';
 import '../css/Flashcard.css';
 import { getDeck, setFlashcardStrength, setLevelCompletion } from '../modules/LocalStorage';
 import type { Flashcard } from '../modules/Types';
+import PageLayout from '../modules/PageLayouts';
 
 type FlashcardWithId = Flashcard & {id: number};
 
@@ -287,41 +288,32 @@ const Flashcards = () => {
     };
 
     return (
-        <>
-            <div className='mainpage'>
-                <div className='tile-collection'>
-                    <div className="tile full-width">
-                        {
-                            error === null ? (
-                                <>
-                                    <h2>{title}</h2>
-                                    <div className='flashcard-full'>
-                                        <Card 
-                                            key={flashcardQueue.length > 1 ? flashcardQueue[0].id :  0}
-                                            front={getCardContent(true)} 
-                                            back={getCardContent(false)}
-                                            lastCard={flashcardQueue.length < 2}
-                                            done={finished}
-                                            setBtn={setButtonStates}
-                                            setHelp={setHelpState}
-                                            resetKey={resetKey}
-                                        ></Card>
-                                    </div>
-                                    <BtnList 
-                                        btnState={buttonStates}
-                                        helpState={helpState}
-                                        helpFn={showHelp}
-                                        responseFn={cardResponse}
-                                    ></BtnList>
-                                </>
-                            ) : (
-                                <h2>Error: {error}</h2>
-                            )
-                        }
+        <PageLayout.Main 
+            children={
+                <>
+                    <h2>{title}</h2>
+                    <div className='flashcard-full'>
+                        <Card 
+                            key={flashcardQueue.length > 1 ? flashcardQueue[0].id :  0}
+                            front={getCardContent(true)} 
+                            back={getCardContent(false)}
+                            lastCard={flashcardQueue.length < 2}
+                            done={finished}
+                            setBtn={setButtonStates}
+                            setHelp={setHelpState}
+                            resetKey={resetKey}
+                        ></Card>
                     </div>
-                </div>
-            </div>
-        </>
+                    <BtnList 
+                        btnState={buttonStates}
+                        helpState={helpState}
+                        helpFn={showHelp}
+                        responseFn={cardResponse}
+                    ></BtnList>
+                </>
+            }
+            error={error}
+        />
     );
 }
 
