@@ -33,7 +33,7 @@
     margin: 2.5%;
     border-radius: var(--border-radius);
     font-size: var(--body-font);
-    padding: 2.5%;
+    padding: 30px;
     color: var(--grey-dark);
     text-align: left;
 }

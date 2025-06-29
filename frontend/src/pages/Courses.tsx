@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getAllCourses, getCurrentCourseTitle, deleteCourse } from "../modules/LocalStorage";
 import { useNavigate } from "react-router-dom";
 import { Confirm } from "./Upload";
+import PageLayout from "../modules/PageLayouts";
 
 function Courses() {
     const navigate = useNavigate();
@@ -57,12 +58,9 @@ function Courses() {
                     <Confirm hideWarn={hideWarn} successFunc={() => {if (preDeleteTitle) clearCourse(preDeleteTitle)}}/>
                 </div>
             </div>
-            <div className="mainpage">
-                <div className='tile-collection'>
-                    <div className="tile full">
-                        
-                    </div>
-                    <div className="tile medium">
+            <PageLayout.SideMainSide 
+                childrenMain={
+                    <>
                         <h2>Courses</h2>
                         <ul>
                             {courses && courses.length > 0 ? (
@@ -89,12 +87,13 @@ function Courses() {
                             )
                             }
                         </ul>
-                    </div>
-                    <div className="tile full center-content">
-                        <button className="button-green" onClick={() => navigate('/upload')}>Upload</button>
-                    </div>
-                </div>
-            </div>
+                    </>
+                }
+                childrenSide2={
+                    <button className="button-green" onClick={() => navigate('/upload')}>Upload</button>
+                }
+                sideHidden={true}
+            />
         </>
     );
 }

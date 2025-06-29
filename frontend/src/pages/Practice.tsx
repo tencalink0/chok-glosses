@@ -4,6 +4,7 @@ import { getCurrentCourse } from "../modules/LocalStorage";
 import { DeckSchema } from "../modules/Schema";
 import { useNavigate } from "react-router-dom";
 import { LoadingBar } from "../Maintenance";
+import PageLayout from "../modules/PageLayouts";
 
 function Practice() {
     const [ error, setError ] = useState<string | null>(null);
@@ -44,51 +45,44 @@ function Practice() {
     }
 
     return (
-        <div className='mainpage'>
-                <div className='tile-collection'>
-                    {
-                        error === null ? (
-                            <>
-                                <div className="tile big">
-                                    <h1 style={{
-                                        textAlign: 'center'
-                                    }}>Practice</h1>
-                                    <table className='leaderboards'>
-                                        <thead>
-                                            <tr>
-                                                <th>Card</th>
-                                                <th>Strength</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {
-                                                cards?.map((card) => (
-                                                    <tr>
-                                                        <td>{card.front}</td>
-                                                        <td>
-                                                            <LoadingBar 
-                                                                progress={card.strength * 100} 
-                                                                extraMargin={false}
-                                                            >{`${(card.strength * 100).toFixed(0)}%`}</LoadingBar>
-                                                        </td>
-                                                    </tr>
-                                                ))
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div className="tile full center-content">
-                                    <button className="button-green" onClick={() => navigate('/begin-practice')}>Begin</button>
-                                </div>
-                            </>
-                        ) : (
-                            <div className="tile big">
-                                <h2>Error: { error }</h2>
-                            </div>
-                        )
-                    }
-                </div>
-        </div>
+        <PageLayout.MainSide
+            childrenMain={
+                <>
+                    <h1 style={{
+                        textAlign: 'center'
+                    }}>Practice</h1>
+                    <table className='leaderboards'>
+                        <thead>
+                            <tr>
+                                <th>Card</th>
+                                <th>Strength</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                cards?.map((card) => (
+                                    <tr>
+                                        <td>{card.front}</td>
+                                        <td>
+                                            <LoadingBar 
+                                                progress={card.strength * 100} 
+                                                extraMargin={false}
+                                            >{`${(card.strength * 100).toFixed(0)}%`}</LoadingBar>
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                </> 
+            }
+            childrenSide={
+                <button className="button-green" onClick={() => navigate('/begin-practice')}>Begin</button>
+            }
+            sideHidden={true}
+            reverseSideForMobile={true}
+            error={error}
+        />
     );
 }
 

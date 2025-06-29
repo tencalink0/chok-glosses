@@ -2,6 +2,7 @@ import CourseCreatorSelect, { parseCourse } from "../modules/CourseCreator";
 import { useState, useRef } from "react";
 import { setCourse } from '../modules/LocalStorage'
 import type { Course } from '../modules/Types'
+import PageLayout from "../modules/PageLayouts";
 
 type ConfirmProps = {
     successFunc: () => void;
@@ -132,13 +133,15 @@ function Upload() {
                     <Confirm hideWarn={hideWarn} successFunc={pushToLocalStorage}/>
                 </div>
             </div>
-            <div className="mainpage">
-                <div className="tile-collection">
-                    <div className="tile half-width">
+            <PageLayout.MainHalf 
+                children1={(
+                    <>
                         <h2>Create your own course:</h2>
                         <CourseCreatorSelect />
-                    </div>
-                    <div className="tile half-width">
+                    </>
+                )}
+                children2={(
+                    <>
                         <h2>Upload:</h2>
                         {/* lbsv: language bar separated values */}
                         <input className="file-input" type="file" onChange={fileUpload} accept=".json,.lbsv" id="fileUpload"></input>
@@ -157,9 +160,9 @@ function Upload() {
                         >
                             <p>Or drag and drop your .json or .lbsv file here</p>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </>
+                )}
+            />
         </>
     );
 }

@@ -12,7 +12,7 @@
           "content": {
             "title": "Greetings",
             "flashcards": [
-              { "front": "Hello", "back": "Hola", "strength": 0 },
+              { "front": "Hello", "back": "Hola", "help": "If you don't know, you're cooked 💀","strength": 0 },
               { "front": "Goodbye", "back": "Adiós", "strength": 0 },
               { "front": "Please", "back": "Por favor", "strength": 0 },
               { "front": "Thank you", "back": "Gracias", "strength": 0 }
