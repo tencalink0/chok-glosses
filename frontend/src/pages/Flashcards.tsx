@@ -26,6 +26,7 @@ function calculateStrength(
 
     const newStrength = prevStrength + rate * (target - prevStrength);
 
+    console.log(prevStrength, newStrength);
     return newStrength;
 }
 
@@ -73,12 +74,18 @@ const Card: React.FC<{
     lastCard: boolean,
     done: boolean,
     setBtn: (state: boolean) => void,
-    setHelp: (state: boolean) => void
-}> = ({front, back, lastCard, done, setBtn, setHelp}) => {
+    setHelp: (state: boolean) => void,
+    resetKey?: number
+}> = ({front, back, lastCard, done, setBtn, setHelp, resetKey}) => {
     const [ shownCard, setShownCard ] = useState(front);
     const [ flipped, setFlipped ] = useState(false);
     const navigate = useNavigate();
     
+    useEffect(() => {
+        setShownCard(front);
+        setFlipped(false);
+    }, [resetKey, front]);
+
     useEffect(() => {
         if (done) {
             confetti({
@@ -139,9 +146,10 @@ const Flashcards = () => {
     const [ helpState, setHelpState ] = useState<boolean>(false);
     const [ helpUse, setHelpUse ] = useState<boolean>(false);
     const [ finished, setFinished ] = useState<boolean>(false);
+    const [ resetKey, setResetKey ] = useState<number>(0);
 
     const [ title, setTitle ] = useState<string | undefined>(undefined);
-    const [ flaschardQueue, setFlashcardQueue ] = useState<FlashcardWithId[]>([]);
+    const [ flashcardQueue, setFlashcardQueue ] = useState<FlashcardWithId[]>([]);
 
     const [ levelGroupIdNum, setLevelGroupIdNum ] = useState<number>(1);
     const [ levelIdNum, setLevelId ] = useState<number>(1);
@@ -201,8 +209,8 @@ const Flashcards = () => {
                 setHelpState(false);
             }
         } else {
-            if (!flaschardQueue[0]) return;
-            const currentHelp = flaschardQueue[0].help;
+            if (!flashcardQueue[0]) return;
+            const currentHelp = flashcardQueue[0].help;
             if (currentHelp) {
                 setHelpState(true);
             } else {
@@ -211,60 +219,69 @@ const Flashcards = () => {
         }
     }
 
-    const nextCard = (strength?: number) => {
-        if (!flaschardQueue[0]) return;
-        if (strength) {
-            setFlashcardStrength(
-                levelGroupIdNum,
-                levelIdNum,
-                flaschardQueue[0].id,
-                strength
-            ); 
-        }
+    const nextCard = (correct: boolean, newStrength?: number) => {
+        setFlashcardQueue(prevQueue => {
+            let updateQueue = prevQueue;
 
-        let newItem;
+            if (newStrength !== undefined) {
+                updateQueue = [
+                    {
+                        ...prevQueue[0],
+                        strength: newStrength
+                    },
+                    ...prevQueue.slice(1)
+                ]
+            }
 
-        if (flaschardQueue.length < 2) {
-            setFinished(true);
-            setLevelCompletion(
-                levelGroupIdNum,
-                levelIdNum
-            );
-            return;
-        } else {
-            // TODO: improve removing first item
-            if (!flaschardQueue[0]) return;
-            newItem = flaschardQueue[1]
-            setFlashcardQueue(flaschardQueue.slice(1));
-        }
-        
-        setButtonStates(false);
-        setHelpUse(false);
-        checkHelp(newItem);
-    }
+            let newQueue;
+
+            if (!correct) {
+                const firstItem = updateQueue[0];
+                newQueue = updateQueue.slice(1).concat(firstItem);
+            } else if (updateQueue.length < 2) {
+                setFinished(true);
+                setLevelCompletion(levelGroupIdNum, levelIdNum);
+                return updateQueue;
+            } else {
+                newQueue = updateQueue.slice(1);
+            }
+
+            if (newStrength !== undefined) {
+                setFlashcardStrength(levelGroupIdNum, levelIdNum, prevQueue[0].id, newStrength);
+            }
+
+            const newItem = newQueue[0];
+            setResetKey(r => r + 1);
+            setButtonStates(false);
+            setHelpUse(false);
+            checkHelp(newItem);
+
+            return newQueue;
+        });
+    };
 
     const cardResponse = (correct: boolean) => {
-        if (!flaschardQueue[0]) return;
+        if (!flashcardQueue[0]) return;
         const strength = calculateStrength(
-            flaschardQueue[0].strength, 
+            flashcardQueue[0].strength, 
             helpUse, 
             1,
             correct
         );
-        nextCard(strength);
+        nextCard(correct, strength);
     }
 
     const showHelp = () => {
         setHelpUse(true);
 
-        if (!flaschardQueue[0]) return;
-        const currentHelp = flaschardQueue[0].help;
+        if (!flashcardQueue[0]) return;
+        const currentHelp = flashcardQueue[0].help;
         if (currentHelp) window.alert(currentHelp);
     }
 
     // true: front, false: back
     function getCardContent(side: boolean): string {
-        const currentFlashcard = flaschardQueue[0];
+        const currentFlashcard = flashcardQueue[0];
         if (!currentFlashcard) return '';
         return side ? currentFlashcard.front : currentFlashcard.back;
     };
@@ -280,13 +297,14 @@ const Flashcards = () => {
                                     <h2>{title}</h2>
                                     <div className='flashcard-full'>
                                         <Card 
-                                            key={flaschardQueue.length > 1 ? flaschardQueue[0].id :  0}
+                                            key={flashcardQueue.length > 1 ? flashcardQueue[0].id :  0}
                                             front={getCardContent(true)} 
                                             back={getCardContent(false)}
-                                            lastCard={flaschardQueue.length < 2}
+                                            lastCard={flashcardQueue.length < 2}
                                             done={finished}
                                             setBtn={setButtonStates}
                                             setHelp={setHelpState}
+                                            resetKey={resetKey}
                                         ></Card>
                                     </div>
                                     <BtnList 

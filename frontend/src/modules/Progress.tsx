@@ -42,21 +42,6 @@ const Progress: React.FC<{course: Course, colors: LevelGroupColour}> = ({ course
         }
     };
 
-    const assignQuery = (levelTypeDescription: ContentChoice): string => {
-        switch (levelTypeDescription) {
-            case ContentChoice.Flashcard: 
-                return 'cardId';
-            case ContentChoice.Reading: 
-                return 'sentenceId';
-            case ContentChoice.Writing: 
-                return 'id';
-            case ContentChoice.Listening: 
-                return 'id';
-            default:
-                return 'id';
-        }
-    };
-
     let globalTileIndex = 0;
 
     return (
