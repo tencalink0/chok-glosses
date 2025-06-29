@@ -17,7 +17,7 @@ function Courses() {
 
     useEffect(() => {
         const allCourses = getAllCourses();
-        setLocalCourseTitle(getCurrentCourseTitle);
+        setLocalCourseTitle(getCurrentCourseTitle());
         if (typeof allCourses === 'string') {
             console.log(`Error: ${allCourses}`);
         } else {

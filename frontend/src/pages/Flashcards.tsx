@@ -195,7 +195,6 @@ const Flashcards = () => {
     const checkHelp = (flashcard?: FlashcardWithId) => {
         if (flashcard) {
             const currentHelp = flashcard.help;
-            console.log(currentHelp);
             if (currentHelp) {
                 setHelpState(true);
             } else {
@@ -204,7 +203,6 @@ const Flashcards = () => {
         } else {
             if (!flaschardQueue[0]) return;
             const currentHelp = flaschardQueue[0].help;
-            console.log('backup: ', currentHelp);
             if (currentHelp) {
                 setHelpState(true);
             } else {
@@ -253,7 +251,6 @@ const Flashcards = () => {
             1,
             correct
         );
-        console.log(strength);
         nextCard(strength);
     }
 

@@ -25,15 +25,12 @@ function Shop() {
 
             for (const mod of imports) {
                 const result = CourseSchema.safeParse(mod.default);
-                console.log(mod);
                 if (result.success) {
                     parsedCourses.push(result.data);
                 } else {
                     console.warn('Invalid course data:', result.error);
                 }
             }
-
-            console.log(parsedCourses);
             setCourses(parsedCourses);
         };
 
