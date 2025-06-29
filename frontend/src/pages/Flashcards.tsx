@@ -188,7 +188,7 @@ const Flashcards = () => {
                 setTitle(errCurrentDeck.title);
                 setFlashcardQueue(currentCards);
 
-                const currentFlashcard = currentCards.find(card => card.id === currentCards[0].id);
+                const currentFlashcard = currentCards[0];
                 if (!currentFlashcard) {
                     setError("Card doesn't exist anymore (rare error)");
                 } else {

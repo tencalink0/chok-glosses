@@ -3,7 +3,11 @@ import { Routes, Route } from "react-router-dom";
 import { Title, ConstructionPercent } from "./App";
 import Err404 from './pages/Err404';
 
-export const LoadingBar: React.FC<{progress: number, extraMargin?: boolean}> = ({progress, extraMargin}) => {
+export const LoadingBar: React.FC<{
+    progress: number, 
+    extraMargin?: boolean,
+    children?: string;
+}> = ({progress, extraMargin, children}) => {
     return (
         <div 
             className="loading-bar-container"
@@ -11,6 +15,9 @@ export const LoadingBar: React.FC<{progress: number, extraMargin?: boolean}> = (
                 margin: extraMargin === false ? '10px' : undefined
             }}
         >
+            <div className="loading-bar-text">
+                {children}
+            </div>
             <div
                 className="loading-bar-fill"
                 style={{ 

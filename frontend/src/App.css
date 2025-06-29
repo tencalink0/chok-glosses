@@ -164,10 +164,20 @@ textarea {
     background-color: #eee;
     border-radius: 4px;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    position: relative;
 }
 
 .loading-bar-fill {
     height: 100%;
     background-color: var(--blue);
     transition: width 0.3s ease-in-out;
+}
+
+.loading-bar-text {
+    color: var(--green);
+    position: absolute;
+    width: 100%;
 }

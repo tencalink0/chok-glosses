@@ -66,7 +66,10 @@ function Practice() {
                                                     <tr>
                                                         <td>{card.front}</td>
                                                         <td>
-                                                            <LoadingBar progress={card.strength * 100} extraMargin={false}/>
+                                                            <LoadingBar 
+                                                                progress={card.strength * 100} 
+                                                                extraMargin={false}
+                                                            >{`${(card.strength * 100).toFixed(0)}%`}</LoadingBar>
                                                         </td>
                                                     </tr>
                                                 ))
