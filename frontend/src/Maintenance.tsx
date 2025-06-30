@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 
 import { Title, ConstructionPercent } from "./App";
 import Err404 from './pages/Err404';
+import PageLayout from "./modules/PageLayouts";
 
 export const LoadingBar: React.FC<{
     progress: number, 
@@ -29,21 +30,22 @@ export const LoadingBar: React.FC<{
 };
 
 const MaintenanceContent = () => {
-    return(
-        <div className="mainpage">
-            <div className="tile-collection">
-                <div className="tile full-width" style={{
-                    display: 'flex',
-                    alignItems: 'center'
-                }}>
+    return (
+        <PageLayout.Main
+            children={
+                <>
                     <h1 style={{margin: '1%'}}>Under construction</h1>
                     <p style={{margin: '1%'}}>{Title} is currently undergoing development</p>
-                    <p>Please check back soon for any updates</p>
+                    <p>Please check again for any updates</p>
                     <LoadingBar progress={ConstructionPercent}/>
                     <p>{ConstructionPercent}% complete</p>
-                </div>
-            </div>
-        </div>
+                </>
+            }
+            style={{
+                display: 'flex',
+                alignItems: 'center'
+            }}
+        />
     );
 }
 

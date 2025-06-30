@@ -29,6 +29,13 @@ header ul {
     list-style-type: none;
     display: flex;
     align-items: center;
+    flex-direction: row;
+}
+
+@media only screen and (max-width: 770px) {
+    header ul {
+        flex-direction: column;
+    }
 }
 
 header ul a {

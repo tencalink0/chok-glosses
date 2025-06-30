@@ -5,6 +5,7 @@ import type { Sentence } from "../modules/Types";
 import confetti from "canvas-confetti";
 
 import '../css/Reading.css';
+import PageLayout from "../modules/PageLayouts";
 
 function Reading() {
     const [ error, setError ] = useState<string | null>(null);
@@ -108,96 +109,89 @@ function Reading() {
     }
     
     return(
-        <div className='mainpage'>
-            <div className='tile-collection'>
-                <div className="tile full-width">
-                    {
-                        error === null && sentences ? (
-                            <>
-                                <div style={{
-                                    position: 'relative'
+        <PageLayout.Main
+            children={
+                <>
+                    <div style={{
+                        position: 'relative'
+                    }}>
+                        <div className={`toggle-switch ${isAnswer ? 'on' : 'off'}`} onClick={toggle}>
+                            <div className="toggle-thumb">{isAnswer ? 'A' : '?'}</div>
+                        </div>
+                    </div>
+                    <h2>{title}</h2>
+                    <ul>
+                        {
+                            (sentences ?? []).map((sentence, index) => (
+                                <li key={index} style={{
+                                    padding: '15px',
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center"
                                 }}>
-                                    <div className={`toggle-switch ${isAnswer ? 'on' : 'off'}`} onClick={toggle}>
-                                        <div className="toggle-thumb">{isAnswer ? 'A' : '?'}</div>
-                                    </div>
-                                </div>
-                                <h2>{title}</h2>
-                                <ul>
                                     {
-                                        sentences.map((sentence, index) => (
-                                            <li key={index} style={{
-                                                padding: '15px',
-                                                display: "flex",
-                                                alignItems: "center",
-                                                justifyContent: "center"
-                                            }}>
-                                                {
-                                                    sentence.clauses.map((clause, clauseIndex) => (
-                                                        <span className="clause-wrapper" key={clauseIndex} >
-                                                            {clause.original}&nbsp;
-                                                            {!isAnswer ? clause.help && (
-                                                                <span className="help-tip">{clause.help}</span>
-                                                            ) : (
-                                                                <span className="help-tip" style={{
-                                                                    backgroundColor: 'var(--level-green)'
-                                                                }}>{clause.translated}</span>
-                                                            )}
-                                                        </span>
-                                                    ))
-                                                }
-                                                <input 
-                                                    type="checkbox"
-                                                    className="sentence-check"
-                                                    value={index + 1}
-                                                    checked={sentence.completed}
-                                                    onChange={completeCheck}
-                                                ></input>
-                                            </li>
+                                        sentence.clauses.map((clause, clauseIndex) => (
+                                            <span className="clause-wrapper" key={clauseIndex} >
+                                                {clause.original}&nbsp;
+                                                {!isAnswer ? clause.help && (
+                                                    <span className="help-tip">{clause.help}</span>
+                                                ) : (
+                                                    <span className="help-tip" style={{
+                                                        backgroundColor: 'var(--level-green)'
+                                                    }}>{clause.translated}</span>
+                                                )}
+                                            </span>
                                         ))
                                     }
-                                </ul>
-                                <div style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    flexDirection: 'column'
-                                }}>
-                                    <div style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        padding: '10px',
-                                        borderRadius: 'var(--border-radius)',
-                                        backgroundColor: 'var(--grey)'
-                                    }}>
-                                        Completed:&nbsp;
-                                        <input 
-                                            type="checkbox"
-                                            className="sentence-check"
-                                            value="completed"
-                                            checked={allSentencesDone}
-                                            readOnly
-                                        ></input>
-                                    </div>
-                                    {allSentencesDone ? (
-                                        <a 
-                                            className='green-highlight' style={{
-                                                fontSize: '20px'
-                                            }}
-                                            onClick={() => navigate('/')}
-                                        >Return Home</a>
-                                    ) : <></>
+                                    <input 
+                                        type="checkbox"
+                                        className="sentence-check"
+                                        value={index + 1}
+                                        checked={sentence.completed}
+                                        onChange={completeCheck}
+                                    ></input>
+                                </li>
+                            ))
+                        }
+                    </ul>
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexDirection: 'column'
+                    }}>
+                        <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: '10px',
+                            borderRadius: 'var(--border-radius)',
+                            backgroundColor: 'var(--grey)'
+                        }}>
+                            Completed:&nbsp;
+                            <input 
+                                type="checkbox"
+                                className="sentence-check"
+                                value="completed"
+                                checked={allSentencesDone}
+                                readOnly
+                            ></input>
+                        </div>
+                        {allSentencesDone ? (
+                            <a 
+                                className='green-highlight' style={{
+                                    fontSize: '20px'
+                                }}
+                                onClick={() => navigate('/')}
+                            >Return Home</a>
+                        ) : <></>
 
-                                    }
-                                </div>
-                            </>
-                        ) : (
-                            <h2>Error: {error}</h2>
-                        )
-                    }
-                </div>
-            </div>
-        </div>
+                        }
+                    </div>
+                </>
+            }
+            error={error}
+        />
     );
 }
 

@@ -6,6 +6,7 @@ import type { LevelGroupColour, Course} from '../modules/Types';
 
 import { useState, useEffect } from 'react';
 import { Title } from '../App';
+import PageLayout from '../modules/PageLayouts';
 
 function MainPage() {
     const [ error, setError ] = useState<string | null>(null);
@@ -39,54 +40,49 @@ function MainPage() {
     }, []);
 
     return(
-        <>  
-            <div className='mainpage'>
-                <div className='tile-collection'>
-                        {
-                            error === null && course ? (
-                                <>
-                                    <div className="tile big full">
-                                        <Progress course={course} colors={colors}/>
-                                    </div>
-                                    <div className="tile">
-                                        <table className='leaderboards'>
-                                            <thead>
-                                                <tr><th>Leaderboards</th></tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr><td>Coming soon...</td></tr>
-                                            </tbody>
-                                        </table>
+        <> 
+            <PageLayout.MainSide
+                childrenMain={
+                    <Progress course={course ?? {
+                        title: '',
+                        level_groups: [],
+                        version: 'pre0.1'
+                    } as Course } colors={colors}/>
+                }
+                childrenSide={
+                    <>
+                        <table className='leaderboards'>
+                            <thead>
+                                <tr><th>Leaderboards</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Coming soon...</td></tr>
+                            </tbody>
+                        </table>
 
-                                        <table className='leaderboards'>
-                                            <thead>
-                                                <tr><th>Notices</th></tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr><td>Coming soon...</td></tr>
-                                            </tbody>
-                                        </table>
+                        <table className='leaderboards'>
+                            <thead>
+                                <tr><th>Notices</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Coming soon...</td></tr>
+                            </tbody>
+                        </table>
 
-                                        <table className='leaderboards'>
-                                            <thead>
-                                                <tr><th>Sponsor {Title}</th></tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr><td>The sooner we can deploy, the better</td></tr>
-                                                <tr><td>Coming soon...</td></tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </>
-                            ) : (
-                                <div className="tile full-width">
-                                    <h2>Error: { error }</h2>
-                                </div>
-                            )
-                        }
-                    
-                </div>
-            </div>
+                        <table className='leaderboards'>
+                            <thead>
+                                <tr><th>Sponsor {Title}</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>The sooner we can deploy, the better</td></tr>
+                                <tr><td>Coming soon...</td></tr>
+                            </tbody>
+                        </table>
+                    </>
+                }
+                mainHidden={true}
+                error={error}
+            /> 
         </>
     );
 }

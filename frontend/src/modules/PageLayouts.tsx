@@ -36,12 +36,16 @@ class PageLayout {
         childrenMain, 
         childrenSide,
         sideHidden,
+        mainHidden,
+        centerSides,
         reverseSideForMobile,
         error
     }: {
         childrenMain: React.ReactNode,
         childrenSide: React.ReactNode,
         sideHidden?: boolean,
+        mainHidden?: boolean,
+        centerSides?: boolean,
         reverseSideForMobile?: boolean,
         error?: string | null
     }) {
@@ -66,12 +70,12 @@ class PageLayout {
                             reverseSideForMobile ? (
                                 <>
                                     <div className='tile-collection'>
-                                        <div className={`tile full-width ${sideHidden ? 'full' : ''} center-content`}>
+                                        <div className={`tile full-width ${sideHidden ? 'full' : ''} ${centerSides ? 'center-content' : ''}`}>
                                             {childrenSide}
                                         </div>
                                     </div>
                                     <div className='tile-collection'>
-                                        <div className="tile full-width">
+                                        <div className={`tile full-width ${mainHidden ? 'full' : ''}`}>
                                             {childrenMain}
                                         </div>
                                     </div>
@@ -79,12 +83,12 @@ class PageLayout {
                             ) : (
                                 <>
                                     <div className='tile-collection'>
-                                        <div className="tile full-width">
+                                        <div className={`tile full-width ${mainHidden ? 'full' : ''}`}>
                                             {childrenMain}
                                         </div>
                                     </div>
                                     <div className='tile-collection'>
-                                        <div className={`tile full-width ${sideHidden ? 'full' : ''} center-content`}>
+                                        <div className={`tile full-width ${sideHidden ? 'full' : ''} ${centerSides ? 'center-content' : ''}`}>
                                             {childrenSide}
                                         </div>
                                     </div>
@@ -93,10 +97,10 @@ class PageLayout {
                         ) : (
                             <>
                                 <div className='tile-collection'>
-                                    <div className="tile big">
+                                    <div className={`tile big ${mainHidden ? 'full' : ''}`}>
                                         {childrenMain}
                                     </div>
-                                    <div className={`tile ${sideHidden ? 'full' : ''} center-content`}>
+                                    <div className={`tile ${sideHidden ? 'full' : ''} ${centerSides ? 'center-content' : ''}`}>
                                         {childrenSide}
                                     </div>
                                 </div>

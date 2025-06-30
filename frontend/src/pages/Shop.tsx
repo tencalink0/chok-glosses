@@ -4,6 +4,8 @@ import { CourseSchema } from '../modules/Schema';
 import { setCourse } from '../modules/LocalStorage';
 
 import { Confirm } from "./Upload";
+import PageLayout from '../modules/PageLayouts';
+import { useNavigate } from 'react-router-dom';
 
 const courseImports = import.meta.glob('../assets/courses/*.json') as Record<
     string,
@@ -13,7 +15,9 @@ const courseImports = import.meta.glob('../assets/courses/*.json') as Record<
 function Shop() {
     const [ courses, setCourses ] = useState<Course[]>([]);
     const [ prePurchaseId, setPrePurchaseId ] = useState<number>(0);
-    const [ prePurchaseTitle, setPrePurchaseTitle] = useState<string>('')
+    const [ prePurchaseTitle, setPrePurchaseTitle] = useState<string>('');
+
+    const navigate = useNavigate();
     
     useEffect(() => {
         const loadCourses = async () => {
@@ -61,6 +65,7 @@ function Shop() {
             window.alert(`Error: ${purchaseState}`);
         } else {
             window.alert('Success!');
+            navigate('/courses')
         }
     }
 
@@ -73,9 +78,9 @@ function Shop() {
                     <Confirm hideWarn={hideWarn} successFunc={() => purchaseCourse(prePurchaseId)}/>
                 </div>
             </div>
-            <div className='mainpage'>
-                <div className='tile-collection'>
-                    <div className="tile full-width">
+            <PageLayout.Main
+                children={
+                    <>
                         <h1 style={{textAlign: 'center'}}>Purchase Courses</h1>
                         <div className='square-container'>
                             {
@@ -94,9 +99,9 @@ function Shop() {
                                 ))
                             }
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </>
+                }
+            />
         </>
     );
 }

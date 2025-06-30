@@ -32,7 +32,7 @@ function Practice() {
         localCourse.level_groups.forEach((level_group) => {
             level_group.tiles.forEach((level) => {
                 const levelContent = level.content;
-                if (DeckSchema.safeParse(levelContent)) {
+                if (DeckSchema.safeParse(levelContent).success) {
                     (levelContent as Deck).flashcards.forEach((card) => {
                         if (card.strength !== 0) localCards.push(card);
                     });
@@ -51,37 +51,46 @@ function Practice() {
                     <h1 style={{
                         textAlign: 'center'
                     }}>Practice</h1>
-                    <table className='leaderboards'>
-                        <thead>
-                            <tr>
-                                <th>Card</th>
-                                <th>Strength</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                cards?.map((card) => (
+                    {
+                        cards && cards.length > 0 ? (
+                            <table className='leaderboards'>
+                                <thead>
                                     <tr>
-                                        <td>{card.front}</td>
-                                        <td>
-                                            <LoadingBar 
-                                                progress={card.strength * 100} 
-                                                extraMargin={false}
-                                            >{`${(card.strength * 100).toFixed(0)}%`}</LoadingBar>
-                                        </td>
+                                        <th>Card</th>
+                                        <th>Strength</th>
                                     </tr>
-                                ))
-                            }
-                        </tbody>
-                    </table>
+                                </thead>
+                                <tbody>
+                                    {
+                                        cards?.map((card, i) => (
+                                            <tr key={i}>
+                                                <td>{card.front}</td>
+                                                <td>
+                                                    <LoadingBar 
+                                                        progress={card.strength * 100} 
+                                                        extraMargin={false}
+                                                    >
+                                                        {`${(card.strength * 100).toFixed(0)}%`}
+                                                    </LoadingBar>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    }
+                                </tbody>
+                            </table>
+                        ) : (
+                            <p key="none">Hmmm, seems like you haven't practiced any cards. Consider <a className="green-highlight" href="/">doing some lessons</a></p>
+                        )
+                    }
                 </> 
             }
             childrenSide={
-                <button className="button-green" onClick={() => navigate('/begin-practice')}>Begin</button>
+                <button className="button-green" onClick={() => navigate('/begin-practice')} disabled={error !== null}>Begin</button>
             }
-            sideHidden={true}
-            reverseSideForMobile={true}
             error={error}
+            sideHidden
+            reverseSideForMobile
+            centerSides
         />
     );
 }

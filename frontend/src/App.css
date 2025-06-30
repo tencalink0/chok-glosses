@@ -49,6 +49,13 @@ h1.course-title {
     color: var(--grey-dark);
     margin: 2.5% 0;
     text-align: center;
+    font-size: 68px;
+}
+
+@media only screen and (max-width: 770px) {
+    h1.course-title {
+        font-size: 44px;
+    }
 }
 
 main {

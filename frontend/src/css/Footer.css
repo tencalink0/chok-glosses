@@ -15,6 +15,12 @@ footer {
     border-top-right-radius: 50px;
 }
 
+@media only screen and (max-width: 770px) {
+    footer {
+        width: 90%;
+    }
+}
+
 footer .icon-credits {
     display: flex;
     align-items: center;
