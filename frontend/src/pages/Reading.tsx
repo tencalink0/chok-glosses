@@ -24,27 +24,27 @@ function Reading() {
     useEffect(() => {
         if (levelGroupId && levelId) {
             let [levelGroupIdTemp, levelIdTemp] = [0, 0];
-            try {
-                [levelGroupIdTemp, levelIdTemp] = [parseInt(levelGroupId), parseInt(levelId)];
-                setLevelGroupIdNum(levelGroupIdTemp);
-                setLevelIdNum(levelIdTemp);
-            } catch (error) {
-                if (error instanceof Error) {
-                    setError(error.message);
-                } else {
-                    setError(String(error));
+                try {
+                    [levelGroupIdTemp, levelIdTemp] = [parseInt(levelGroupId), parseInt(levelId)];
+                    setLevelGroupIdNum(levelGroupIdTemp);
+                    setLevelIdNum(levelIdTemp);
+                } catch (error) {
+                    if (error instanceof Error) {
+                        setError(error.message);
+                    } else {
+                        setError(String(error));
+                    }
+                    return;
                 }
-                return;
-            }
 
-            let errCurrentDeck = getReading(levelGroupIdTemp, levelIdTemp);
-            if (typeof errCurrentDeck === 'string') {
-                setError(errCurrentDeck);
-            } else {
-                setTitle(errCurrentDeck.title);
-                setSentences(errCurrentDeck.sentences);
-                checkSentencesComplete(errCurrentDeck.sentences);
-            }
+                let errCurrentDeck = getReading(levelGroupIdTemp, levelIdTemp);
+                if (typeof errCurrentDeck === 'string') {
+                    setError(errCurrentDeck);
+                } else {
+                    setTitle(errCurrentDeck.title);
+                    setSentences(errCurrentDeck.sentences);
+                    checkSentencesComplete(errCurrentDeck.sentences, levelGroupIdTemp, levelIdTemp);
+                }
         } else {
             setError('Broken url sub-path');
         }
@@ -90,22 +90,30 @@ function Reading() {
         checkSentencesComplete(updatedSentences);
     };
 
-    const updateSectionStatus = (allCompleted: boolean) => {
+    const updateSectionStatus = (
+        allCompleted: boolean,
+        groupId?: number,
+        levelId?: number
+    ) => {
         setLevelCompletion(
-            levelGroupIdNum,
-            levelIdNum,
+            groupId ?? levelGroupIdNum,
+            levelId ?? levelIdNum,
             allCompleted
         );
     }
 
-    const checkSentencesComplete = (updatedSentences?: Sentence[]) => {
+    const checkSentencesComplete = (
+        updatedSentences?: Sentence[],
+        groupId?: number,
+        levelId?: number
+    ) => {
         let localSentences = updatedSentences ?? sentences;
         let allCompleted = true;
         localSentences?.forEach((sentence) => {
             if (!sentence.completed) allCompleted = false;
         });
         setAllSentencesDone(allCompleted)
-        updateSectionStatus(allCompleted);
+        updateSectionStatus(allCompleted, groupId, levelId);
     }
     
     return(
