@@ -1,5 +1,5 @@
 {
-  "title": "English to Turkish Essentials",
+  "title": "Turkish Essentials",
   "version": "pre0.1",
   "emoji": "🇹🇷",
   "level_groups": [
@@ -135,6 +135,7 @@
     },
     {
       "title": "Emotions & Planning",
+      "color": "--green",
       "tiles": [
         {
           "content": {

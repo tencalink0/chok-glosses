@@ -12,7 +12,7 @@ const Progress: React.FC<{course: Course, colors: LevelGroupColour}> = ({ course
     const progress = course.level_groups;
     const navigate = useNavigate();
 
-    const assignColor = (color: LevelGroupColourChoice | undefined) => {
+    const assignColor = (color: LevelGroupColourChoice | string | undefined) => {
         switch (color) {
             case LevelGroupColourChoice.Red:
                 return colors.Red;
@@ -22,9 +22,10 @@ const Progress: React.FC<{course: Course, colors: LevelGroupColour}> = ({ course
                 return colors.Purple;
             case LevelGroupColourChoice.Orange:
                 return colors.Orange;
-            default:
-                return '#ccc';
         }
+
+        if (typeof color === 'string') return color;
+        return '#ccc';
     };
 
     const assignIcon = (levelTypeDescription: ContentChoice): string | undefined => {

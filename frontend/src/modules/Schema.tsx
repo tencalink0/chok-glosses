@@ -51,7 +51,11 @@ export const LevelSchema = z.object({
 export const LevelGroupSchema = z.object({
     title: z.string(),
     tiles: z.array(LevelSchema),
-    color: LevelGroupColourChoiceSchema.optional(),
+    color: z.union([
+        LevelGroupColourChoiceSchema,
+        z.string(),
+        z.undefined()
+    ])
 });
 
 export const CourseSchema = z.object({
