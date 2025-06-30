@@ -34,6 +34,7 @@ function Practice() {
                 const levelContent = level.content;
                 if (DeckSchema.safeParse(levelContent).success) {
                     (levelContent as Deck).flashcards.forEach((card) => {
+                        console.log(card);
                         if (card.strength !== 0) localCards.push(card);
                     });
                 }

@@ -234,6 +234,10 @@ const Flashcards = () => {
                 ]
             }
 
+            if (newStrength !== undefined) {
+                setFlashcardStrength(levelGroupIdNum, levelIdNum, prevQueue[0].id, newStrength);
+            }
+
             let newQueue;
 
             if (!correct) {
@@ -245,10 +249,6 @@ const Flashcards = () => {
                 return updateQueue;
             } else {
                 newQueue = updateQueue.slice(1);
-            }
-
-            if (newStrength !== undefined) {
-                setFlashcardStrength(levelGroupIdNum, levelIdNum, prevQueue[0].id, newStrength);
             }
 
             const newItem = newQueue[0];
