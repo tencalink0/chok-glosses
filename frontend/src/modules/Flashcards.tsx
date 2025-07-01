@@ -254,6 +254,7 @@ function Flashcards(
                             levelGroupIdNum, 
                             levelIdNum
                         );
+                        setButtonStates(false);
                     }
                 }
                 return updateQueue;

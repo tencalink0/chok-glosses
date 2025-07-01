@@ -14,7 +14,7 @@ function Header() {
                     <a href="/shop"><li>Shop</li></a>
                 </ul>
                 <div className="login-container">
-                    <button className="button-green">login</button>
+                    <button className="button-green" disabled>login</button>
                 </div>
             </header>
         </>
