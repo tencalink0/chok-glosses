@@ -1,0 +1,169 @@
+{
+  "title": "English -> Argentine Spanish [Intro course]",
+  "emoji": "🇦🇷",
+  "version": "pre0.1",
+  "level_groups": [
+    {
+      "title": "Introduction",
+      "tiles": [
+        {
+          "description": "ARGENTINE SPANISH (NOT SPAIN SPANISH)",
+          "content": {
+            "title": "The proper basics",
+            "flashcards": [
+              {
+                "front": "Hello",
+                "back": "Hola",
+                "help": "Blud, you're cooked 💀"
+              },
+              {
+                "front": "Goodbye",
+                "back": "Chau"
+              },
+              {
+                "front": "Please",
+                "back": "Por fa'"
+              },
+              {
+                "front": "I",
+                "back": "Yo"
+              },
+              {
+                "front": "You",
+                "back": "Vos",
+                "help": "It's NOT SPAIN SPANISH"
+              },
+              {
+                "front": "He",
+                "back": "Él"
+              },
+              {
+                "front": "She",
+                "back": "Ella"
+              }
+            ]
+          }
+        },
+        {
+          "description": "Learn basic flashcards",
+          "content": {
+            "title": "The basics pt.2",
+            "flashcards": [
+              {
+                "front": "How are you",
+                "back": "¿Cómo te va?"
+              },
+              {
+                "front": "Who",
+                "back": "¿Quién?"
+              },
+              {
+                "front": "I am",
+                "back": "Yo soy"
+              },
+              {
+                "front": "You are",
+                "back": "Vos sos"
+              },
+              {
+                "front": "He/she is",
+                "back": "Él/Ella es"
+              }
+            ]
+          }
+        },
+        {
+          "description": "Practice reading",
+          "content": {
+            "title": "Conversation with Rodrigo and Hugo",
+            "sentences": [
+              {
+                "clauses": [
+                  {
+                    "original": "R -",
+                    "translated": "R -"
+                  },
+                  {
+                    "original": "Hola",
+                    "translated": "Hi"
+                  },
+                  {
+                    "original": "¿Quién sos?",
+                    "translated": "Who are you?"
+                  }
+                ]
+              },
+              {
+                "clauses": [
+                  {
+                    "original": "H -",
+                    "translated": "H -"
+                  },
+                  {
+                    "original": "Soy Hugo,",
+                    "translated": "I am Hugo,"
+                  },
+                  {
+                    "original": "¿y vos?",
+                    "translated": "and you?"
+                  }
+                ]
+              },
+              {
+                "clauses": [
+                  {
+                    "original": "R -",
+                    "translated": "R -"
+                  },
+                  {
+                    "original": "Sí,",
+                    "translated": "Yes,"
+                  },
+                  {
+                    "original": "yo soy Rodrigo,",
+                    "translated": "I am Rodrigo,"
+                  },
+                  {
+                    "original": "¿cómo te va?",
+                    "translated": "how are you?"
+                  }
+                ]
+              },
+              {
+                "clauses": [
+                  {
+                    "original": "H -",
+                    "translated": "H -"
+                  },
+                  {
+                    "original": "Re bien,",
+                    "translated": "Really good,",
+                    "help": "Re: really"
+                  },
+                  {
+                    "original": "¿y vos?",
+                    "translated": "and you?"
+                  }
+                ]
+              },
+              {
+                "clauses": [
+                  {
+                    "original": "R -",
+                    "translated": "R -"
+                  },
+                  {
+                    "original": "¡Tremendo!",
+                    "translated": "Awesome!",
+                    "help": "Tremendo: great"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "color": "--green"
+    }
+  ]
+}
