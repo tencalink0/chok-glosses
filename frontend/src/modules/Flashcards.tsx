@@ -1,13 +1,11 @@
-import { useParams, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import confetti from 'canvas-confetti';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { setFlashcardStrength, setLevelCompletion } from './LocalStorage';
 
-import '../css/Flashcard.css';
-import { getDeck, setFlashcardStrength, setLevelCompletion } from '../modules/LocalStorage';
-import type { Flashcard } from '../modules/Types';
-import PageLayout from '../modules/PageLayouts';
-
-type FlashcardWithId = Flashcard & {id: number};
+import PageLayout from "./PageLayouts";
+import type { Flashcard, FlashcardWithId } from './Types';
+import { FlashcardWithIdSchema } from './Schema';
 
 function calculateStrength(
     prevStrength: number, // big significance
@@ -141,63 +139,61 @@ const Card: React.FC<{
     );
 };
 
-const Flashcards = () => {
-    const [ error, setError ] = useState<string | null>(null);
+function Flashcards(
+    {
+        importedTitle,
+        importedCards,
+        error,
+        levelGroupIdNum, 
+        levelIdNum,
+        allowLevelCompletion = false
+    } : {
+        importedTitle: string | undefined,
+        importedCards: Flashcard[] | FlashcardWithId[],
+        error: string | null,
+        levelGroupIdNum?: number, 
+        levelIdNum?: number,
+        allowLevelCompletion?: boolean
+    } 
+) {
     const [ buttonStates, setButtonStates ] = useState<boolean>(false);
     const [ helpState, setHelpState ] = useState<boolean>(false);
     const [ helpUse, setHelpUse ] = useState<boolean>(false);
     const [ finished, setFinished ] = useState<boolean>(false);
     const [ resetKey, setResetKey ] = useState<number>(0);
 
-    const [ title, setTitle ] = useState<string | undefined>(undefined);
     const [ flashcardQueue, setFlashcardQueue ] = useState<FlashcardWithId[]>([]);
-
-    const [ levelGroupIdNum, setLevelGroupIdNum ] = useState<number>(1);
-    const [ levelIdNum, setLevelId ] = useState<number>(1);
-
-    const { levelGroupId, levelId } = useParams();
-
+    
     useEffect(() => {
-        if (levelGroupId && levelId) {
-            let [levelGroupIdTemp, levelIdTemp] = [0, 0, 0];
-            try {
-                [levelGroupIdTemp, levelIdTemp] = [parseInt(levelGroupId), parseInt(levelId)];
-                setLevelGroupIdNum(levelGroupIdTemp);
-                setLevelId(levelIdTemp);
-            } catch (error) {
-                if (error instanceof Error) {
-                    setError(error.message);
-                } else {
-                    setError(String(error));
-                }
-                return;
-            }
-
-            let errCurrentDeck = getDeck(levelGroupIdTemp, levelIdTemp);
-            if (typeof errCurrentDeck === 'string') {
-                setError(errCurrentDeck);
-            } else {
-                const currentCards = shuffle(
-                    errCurrentDeck.flashcards.map((value, i) => {
-                        return {
-                            ...value,
-                            id: i + 1
-                        }
-                    })
-                ).sort((a, b) => a.strength - b.strength);
-
-                setTitle(errCurrentDeck.title);
-                setFlashcardQueue(currentCards);
-
-                const currentFlashcard = currentCards[0];
-                if (!currentFlashcard) {
-                    setError("Card doesn't exist anymore (rare error)");
-                } else {
-                    checkHelp(currentFlashcard);
-                }
-            }
+        let currentCards: FlashcardWithId[];
+        if (FlashcardWithIdSchema.safeParse(importedCards).success) {
+            currentCards = importedCards as FlashcardWithId[];
         } else {
-            setError('Broken url sub-path');
+            if (!levelGroupIdNum || !levelIdNum) {
+                error = 'Level identification required';
+                levelGroupIdNum = 1;
+                levelIdNum = 1;
+            }
+
+            currentCards = shuffle(
+                importedCards.map((value, i) => {
+                    return {
+                        ...value,
+                        id: i + 1,
+                        levelId: levelIdNum,
+                        levelGroupId: levelGroupIdNum
+                    }
+                })
+            ).sort((a, b) => a.strength - b.strength) as FlashcardWithId[];
+        }
+
+        setFlashcardQueue(currentCards);
+
+        const currentFlashcard = currentCards[0];
+        if (!currentFlashcard) {
+            error = "Card doesn't exist anymore (rare error)";
+        } else {
+            checkHelp(currentFlashcard);
         }
     }, []);
 
@@ -235,7 +231,12 @@ const Flashcards = () => {
             }
 
             if (newStrength !== undefined) {
-                setFlashcardStrength(levelGroupIdNum, levelIdNum, prevQueue[0].id, newStrength);
+                setFlashcardStrength(
+                    prevQueue[0].levelGroupId, 
+                    prevQueue[0].levelId, 
+                    prevQueue[0].id, 
+                    newStrength
+                );
             }
 
             let newQueue;
@@ -245,7 +246,16 @@ const Flashcards = () => {
                 newQueue = updateQueue.slice(1).concat(firstItem);
             } else if (updateQueue.length < 2) {
                 setFinished(true);
-                setLevelCompletion(levelGroupIdNum, levelIdNum);
+                if (allowLevelCompletion) {
+                    if (!levelGroupIdNum || !levelIdNum) {
+                        error = 'Failed to get Ids'
+                    } else {
+                        setLevelCompletion(
+                            levelGroupIdNum, 
+                            levelIdNum
+                        );
+                    }
+                }
                 return updateQueue;
             } else {
                 newQueue = updateQueue.slice(1);
@@ -288,10 +298,10 @@ const Flashcards = () => {
     };
 
     return (
-        <PageLayout.Main 
+        <PageLayout.Main
             children={
                 <>
-                    <h2>{title}</h2>
+                    <h2>{importedTitle}</h2>
                     <div className='flashcard-full'>
                         <Card 
                             key={flashcardQueue.length > 1 ? flashcardQueue[0].id :  0}

@@ -13,8 +13,14 @@ export const FlashcardSchema = z.object({
     front: z.string(),
     back: z.string(),
     help: z.string().optional(),
-    strength: z.number().default(0)
+    strength: z.number().default(0.5) // Non-zero default to reward more for first correct
 });
+
+export const FlashcardWithIdSchema = FlashcardSchema.extend({
+    levelGroupId: z.number(),
+    levelId: z.number(),
+    id: z.number()
+})
 
 export const DeckSchema = z.object({
     title: z.string(),
