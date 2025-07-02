@@ -43,6 +43,12 @@ function Feedback() {
                     backgroundColor: 'var(--level-red)'
                 }}
             />
+            <PageLayout.Main
+                children={
+                    <h2><a href="https://forms.gle/toYohfpHZP3ZzXLk6" target="_blank" className="green-highlight">Submit here</a></h2>
+                }
+                mainHidden
+            />
             {/*
                 <div className='tile-collection'>
                     <div className="tile full-width">

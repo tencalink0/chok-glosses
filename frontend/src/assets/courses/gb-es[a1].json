@@ -9,7 +9,7 @@
         {
           "description": "ARGENTINE SPANISH (NOT SPAIN SPANISH)",
           "content": {
-            "title": "The proper basics",
+            "title": "The basics pt.1",
             "flashcards": [
               {
                 "front": "Hello",
@@ -158,6 +158,37 @@
                     "help": "Tremendo: great"
                   }
                 ]
+              }
+            ]
+          }
+        },
+        {
+          "content": {
+            "title": "The basics pt.3",
+            "flashcards": [
+              {
+                "front": "We",
+                "back": "Nosotros"
+              },
+              {
+                "front": "They",
+                "back": "Ellos"
+              },
+              {
+                "front": "You (formal)",
+                "back": "Usted"
+              },
+              {
+                "front": "You all (formal)",
+                "back": "Ustedes"
+              },
+              {
+                "front": "Friend",
+                "back": "Amigo"
+              },
+              {
+                "front": "Friends with benefits",
+                "back": "Amigovios"
               }
             ]
           }

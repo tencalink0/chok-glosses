@@ -4,11 +4,13 @@ class PageLayout {
     static Main({
         children,
         style,
-        error
+        error,
+        mainHidden
     }: {
         children: React.ReactNode,
         style?: CSSProperties,
-        error?: string | null
+        error?: string | null,
+        mainHidden?: boolean
     }) {
         return (
             <div className='mainpage'>
@@ -16,13 +18,13 @@ class PageLayout {
                     {
                         error === null || error === undefined ? (
                             <div 
-                                className="tile full-width"
+                                className={`tile full-width ${mainHidden ? 'full' : ''}`}
                                 style={style}
                             >
                                 {children}
                             </div>
                         ) : (
-                            <div className="tile big">
+                            <div className={`tile big ${mainHidden ? 'full' : ''}`}>
                                 <h2>Error: { error }</h2>
                             </div>
                         )
