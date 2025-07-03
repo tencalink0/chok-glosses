@@ -58,6 +58,15 @@
                 "back": "¿Quién?"
               },
               {
+                "front": "What",
+                "back": "¿Qué?",
+                "help": "It can also mean 'that'"
+              },
+              {
+                "front": "How",
+                "back": "¿Cómo?"
+              },
+              {
                 "front": "I am",
                 "back": "Yo soy"
               },
@@ -80,8 +89,7 @@
               {
                 "clauses": [
                   {
-                    "original": "R -",
-                    "translated": "R -"
+                    "original": "R -"
                   },
                   {
                     "original": "Hola",
@@ -96,8 +104,7 @@
               {
                 "clauses": [
                   {
-                    "original": "H -",
-                    "translated": "H -"
+                    "original": "H -"
                   },
                   {
                     "original": "Soy Hugo,",
@@ -112,8 +119,7 @@
               {
                 "clauses": [
                   {
-                    "original": "R -",
-                    "translated": "R -"
+                    "original": "R -"
                   },
                   {
                     "original": "Sí,",
@@ -132,8 +138,7 @@
               {
                 "clauses": [
                   {
-                    "original": "H -",
-                    "translated": "H -"
+                    "original": "H -"
                   },
                   {
                     "original": "Re bien,",
@@ -149,8 +154,7 @@
               {
                 "clauses": [
                   {
-                    "original": "R -",
-                    "translated": "R -"
+                    "original": "R -"
                   },
                   {
                     "original": "¡Tremendo!",
@@ -187,14 +191,342 @@
                 "back": "Amigo"
               },
               {
+                "front": "Boyfriend",
+                "back": "Novio"
+              },
+              {
                 "front": "Friends with benefits",
                 "back": "Amigovios"
+              }
+            ]
+          }
+        },
+        {
+          "content": {
+            "title": "Extended conversation",
+            "sentences": [
+              {
+                "clauses": [
+                  {
+                    "original": "R -"
+                  },
+                  {
+                    "original": "¿Y quiénes son ellos?",
+                    "translated": "And who are they?"
+                  }
+                ]
+              },
+              {
+                "clauses": [
+                  {
+                    "original": "H -"
+                  },
+                  {
+                    "original": "Ellos son mis amigos,",
+                    "translated": "They are my friends,"
+                  },
+                  {
+                    "original": "y ella es mi novia.",
+                    "translated": "and she is my girlfriend."
+                  }
+                ]
+              },
+              {
+                "clauses": [
+                  {
+                    "original": "R -"
+                  },
+                  {
+                    "original": "¡Qué facha tu novia!",
+                    "translated": "Your girlfriend looks amazing!",
+                    "help": "Facha: good looking"
+                  }
+                ]
+              },
+              {
+                "clauses": [
+                  {
+                    "original": "H -"
+                  },
+                  {
+                    "original": "Gracias,",
+                    "translated": "Thanks,"
+                  },
+                  {
+                    "original": "ustedes también se ven re bien.",
+                    "translated": "you all look really good too."
+                  }
+                ]
+              },
+              {
+                "clauses": [
+                  {
+                    "original": "R -"
+                  },
+                  {
+                    "original": "Nosotros somos solo amigovios,",
+                    "translated": "We are just friends with benefits,"
+                  },
+                  {
+                    "original": "nada serio.",
+                    "translated": "nothing serious."
+                  }
+                ]
+              },
+              {
+                "clauses": [
+                  {
+                    "original": "H -"
+                  },
+                  {
+                    "original": "Jajaja,",
+                    "translated": "Haha,"
+                  },
+                  {
+                    "original": "¡Contame más!",
+                    "translated": "Tell me more!",
+                    "help": "Contame: tell me"
+                  }
+                ]
               }
             ]
           }
         }
       ],
       "color": "--green"
+    },
+    {
+      "title": "More depth",
+      "tiles": [
+        {
+          "description": "More popular phrases",
+          "content": {
+            "title": "The basics pt.4",
+            "flashcards": [
+              {
+                "front": "Hey",
+                "back": "Che"
+              },
+              {
+                "front": "Argentine tea",
+                "back": "Mate"
+              },
+              {
+                "front": "Obviously",
+                "back": "Obvio",
+                "help": "Simmilar to English"
+              },
+              {
+                "front": "For real",
+                "back": "posta / me jodés",
+                "help": "More like a confirmation"
+              },
+              {
+                "front": "idk",
+                "back": "Ni 'dea"
+              },
+              {
+                "front": "Dating",
+                "back": "Saliendo",
+                "help": "Think: (leaving)"
+              }
+            ]
+          }
+        },
+        {
+          "description": "Even more basics",
+          "content": {
+            "title": "The basics pt.5",
+            "flashcards": [
+              {
+                "front": "With",
+                "back": "Con"
+              },
+              {
+                "front": "Sugar",
+                "back": "Azúcar"
+              },
+              {
+                "front": "Bitter",
+                "back": "Amargo"
+              },
+              {
+                "front": "Day",
+                "back": "Día"
+              },
+              {
+                "front": "Week",
+                "back": "Semana"
+              },
+              {
+                "front": "I'm suprised",
+                "back" : "me sorprende"
+              }
+            ]
+          }
+        },
+        {
+          "description": "Deeper conversation",
+          "content": {
+            "title": "Mateando con Cami y Fede",
+            "sentences": [
+              {
+                "clauses": [
+                  {
+                    "original": "C -"
+                  },
+                  {
+                    "original": "Che,",
+                    "translated": "Hey,"
+                  },
+                  {
+                    "original": "¿Tomás mate?",
+                    "translated": "Do you drink mate?",
+                    "help": "Tomás: you drink"
+                  }
+                ]
+              },
+              {
+                "clauses": [
+                  {
+                    "original": "F -"
+                  },
+                  {
+                    "original": "Obvio,",
+                    "translated": "Obviously,"
+                  },
+                  {
+                    "original": "me encanta.",
+                    "translated": "I love it.",
+                    "help": "Me encanta: I love it"
+                  }
+                ]
+              },
+              {
+                "clauses": [
+                  {
+                    "original": "C -"
+                  },
+                  {
+                    "original": "¿Con azúcar",
+                    "translated": "With sugar"
+                  },
+                  {
+                    "original": "o amargo?",
+                    "translated": "or bitter?"
+                  }
+                ]
+              },
+              {
+                "clauses": [
+                  {
+                    "original": "F -"
+                  },
+                  {
+                    "original": "Amargo,",
+                    "translated": "Bitter,"
+                  },
+                  {
+                    "original": "como tiene que ser.",
+                    "translated": "like it should be.",
+                    "help": "Ser: be"
+                  }
+                ]
+              },
+              {
+                "clauses": [
+                  {
+                  "original": "C -"
+                },
+                {
+                  "original": "Posta",
+                  "translated": "For real",
+                  "help": "Posta: for real / seriously"
+                },
+                {
+                  "original": "que sí.",
+                  "translated": "yeah."
+                }
+                ]
+              },
+              {
+                "clauses": [
+                  {
+                    "original": "F -"
+                  },
+                  {
+                    "original": "Che,",
+                    "translated": "Hey,"
+                  },
+                  {
+                    "original": "¿sabías que Rodrigo y Julia",
+                    "translated": "did you know that Rodrigo and Julia",
+                    "help": "Sabías: did you know"
+                  },
+                  {
+                    "original": "están saliendo?",
+                    "translated": "are dating?",
+                    "help": "Están: they are"
+                  }
+                ]
+              },
+              {
+                "clauses": [
+                  {
+                    "original": "C -"
+                  },
+                  {
+                    "original": "¿Me jodés?",
+                    "translated": "Are you kidding me?"
+                  },
+                  {
+                    "original": "¡No tenía ni idea!",
+                    "translated": "I had no idea!",
+                    "help": "Tenía: I had"
+                  }
+                ]
+              },
+              {
+                "clauses": [
+                  {
+                    "original": "F -"
+                  },
+                  {
+                    "original": "Sí,",
+                    "translated": "Yeah,"
+                  },
+                  {
+                    "original": "hace como dos semanas.",
+                    "translated": "for like two weeks now.",
+                    "help": "Hace como: for about / for like"
+                  }
+                ]
+              },
+              {
+                "clauses": [
+                  {
+                    "original": "C -"
+                  },
+                  {
+                    "original": "No sé",
+                    "translated": "I don't know"
+                  },
+                  {
+                    "original": "si me sorprende",
+                    "translated": "if I'm surprised"
+                  },
+                  {
+                    "original": "o no.",
+                    "translated": "or not.",
+                    "help": "O: or"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "color": "--red"
     }
   ]
 }

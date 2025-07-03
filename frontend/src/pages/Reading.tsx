@@ -143,7 +143,7 @@ function Reading() {
                                                 {clause.original}&nbsp;
                                                 {!isAnswer ? clause.help && (
                                                     <span className="help-tip">{clause.help}</span>
-                                                ) : (
+                                                ) : clause.translated && (
                                                     <span className="help-tip" style={{
                                                         backgroundColor: 'var(--level-green)'
                                                     }}>{clause.translated}</span>
