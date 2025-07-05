@@ -63,9 +63,10 @@ export const CourseSchema = z.object({
 });
 
 Create me a json course following these rules:
-- All optional fields which have defaults must be ommitted 
+- All fields which have defaults must be ommitted 
 - It has three level groups  
 - Each level group has 2 x (flashcard section + reading section)
 - Help on reading sections should be given out for a few clauses
+- For each clause, original means in the language they are learning, and translated is the language they know
 - It should be for [lang1 -> lang2]
 - flashcard sets:

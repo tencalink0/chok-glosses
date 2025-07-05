@@ -22,6 +22,10 @@ const Progress: React.FC<{course: Course, colors: LevelGroupColour}> = ({ course
                 return colors.Purple;
             case LevelGroupColourChoice.Orange:
                 return colors.Orange;
+            case LevelGroupColourChoice.Yellow:
+                return colors.Yellow;
+            case LevelGroupColourChoice.Blue:
+                return colors.Blue;
         }
 
         if (typeof color === 'string') return color;

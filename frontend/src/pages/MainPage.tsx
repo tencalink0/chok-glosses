@@ -16,7 +16,9 @@ function MainPage() {
         Red: 'red',
         Green: 'green',
         Purple: 'purple',
-        Orange: 'orange'
+        Orange: 'orange',
+        Yellow: 'yellow',
+        Blue: 'blue'
     });
 
     const loadCourse = () => {
@@ -35,6 +37,8 @@ function MainPage() {
             Green: rootStyles.getPropertyValue('--level-green').trim(),
             Purple: rootStyles.getPropertyValue('--level-purple').trim(),
             Orange: rootStyles.getPropertyValue('--level-orange').trim(),
+            Yellow: rootStyles.getPropertyValue('--level-yellow').trim(),
+            Blue: rootStyles.getPropertyValue('--level-blue').trim(),
         });
         loadCourse();
     }, []);

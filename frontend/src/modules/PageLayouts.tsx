@@ -24,7 +24,7 @@ class PageLayout {
                                 {children}
                             </div>
                         ) : (
-                            <div className={`tile big ${mainHidden ? 'full' : ''}`}>
+                            <div className={`tile full-width ${mainHidden ? 'full' : ''}`}>
                                 <h2>Error: { error }</h2>
                             </div>
                         )
@@ -110,7 +110,7 @@ class PageLayout {
                         )
                     ) : (
                         <div className='tile-collection'>
-                            <div className="tile big">
+                            <div className="tile full-width">
                                 <h2>Error: { error }</h2>
                             </div>
                         </div>

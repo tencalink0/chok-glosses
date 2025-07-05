@@ -2,7 +2,9 @@ export const LevelGroupColourChoice = {
     Red: '--red', 
     Green: '--green',
     Purple: '--purple', 
-    Orange: '--orange'
+    Orange: '--orange',
+    Yellow: '--yellow',
+    Blue: '--blue'
 };
 
 export const ContentChoice = {
