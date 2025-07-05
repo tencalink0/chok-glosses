@@ -9,7 +9,7 @@
     "build:deno": "npm run build && npm run build:deno --workspace backend",
     "build:express": "npm run build && npm run build:express --workspace backend",
     "copy-dist": "shx rm -rf backend/dist && shx mkdir -p backend/dist/public && shx cp -r frontend/dist/* backend/dist/public/ && shx rm -rf frontend/dist",
-    "start:deno": "npm run start:deno --workspace backend",
+    "start:deno": "deno run --allow-net --allow-read ./backend/dist/server-deno.ts",
     "start:express": "npm run start:express --workspace backend",
     "install:workspaces": "npm install --workspace frontend && npm install --workspace backend",
     "clean": "npm run clean:workspaces && shx rm package-lock.json && shx rm -rf node_modules",

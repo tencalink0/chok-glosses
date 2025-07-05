@@ -6,7 +6,6 @@
     "dev": "nodemon src/server-express.ts",
     "build:deno": "shx cp ./src/server-deno.ts ./dist/server-deno.ts",
     "build:express": "tsc",
-    "start:deno": "deno run --allow-net --allow-read ./dist/server-deno.ts",
     "start:express": "node dist/server-express.js"
   },
   "type": "module",

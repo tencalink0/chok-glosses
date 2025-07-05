@@ -8,10 +8,7 @@ The ultimate language learning framework for passionate language learners.
 4. Run:
     - Locally: ``` npm run dev ```
     - Production: ``` npm run build:express && npm run start:express ```
-    - Deno Production (not recommended):
-        1. Change the fsRoot path in backend/src/server-deno.ts to your dist path
-        2. Run: ``` npm run build:deno && npm run start:deno ```
-
+    - Deno Production (not preferred): ``` npm run build:deno && npm run start:deno ```
 ## Features
 ### Live Features
 - Flashcard and Reading section

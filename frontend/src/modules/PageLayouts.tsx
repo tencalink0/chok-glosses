@@ -1,4 +1,5 @@
 import React, { useEffect, useState, type CSSProperties } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 class PageLayout {
     static Main({
@@ -12,6 +13,8 @@ class PageLayout {
         error?: string | null,
         mainHidden?: boolean
     }) {
+        const navigate = useNavigate();
+
         return (
             <div className='mainpage'>
                 <div className='tile-collection'>
@@ -26,6 +29,20 @@ class PageLayout {
                         ) : (
                             <div className={`tile full-width ${mainHidden ? 'full' : ''}`}>
                                 <h2>Error: { error }</h2>
+                                {
+                                    error.trim() === 'No courses available' || 
+                                    error.trim() === 'No course selected' ? (
+                                        <p
+                                            style={{
+                                                textAlign: 'center',
+                                                padding: '10px'
+                                            }}
+                                        >Psst, if you're new here, visit the <a 
+                                            className='green-highlight'
+                                            onClick={() => navigate('/shop')}
+                                        >Shop</a></p>
+                                    ) : ''
+                                }
                             </div>
                         )
                     }
@@ -52,6 +69,7 @@ class PageLayout {
         error?: string | null
     }) {
         const [ isMobile, setIsMobile ] = useState(window.innerWidth <= 770);
+        const navigate = useNavigate();
         
         useEffect(() => {
             const handleResize = () => {
@@ -112,6 +130,20 @@ class PageLayout {
                         <div className='tile-collection'>
                             <div className="tile full-width">
                                 <h2>Error: { error }</h2>
+                                {
+                                    error.trim() === 'No courses available' || 
+                                    error.trim() === 'No course selected' ? (
+                                        <p
+                                            style={{
+                                                textAlign: 'center',
+                                                padding: '10px'
+                                            }}
+                                        >Psst, if you're new here, visit the <a 
+                                            className='green-highlight'
+                                            onClick={() => navigate('/shop')}
+                                        >Shop</a></p>
+                                    ) : ''
+                                }
                             </div>
                         </div>
                     )
