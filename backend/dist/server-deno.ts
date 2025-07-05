@@ -9,7 +9,7 @@ serve(async (req: Request) => {
     const res = await serveDir(req, { fsRoot });
     if (res.status !== 404) return res;
   } catch (_) {
-    console.log(" ")
+    console.log(" ");
   }
 
   return new Response(

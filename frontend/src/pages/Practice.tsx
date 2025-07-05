@@ -43,65 +43,70 @@ function Practice() {
     }
 
     return (
-        <PageLayout.MainSide
-            childrenMain={
-                !beginPractice ? (
-                    <>
-                        <h1 style={{
-                            textAlign: 'center'
-                        }}>Practice</h1>
-                        {
-                            cards && cards.length > 0 ? (
-                                <table className='leaderboards'>
-                                    <thead>
-                                        <tr>
-                                            <th>Card</th>
-                                            <th>Strength</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {
-                                            cards?.map((card, i) => (
-                                                <tr key={i}>
-                                                    <td>{card.front}</td>
-                                                    <td>
-                                                        <LoadingBar 
-                                                            progress={card.strength * 100} 
-                                                            extraMargin={false}
-                                                        >
-                                                            {`${(card.strength * 100).toFixed(0)}%`}
-                                                        </LoadingBar>
-                                                    </td>
-                                                </tr>
-                                            ))
-                                        }
-                                    </tbody>
-                                </table>
-                            ) : (
-                                <p key="none">Hmmm, seems like you haven't practiced any cards. Consider <a className="green-highlight" href="/">doing some lessons</a></p>
-                            )
-                        }
-                    </>
+        <>
+            {
+                beginPractice ? (
+                    <Flashcards
+                        importedTitle="Practice"
+                        importedCards={cards}
+                        error={error}
+                        levelGroupIdNum={0}
+                        levelIdNum={0}
+                    />
                 ) : (
-                    <>
-                        <Flashcards
-                            importedTitle="Practice"
-                            importedCards={cards}
-                            error={error}
-                            levelGroupIdNum={0}
-                            levelIdNum={0}
-                        />
-                    </>
+                    <PageLayout.MainSide
+                        childrenMain={
+                            <>
+                                <h1 style={{
+                                    textAlign: 'center'
+                                }}>Practice</h1>
+                                {
+                                    cards && cards.length > 0 ? (
+                                        <table className='leaderboards'>
+                                            <thead>
+                                                <tr>
+                                                    <th>Card</th>
+                                                    <th>Strength</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {
+                                                    cards?.map((card, i) => (
+                                                        <tr key={i}>
+                                                            <td>{card.front}</td>
+                                                            <td>
+                                                                <LoadingBar 
+                                                                    progress={card.strength * 100} 
+                                                                    extraMargin={false}
+                                                                >
+                                                                    {`${(card.strength * 100).toFixed(0)}%`}
+                                                                </LoadingBar>
+                                                            </td>
+                                                        </tr>
+                                                    ))
+                                                }
+                                            </tbody>
+                                        </table>
+                                    ) : (
+                                        <p style={{
+                                            padding: '10px'
+                                        }}
+                                        key="none">Hmmm, seems like you haven't practiced any cards. Consider <a className="green-highlight" href="/">doing some lessons</a></p>
+                                    )
+                                }
+                            </>
+                        }
+                        childrenSide={
+                            <button className="button-green" onClick={() => setBeginPractice(true)} disabled={error !== null}>Begin</button>
+                        }
+                        error={error}
+                        sideHidden
+                        reverseSideForMobile
+                        centerSides
+                    />
                 )
             }
-            childrenSide={
-                <button className="button-green" onClick={() => setBeginPractice(true)} disabled={error !== null}>Begin</button>
-            }
-            error={error}
-            sideHidden
-            reverseSideForMobile
-            centerSides
-        />
+        </>
     );
 }
 
