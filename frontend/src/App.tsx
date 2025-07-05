@@ -14,7 +14,7 @@ export const Version = Versions.pre0_1;
 export const Title = 'Chok Glosses';
 
 const MaintenanceState = false;
-export const ConstructionPercent = 85;
+export const ConstructionPercent = 100;
 
 export function mapContentType(levelContent: Deck | Reading | null): ContentChoice {
     if (levelContent === null) return ContentChoice.ComingSoon; 
