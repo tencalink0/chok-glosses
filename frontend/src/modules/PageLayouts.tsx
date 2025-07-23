@@ -6,47 +6,47 @@ class PageLayout {
         children,
         style,
         error,
-        mainHidden
+        mainHidden,
+        classAddOn
     }: {
         children: React.ReactNode,
         style?: CSSProperties,
         error?: string | null,
-        mainHidden?: boolean
+        mainHidden?: boolean,
+        classAddOn?: string
     }) {
         const navigate = useNavigate();
 
         return (
-            <div className='mainpage'>
-                <div className='tile-collection'>
-                    {
-                        error === null || error === undefined ? (
-                            <div 
-                                className={`tile full-width ${mainHidden ? 'full' : ''}`}
-                                style={style}
-                            >
-                                {children}
-                            </div>
-                        ) : (
-                            <div className={`tile full-width ${mainHidden ? 'full' : ''}`}>
-                                <h2>Error: { error }</h2>
-                                {
-                                    error.trim() === 'No courses available' || 
-                                    error.trim() === 'No course selected' ? (
-                                        <p
-                                            style={{
-                                                textAlign: 'center',
-                                                padding: '10px'
-                                            }}
-                                        >Psst, if you're new here, visit the <a 
-                                            className='green-highlight'
-                                            onClick={() => navigate('/shop')}
-                                        >Shop</a></p>
-                                    ) : ''
-                                }
-                            </div>
-                        )
-                    }
-                </div>
+            <div className='tile-collection'>
+                {
+                    error === null || error === undefined ? (
+                        <div 
+                            className={`tile full-width ${mainHidden ? 'full' : ''} ${classAddOn}`}
+                            style={style}
+                        >
+                            {children}
+                        </div>
+                    ) : (
+                        <div className={`tile full-width ${mainHidden ? 'full' : ''} ${classAddOn}`}>
+                            <h2>Error: { error }</h2>
+                            {
+                                error.trim() === 'No courses available' || 
+                                error.trim() === 'No course selected' ? (
+                                    <p
+                                        style={{
+                                            textAlign: 'center',
+                                            padding: '10px'
+                                        }}
+                                    >Psst, if you're new here, visit the <a 
+                                        className='green-highlight'
+                                        onClick={() => navigate('/shop')}
+                                    >Shop</a></p>
+                                ) : ''
+                            }
+                        </div>
+                    )
+                }
             </div>
         );
     }
@@ -83,7 +83,7 @@ class PageLayout {
         }, []);
 
         return (
-            <div className="mainpage">
+            <>
                 {
                     error === null || error === undefined ? (
                         isMobile ? (
@@ -148,7 +148,7 @@ class PageLayout {
                         </div>
                     )
                 }
-            </div>
+            </>
         );
     }
 
@@ -177,15 +177,19 @@ class PageLayout {
         }, []);
 
         return (
-            <div className="mainpage">
+            <>
                 {
                     isMobile ? (
                         <>
-                            <div className='tile-collection'>
-                                <div className={`tile full-width ${sideHidden ? 'full' : ''} center-content`}>
-                                    {childrenSide1}
-                                </div>
-                            </div>
+                            {
+                                childrenSide1 ? (
+                                    <div className='tile-collection'>
+                                        <div className={`tile full-width ${sideHidden ? 'full' : ''} center-content`}>
+                                            {childrenSide1}
+                                        </div>
+                                    </div> 
+                                ) : <></>
+                            }
                             <div className='tile-collection'>
                                 <div className="tile full-width">
                                     {childrenMain}
@@ -211,7 +215,7 @@ class PageLayout {
                         </div>
                     )
                 }
-            </div>
+            </>
         );
     }
 
@@ -236,7 +240,7 @@ class PageLayout {
         }, []);
 
         return (
-            <div className="mainpage">
+            <>
                 {
                     !isMobile ? (
                         <div className="tile-collection">
@@ -262,7 +266,7 @@ class PageLayout {
                         </>
                     )
                 }
-            </div>
+            </>
         );
     }
 }

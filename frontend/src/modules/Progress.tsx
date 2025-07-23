@@ -2,10 +2,10 @@ import { LevelGroupColourChoice, ContentChoice} from './Enums';
 import type { LevelGroupColour, Course } from './Types';
 import { useNavigate } from 'react-router-dom';
 
-import bookIcon from '../img/icons/icons8-book-100.png';
-import flashcardsIcon from '../img/icons/icons8-flashcards-100.png';
-import speakerIcon from '../img/icons/icons8-speaker-100.png'
-import writingIcon from '../img/icons/icons8-writing-100.png';
+import bookIcon from '../assets/img/icons/icons8-book-100.png';
+import flashcardsIcon from '../assets/img/icons/icons8-flashcards-100.png';
+import speakerIcon from '../assets/img/icons/icons8-speaker-100.png'
+import writingIcon from '../assets/img/icons/icons8-writing-100.png';
 import { mapContentType } from '../App';
 
 const Progress: React.FC<{course: Course, colors: LevelGroupColour}> = ({ course, colors }) => {
@@ -26,11 +26,17 @@ const Progress: React.FC<{course: Course, colors: LevelGroupColour}> = ({ course
                 return colors.Yellow;
             case LevelGroupColourChoice.Blue:
                 return colors.Blue;
+            case LevelGroupColourChoice.Grey:
+                return colors.Grey;
         }
 
         if (typeof color === 'string') return color;
-        return '#ccc';
+        return colors.Grey;
     };
+
+    const checkIsPresetColor = (color: LevelGroupColourChoice | string | undefined): boolean => {
+        return Object.values(LevelGroupColourChoice).includes(color ?? '');
+    }
 
     const assignIcon = (levelTypeDescription: ContentChoice): string | undefined => {
         switch (levelTypeDescription) {
@@ -55,7 +61,7 @@ const Progress: React.FC<{course: Course, colors: LevelGroupColour}> = ({ course
             {progress.map((group, groupIndex) => (
                 <div
                     key={groupIndex}
-                    className="level-group"
+                    className={`level-group ${checkIsPresetColor(group.color) ? 'dark-text' : ''}`}
                     style={{
                         background: assignColor(group.color),
                     }}

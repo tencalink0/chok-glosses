@@ -101,6 +101,7 @@ function Shop() {
                         </div>
                     </>
                 }
+                classAddOn='force-full'
             />
         </>
     );

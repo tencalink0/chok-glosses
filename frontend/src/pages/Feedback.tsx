@@ -39,9 +39,6 @@ function Feedback() {
                         <h3>Not listed here? Great, go ahead and submit it below:</h3>
                     </>
                 }
-                style={{
-                    backgroundColor: 'var(--level-red)'
-                }}
             />
             <PageLayout.Main
                 children={

@@ -14,6 +14,7 @@ export type LevelGroupColour = {
     Orange: string;
     Yellow: string;
     Blue: string;
+    Grey: string;
 };
 
 export type Deck = z.infer<typeof Schema.DeckSchema>;

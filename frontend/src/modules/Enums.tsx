@@ -4,7 +4,8 @@ export const LevelGroupColourChoice = {
     Purple: '--purple', 
     Orange: '--orange',
     Yellow: '--yellow',
-    Blue: '--blue'
+    Blue: '--blue',
+    Grey: '--grey'
 };
 
 export const ContentChoice = {
