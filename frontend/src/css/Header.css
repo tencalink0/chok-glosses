@@ -52,7 +52,7 @@ header ul a {
     text-align: center;
     padding: 10px;
     font-size: var(--header-fontsize);
-    color: white;
+    color: var(--white);
     transition: transform 0.2s ease;
 }
 

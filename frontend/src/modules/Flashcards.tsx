@@ -114,8 +114,8 @@ const Card: React.FC<{
             <div 
                 className={`flashcard ${flipped ? 'flipped' : ''} ${lastCard ? '' : 'back-card'}`}
                 style={done ? { 
-                    backgroundColor: 'white', 
-                    color: 'var(--blue)' 
+                    backgroundColor: 'var(--blue)', 
+                    color: 'white' 
                 } : {}}
                 onClick={handleClick}
             >
@@ -124,7 +124,7 @@ const Card: React.FC<{
                         done ? (
                             <div>
                                 <p>All done!</p>
-                                <a 
+                                <a
                                     className='green-highlight' style={{
                                         fontSize: '24px'
                                     }}

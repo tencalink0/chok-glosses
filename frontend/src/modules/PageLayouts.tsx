@@ -15,20 +15,32 @@ class PageLayout {
         mainHidden?: boolean,
         classAddOn?: string
     }) {
+        const [ isMobile, setIsMobile ] = useState(window.innerWidth <= 770);
         const navigate = useNavigate();
+        
+        useEffect(() => {
+            const handleResize = () => {
+                setIsMobile(window.innerWidth <= 770);
+            };
+
+            window.addEventListener('resize', handleResize);
+            handleResize();
+
+            return () => window.removeEventListener('resize', handleResize);
+        }, []);
 
         return (
             <div className='tile-collection'>
                 {
                     error === null || error === undefined ? (
                         <div 
-                            className={`tile full-width ${mainHidden ? 'full' : ''} ${classAddOn}`}
+                            className={`tile full-width ${mainHidden ? 'full' : ''} ${classAddOn && isMobile ? classAddOn : '' }`}
                             style={style}
                         >
                             {children}
                         </div>
                     ) : (
-                        <div className={`tile full-width ${mainHidden ? 'full' : ''} ${classAddOn}`}>
+                        <div className={`tile full-width ${mainHidden ? 'full' : ''}`}>
                             <h2>Error: { error }</h2>
                             {
                                 error.trim() === 'No courses available' || 
