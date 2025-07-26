@@ -120,13 +120,9 @@ function Reading() {
         <PageLayout.Main
             children={
                 <>
-                    <div style={{
-                        position: 'relative'
-                    }}>
-                        <div className={`toggle-switch ${isAnswer ? 'on' : 'off'}`} onClick={toggle}>
+                    <div className={`toggle-switch ${isAnswer ? 'on' : 'off'}`} onClick={toggle}>
                             <div className="toggle-thumb">{isAnswer ? 'A' : '?'}</div>
                         </div>
-                    </div>
                     <h2>{title}</h2>
                     <ul>
                         {
@@ -174,7 +170,7 @@ function Reading() {
                             justifyContent: 'center',
                             padding: '10px',
                             borderRadius: 'var(--border-radius)',
-                            backgroundColor: 'var(--grey)'
+                            backgroundColor: 'var(--grey2)'
                         }}>
                             Completed:&nbsp;
                             <input 
@@ -199,6 +195,9 @@ function Reading() {
                 </>
             }
             error={error}
+            style={{
+                position: 'relative'
+            }}
         />
     );
 }

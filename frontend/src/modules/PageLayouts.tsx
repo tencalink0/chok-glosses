@@ -1,5 +1,6 @@
 import React, { useEffect, useState, type CSSProperties } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { marked } from "marked";
 
 class PageLayout {
     static Main({
@@ -8,7 +9,7 @@ class PageLayout {
         error,
         mainHidden,
         classAddOn
-    }: {
+    } : {
         children: React.ReactNode,
         style?: CSSProperties,
         error?: string | null,
@@ -19,6 +20,7 @@ class PageLayout {
         const navigate = useNavigate();
         
         useEffect(() => {
+            console.log('error', error)
             const handleResize = () => {
                 setIsMobile(window.innerWidth <= 770);
             };
@@ -54,12 +56,75 @@ class PageLayout {
                                         className='green-highlight'
                                         onClick={() => navigate('/shop')}
                                     >Shop</a></p>
-                                ) : ''
+                                ) : (
+                                    <>
+                                        <h2 style={{color: 'var(--red)', margin: '1%'}}>:(</h2>
+                                        <p style={{textAlign: 'center', margin: '1%'}}>Try checking the url or flag this issue if it persists</p>
+                                    </>
+                                )
                             }
                         </div>
                     )
                 }
             </div>
+        );
+    }
+
+    static Article({
+        contents,
+        css,
+        isMarkdown,
+        error
+    } : {
+        contents: string
+        css?: string
+        isMarkdown?: boolean
+        error: string | null
+    }) {
+        const [ wrappedHtml, setWrappedHtml ] = useState<string>('');
+
+        const wrapHtml = (html: string, cssImport?: string) => {
+            setWrappedHtml(`
+            <!DOCTYPE html>
+            <html>
+                <head>
+                ${cssImport && `<style>${cssImport}</style>`}
+                </head>
+                <body>${html}</body>
+            </html>
+            `);
+        };
+
+        useEffect(() => {
+            if (!isMarkdown) {
+                wrapHtml(contents, css);
+            } else {
+                (async () => {
+                    const html = await marked(contents);
+                    wrapHtml(html, css);
+                })();
+            }
+        }, [contents, css, isMarkdown]);
+
+        return (
+            <>
+                {
+                    error === null || error === undefined ? (
+                        <iframe
+                            className='article'
+                            srcDoc={wrappedHtml}
+                        />
+                    ) : (
+                        <div className='tile-collection'>
+                            <div className="tile full-width">
+                                <h2>Error: { error }</h2>
+                                <h2 style={{color: 'var(--red)', margin: '1%'}}>:(</h2>
+                                <p style={{textAlign: 'center', margin: '1%'}}>Try checking the url or flag this issue if it persists</p>
+                            </div>
+                        </div>
+                    )
+                }   
+            </>
         );
     }
 
@@ -71,7 +136,7 @@ class PageLayout {
         centerSides,
         reverseSideForMobile,
         error
-    }: {
+    } : {
         childrenMain: React.ReactNode,
         childrenSide: React.ReactNode,
         sideHidden?: boolean,
@@ -154,7 +219,12 @@ class PageLayout {
                                             className='green-highlight'
                                             onClick={() => navigate('/shop')}
                                         >Shop</a></p>
-                                    ) : ''
+                                    ) : (
+                                        <>
+                                            <h2 style={{color: 'var(--red)', margin: '1%'}}>:(</h2>
+                                            <p style={{textAlign: 'center', margin: '1%'}}>Try checking the url or flag this issue if it persists</p>
+                                        </>
+                                    )
                                 }
                             </div>
                         </div>

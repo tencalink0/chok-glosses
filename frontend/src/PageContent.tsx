@@ -9,6 +9,7 @@ import Err404 from './pages/Err404';
 import Feedback, { FeedbackBar } from './pages/Feedback';
 import Shop from "./pages/Shop";
 import Practice from './pages/Practice';
+import Article from "./pages/Article";
 
 function PageContent() {
     return (
@@ -21,15 +22,10 @@ function PageContent() {
                     <Route path="/courses" element={<Courses />} />
                     <Route path="/shop" element={<Shop />} />
 
-                    <Route path="/flashcard/:levelGroupId/:levelId?cardId=3" element={<FlashcardsSection />} />
                     <Route path="/flashcard/:levelGroupId/:levelId" element={<FlashcardsSection />} />
-                    <Route path="/flashcard/:levelGroupId" element={<FlashcardsSection />} />
-                    <Route path="/flashcard" element={<FlashcardsSection />} />
-
-                    <Route path="/reading/:levelGroupId/:levelId?cardId=3" element={<Reading />} />
                     <Route path="/reading/:levelGroupId/:levelId" element={<Reading />} />
-                    <Route path="/reading/:levelGroupId" element={<Reading />} />
-                    <Route path="/reading" element={<Reading />} />
+
+                    <Route path="/article/:articleId" element={<Article />} />
 
                     <Route path="/upload" element={<Upload />} />
                     <Route path="/feedback" element={<Feedback />} />

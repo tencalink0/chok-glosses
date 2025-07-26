@@ -128,6 +128,7 @@
     border-radius: var(--border-radius);
     color: white;
     transition: background-color 0.2s ease, transform 0.2s ease;
+    padding: 20px 0;
 }
 
 .square-container .square:hover {
@@ -135,24 +136,36 @@
     transform: scale(1.05);
 }
 
-table.leaderboards {
+table.list-table {
     border-collapse: collapse;
 }
 
-table.leaderboards td, th {
-    text-align: left;
-    padding: 8px;
-    border-radius: 8px;
-    color: var(--white);
-    font-size:  var(--body-font);
+table.list-table td > a {
+    display: inline-block;
+    font-weight: bold;
+    color: var(--green);
+    transition: transform 0.3s ease;
+    padding-bottom: 15px;
 }
 
-table.leaderboards th {
+table.list-table td > a:hover {
+    transform: translateX(20px);
+}
+
+table.list-table td, th {
+    text-align: left;
+    padding: 4px;
+    border-radius: 8px;
+    color: var(--white);
+    font-size:  var(--body-font)
+}
+
+table.list-table th {
     color: var(--blue);
     font-size:  var(--body-font-big);
 }
 
-table.leaderboards tr {
+table.list-table tr {
     border-radius: 8px;
 }
 

@@ -7,10 +7,13 @@ import type { LevelGroupColour, Course} from '../modules/Types';
 import { useState, useEffect } from 'react';
 import { Title } from '../App';
 import PageLayout from '../modules/PageLayouts';
+import { useNavigate } from 'react-router-dom';
 
 function MainPage() {
     const [ error, setError ] = useState<string | null>(null);
     const [ course, setCourse ] = useState<Course | undefined>(undefined);
+
+    const navigate = useNavigate();
 
     const [colors, setColors] = useState<LevelGroupColour>({
         Red: 'red',
@@ -57,7 +60,7 @@ function MainPage() {
                 }
                 childrenSide={
                     <>
-                        <table className='leaderboards'>
+                        <table className='list-table'>
                             <thead>
                                 <tr><th>Leaderboards</th></tr>
                             </thead>
@@ -66,16 +69,19 @@ function MainPage() {
                             </tbody>
                         </table>
 
-                        <table className='leaderboards'>
+                        <table className='list-table'>
                             <thead>
-                                <tr><th>Notices</th></tr>
+                                <tr><th>Articles</th></tr>
                             </thead>
                             <tbody>
-                                <tr><td>Coming soon...</td></tr>
+                                <tr><td>
+                                    <a onClick={() => navigate('/article/getting-started')}>Getting started</a>
+                                    <a onClick={() => navigate('/article/practice-explanation')}>How is strength calculated</a>   
+                                </td></tr>
                             </tbody>
                         </table>
 
-                        <table className='leaderboards'>
+                        <table className='list-table'>
                             <thead>
                                 <tr><th>Sponsor {Title}</th></tr>
                             </thead>
