@@ -13,8 +13,8 @@ import { DeckSchema, ReadingSchema } from './modules/Schema';
 export const Version = Versions.pre0_1;
 export const Title = 'Chok Glosses';
 
-const MaintenanceState = false;
-export const ConstructionPercent = 100;
+const MaintenanceState = true;
+export const ConstructionPercent = 10;
 
 export function mapContentType(levelContent: Deck | Reading | null): ContentChoice {
     if (levelContent === null) return ContentChoice.ComingSoon; 

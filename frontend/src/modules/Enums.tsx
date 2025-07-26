@@ -17,7 +17,8 @@ export const ContentChoice = {
 } 
 
 export const Versions = {
-    pre0_1: 'pre0.1'
+    pre0_1: 'pre0.1',
+    pre0_2: 'pre0.2'
 }
 
 export type LevelGroupColourChoice = typeof LevelGroupColourChoice[keyof typeof LevelGroupColourChoice];
