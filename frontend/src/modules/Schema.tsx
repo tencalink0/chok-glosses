@@ -66,6 +66,7 @@ export const LevelGroupSchema = z.object({
 
 export const CourseSchema = z.object({
     title: z.string(),
+    purchaseTitle: z.string().optional(),
     emoji: z.string().optional(),
     version: VersionsSchema,
     level_groups: z.array(LevelGroupSchema),

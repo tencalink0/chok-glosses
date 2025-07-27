@@ -11,7 +11,7 @@ import type { Deck, Reading } from './modules/Types';
 import { DeckSchema, ReadingSchema } from './modules/Schema';
 import { FeedbackBar } from "./pages/Feedback";
 
-export const Version = Versions.pre0_1;
+export const Version = Versions.pre0_2;
 export const Title = 'Chok Glosses';
 
 const MaintenanceState = false;
