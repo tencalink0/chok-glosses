@@ -35,8 +35,8 @@ const MaintenanceContent = () => {
             children={
                 <>
                     <h1 style={{margin: '1%'}}>Under construction</h1>
-                    <p style={{margin: '1%'}}>{Title} is currently undergoing development</p>
-                    <p>Please check again for any updates</p>
+                    <p className="quick-center">{Title} is currently undergoing development, we apologise for any inconveniences</p>
+                    <p className="quick-center">Please check again for any updates</p>
                     <LoadingBar progress={ConstructionPercent}/>
                     <p>{ConstructionPercent}% complete</p>
                 </>

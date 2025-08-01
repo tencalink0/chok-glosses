@@ -206,3 +206,11 @@ iframe.article {
     width: 100%;
     height: 80vh;
 }
+
+.quick-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
